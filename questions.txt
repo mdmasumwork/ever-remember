@@ -1,0 +1,159 @@
+Introduction section -
+
+Welcome to Ever Remember AI-powered condolence and sympathy assistant.
+Hello, I'm Serenity, your AI-powered condolence and sympathy assistant.
+Expressing the right words during a time of loss can be difficult. Together, we’ll create a heartfelt and meaningful message to share your thoughts and emotions with care.
+I’ll ask you a few simple questions to guide us, and I can email the final message to you if you’d like.
+So, I’m Serenity – what’s your name?
+
+===========================================
+
+Email section -
+
+Welcome User
+Everything we create together will be visible here but will not be stored, ensuring complete privacy.
+If you prefer, I can also email it to you. This is entirely optional, as the message will still be displayed on your screen.
+
+---- field below checkbox - I agree to receive update and future offers via email
+
+===========================================
+
+Disclaimer Section
+
+Ok, we're ready to start
+
+In a moment, you’ll be able to share what you’d like me to help you write. However, I want to make you aware of my limitations.
+
+My suggestions may not always perfectly capture your thoughts, and I may make mistakes. Please take a moment to review what I write to ensure it truly reflects your memories and feelings.
+
+Additionally, my suggestions are not a substitute for professional advice. If you need bereavement support or care, I encourage you to seek help from a qualified professional.
+
+button - I understand, let's write
+
+===========================================
+
+Dead persona name section
+
+Who is it you want to write a message about today?
+
+===========================================
+
+Message type section
+
+What kind of message would you like me to write?
+
+- A message for cards or flower (condolence-message)
+- A letter for sympathy (sympathy-letter)
+- A eulogy (eulogy)
+- An obituary or something else (obituary)
+
+===========================================
+
+Dead person relation section
+
+I’d be honored to assist you in creating a {message type}.
+Please can you tell me a little more about {dead-person}? Let's start with how you knew each other
+
+field placeholder - {dead-person} was my ...
+field below text - (with heart icon at the start) It’s OK if you’re not sure what to say at any point. You can use the answer boxes to let me know. I’m here to help you.
+
+==========================================
+
+Dead person details section
+
+"Thank you for sharing that, and I'm truly sorry for your loss..
+TTo help me write something that truly captures {dead-person}, please could you tell me a bit more about them?
+You can start with simple details, like:"
+
+When and where {dead-person} was born
+Their profession or what they did for a living
+Hobbies and interests that brought them joy
+Where they grew up and lived
+Special memories you cherish
+Anything else you'd like to include
+Field Below Text:
+(with a heart icon)
+"It’s completely okay if you’re unsure what to say. Feel free to use the white answer boxes to ask for ideas or guidance whenever you need."
+==========================================
+
+Dead person accomplishment section
+
+"Would you like to share any of {dead-person}’s accomplishments?
+Were there particular achievements at work or in something they were passionate about? What were they especially good at?"
+
+Field Below Text:
+(with a heart icon)
+"Remember, you don’t need to stress about finding the perfect words—that’s my job. Just type whatever comes to mind, and I’ll take care of the rest."
+==========================================
+
+Message tone section
+
+Thank you for sharing these details about {dead-person}.
+To ensure the message truly honors them, could you let me know the tone that feels most appropriate? Here are some options to choose from:
+
+Compassionate – Gentle and heartfelt, ideal for creating a comforting and personal message.
+Formal – Professional and traditional, suitable for a more dignified tribute.
+Poetic – Elegant and expressive, focusing on deep emotions for an artistic touch.
+Uplifting – Positive and hopeful, celebrating the joy and achievements of a life well-lived.
+
+
+==========================================
+
+Final question section
+
+Thank you for sharing so much about {dead-person}.
+
+Before I begin drafting, is there anything else you’d like me to know about them?
+
+==========================================
+
+Draft section
+
+Thanks for sharing those beautiful details about {dead-person}. Here’s an optimistic and uplifting eulogy that reflects the friendship you shared, and {dead-person}'s vibrant personality.
+
+==========================================
+
+First Feedback section
+
+Does this content meet your expectations?
+- Yes, I like it
+- No, I need modifications
+
+=========================================
+
+///////////////////////
+// If yes in the previous Feedback section
+
+That's wonderful to hear! Would you mind taking a moment to share your feedback or any suggestions for improvement?
+
+=========================================
+
+//////////////////////
+// if 'No' in the previous Feedback section
+
+I understand. Would you like to share anything more about {dead-person} or provide any specific instructions to help improve the content?
+
+Field below text - No worries! Even if you don’t have additional details or instructions, I’ll generate another version of the content. You’ll then have the option to choose between the two.
+
+=========================================
+
+Second Feedback
+
+Does this revised content meet your expectations?
+- Yes, I like it
+- No, I need modifications
+
+=========================================
+
+//////////////////////
+// If 'No' in the Second feedback
+
+Thank you for your patience. This is the final opportunity to make modifications. Please let us know any specific details or instructions to help us craft a version that truly meets your expectations.
+
+Field below text - Remember, even if you don’t have additional details or instructions, I’ll still generate another version of the content. You’ll then have the option to choose from all three versions.
+
+=========================================
+
+Thank you for your patience. Here is the final version of your content. I hope one of these versions captures what you had in mind. Thank you for using our service, and please let us know if you’d like further assistance in the future.
+
+Would you mind taking a moment to share your feedback or any suggestions for improvement?

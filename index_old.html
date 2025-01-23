@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="x-ua-compatible" content="ie=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="" />
+
+   <!-- Site Title -->
+   <title>Eulogai</title>
+
+   <!-- Place favicon.ico in the root directory -->
+   <link rel="shortcut icon" type="image/x-icon" href="" />
+
+   <!-- CSS here -->
+   <link rel="stylesheet" href="public/assets/css/main.css" />
+</head>
+
+<body>
+
+   <main id="primary" class="site-main">
+      <section class="header-section">
+         <div class="logo-area">
+            <img src="public/assets/logo_2.png" alt="Lost of words logo"/>
+         </div>
+         <div class="share-area">
+            <span>Share</span><img src="public/assets/images/icons/share.svg" alt="share button"/>
+         </div>
+      </section>
+      <!-- start: eulogai-group -->
+      <section class="eulogai-section">
+         <div class="chat-wrapper">
+            <div class="chat-inner">
+
+               <!-- intro -->
+               <div class="chat-anim intro first-block required">
+                  <div class="sec_title">
+                     <h1 class="title">Hello!</h1>
+                     <div class="desc">
+                        <p>I'm Serenity, your AI-powered condolence and sympathy assistant.</p>
+                        <p>Expressing the right words during a time of loss can be difficult. Together, we’ll create a heartfelt and meaningful message to share your thoughts and emotions with care.</p>
+                        <p>I’ll ask you a few simple questions to guide us, and I can email the final message to you if you’d like.</p>
+                     </div>
+                     <div class="field-area-label">
+                        <p>What’s your name?</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input full-name">
+                        <input type="text" name="full_name" id="full-name" placeholder="Enter your full name">
+                     </div>
+                     <div class="input-field-button-container">
+                        <button class="anim-btn intro-btn" type="submit">Send <img src="public/assets/images/icons/up-arrow-white.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- Email -->
+               <div class="chat-anim email required" style="display: none;">
+                  <div class="sec_title">
+                     <h1 class="title">Welcome, <span class="username">Albert</span>!</h1>
+                     <div class="desc">
+                        <p>Anything we write together you can view here, but I won’t keep it, so stays completely private.</p>
+                        <p>I can also email it to you. That’s optional, as you will still get the message displayed on screen here.</p>
+                        <p>So, if you would like me to email it to you, and you’re happy to learn more about Pure Cremation’s products and special offers, please enter your email address. You can unsubscribe any time:</p>
+                     </div>
+                     <div class="field-area-label">
+                        <p>Shall I send the words we write to your inbox?</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input email">
+                        <input type="text" name="email" id="email" placeholder="Your email address">
+                     </div>
+                     <div class="input-field-button-container has-skip">
+                        <div><a href="#" class="skip-btn email-skip">Skip</a></div>
+                        <button class="anim-btn email-btn" type="submit" disabled>Send <img src="public/assets/images/icons/up-arrow-white.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- quick note -->
+               <div class="chat-anim quick-note " style="display: none;">
+                  <div class="sec_title">
+                     <h1 class="title">Ok, we’re ready to begin</h1>
+                     <div class="desc">
+                        <p>In a moment, you can tell me what you’d like to write. But I just want to make you aware of my limitations.</p>
+                        <p>My suggestions may not always perfectly capture what you want to say, and I can make mistakes. So please check what I write to make sure it reflects your memories and feelings.</P>
+                        <p></p>Also, what I suggest is not advice. If you need bereavement support or care, I can give you information on how to get professional help.</p>
+                     </div>
+                  </div>
+                  <button class="anim-btn quick-not-btn" type="submit">
+                     I understand, let's write<img src="public/assets/images/icons/tick-white.svg" alt="Icons">
+                  </button>
+
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- passed -->
+               <div class="chat-anim required" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>Who is it you want to write a message about today?</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input">
+                        <label for="passed-name">Who we're writing about</label>
+                        <input type="text" name="dead_person_name" id="passed-name" placeholder="Their full name" value="">
+                     </div>
+                     <div class="input-field-button-container">
+                        <button class="anim-btn passed-btn">
+                           Send <img src="public/assets/images/icons/up-arrow-white.svg" alt="arrowIcon">
+                        </button>
+                     </div>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- what i do -->
+               <div class="chat-anim what-i-do" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>And what kind of message would you like to write, <span class="username">Albert</span>?</p>
+                     </div>
+                  </div>
+                  <div class="cart-inner">
+                     <button class="cart-item content-type" data-type="condolence message">
+                        <h5 class="title">
+                           <img src="public/assets/images/icons/sunflower.svg" alt="Icons">
+                           A message for cards or flowers
+                        </h5>
+                        <span class="cart-btn" type="submit">
+                           Help me express my condolences in a short message
+                        </span>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item content-type" data-type="letter of sympathy">
+                        <h5 class="title">
+                           <img src="public/assets/images/icons/pen-tip.svg" alt="Icons">
+                           A letter of sympathy
+                        </h5>
+                        <span class="cart-btn" type="submit">
+                           Help me write a longer letter of sympathy to someone I care about
+                        </span>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item content-type" data-type="eulogy">
+                        <h5 class="title">
+                           <img src="public/assets/images/icons/man-reading-eulogy.svg" alt="Icons">
+                           A eulogy
+                        </h5>
+                        <p class="cart-btn">
+                           Help me write a heartfelt eulogy to honor and remember <span class="dead-person">Gary</span>
+                        </p>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item content-type" data-type="obituary">
+                        <h5 class="title">
+                           <img src="public/assets/images/icons/message.svg" alt="Icons">
+                           An obituary or something else
+                        </h5>
+                        <span class="cart-btn" type="submit">
+                           Help me write a social post, an obituary, or anything else
+                        </span>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons/water-lily.svg" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- relationship -->
+               <div class="chat-anim relation required" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>I’d be honoured to help you write a eulogy.</p>
+                        <p>Please can you tell me a little more about <span class="dead-person">Chris</span>? Let's start with how you knew each other</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input relation">
+                        <input type="text" name="relation" id="relation" placeholder="The person was my..." value="">
+                     </div>
+                     <div class="input-field-button-container">
+                        <button class="anim-btn relation-btn" type="submit" disabled>
+                           Send  <img src="public/assets/images/icons/up-arrow-white.svg" alt="arrowIcon">
+                        </button>
+                     </div>
+                  </div>
+                  <div class="field-area-hint">
+                     <div><img src="public/assets/images/icons/heart.svg"></div>
+                     <div style="padding-left: 12px;">
+                        <p>It’s OK if you’re not sure what to say at any point. You can use the answer boxes to let me know. I’m here to help you. </p>
+                     </div>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- dob Section -->
+               <div class="chat-anim dob required" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>Thank you, would you also tell me when <span class="dead-person">the person</span> was born?</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input dobInput">
+                        <label for="dob">Of course</label>
+                        <input type="text" name="dead_person_dob" id="dob" placeholder="Enter their age" value="">
+                     </div>
+                     <div class="input-field-button-container">
+                        <button class="anim-btn dob-btn" type="submit" disabled>
+                           Send
+                           <img src="public/assets/images/icons/up-arrow-white.svg" alt="arrowIcon">
+                        </button>
+                     </div>
+                  </div>
+
+                  <div class="wide-button-area">
+                     <button class="skip-btn dob-skip-btn">I am not sure when <span class="dead-person">the person</span> was born</button>
+                  </div>
+
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons/water-lily.svg" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- story -->
+               <div class="chat-anim story" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>Thank you for sharing that, and I'm truly sorry for the loss of your <span class="relation-in-text">close friend</span>, <span class="dead-person">Chris</span>.
+                           To help me write something that truly honours <span class="pronoun3">them</span>, could you tell me the tone of voice
+                           that would be best?</p>
+                     </div>
+                  </div>
+                  <div class="cart-inner">
+                     <button class="cart-item style-2 content-tone" data-tone="warm and compassionate">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/heart-hand.svg" alt="Icons" style="width: 32px;">
+                           Compassionate
+                        </h3>
+                        <div class="desc">
+                           <p>Gentle and heartfelt, perfect for creating a comforting, personal tone.</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item style-2 content-tone" data-tone="formal and respectful">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/man-giving-speech.svg" alt="Icons">
+                           Formal
+                        </h3>
+                        <div class="desc">
+                           <p>Professional and traditional, ideal for those seeking a more dignified tone.</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item style-2 content-tone" data-tone="poetic and reflective">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/man-holding-microphone.svg" alt="Icons" style="width: 26px;">
+                           Poetic
+                        </h3>
+                        <div class="desc">
+                           <p>Elegant and thoughtful, focusing ondeep emotions for a more artistic tribute.</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item style-2 content-tone" data-tone="optimistic and uplifting">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/uplifting.svg" alt="Icons" style="width: 38px;">
+                           Uplifting
+                        </h3>
+                        <div class="desc">
+                           <p>Positive and hopeful, highlighting the joy and achievements of a life well-lived.</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                  </div>
+
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+
+                  <button class="save-btn" type="submit" style="display: none;" disabled>
+                     Done <img src="public/assets/images/icons_old/icons-1.svg" alt="Icons">
+                  </button>
+               </div>
+
+               <!-- confirmation -->
+               <div class="chat-anim confirmation required" style="display: none;">
+                  <div class="sec_title">
+                     <h1 class="title">Lovely choice, thanks for confirming that.</h1>
+                     <div class="desc field-area-label">
+                        <p>To help me write something that truly captures <span class="dead-person">Chris</span>, please could you tell me a bit more about <span class="pronoun3">them</span>?</p>
+                     </div>
+                     <div class="desc">
+                        <p>Let’s start with simple facts, such as:
+                           <ul>
+                              <li>What <span class="dead-person">Chris</span> did for a living</li>
+                              <li><span class="pronoun2" style="text-transform: capitalize;">His/Her</span> hobbies and interests</li>
+                              <li>Where <span class="pronoun1">they</span> grew up and lived</li>
+                              <li>Any special memories</li>
+                              <li>Anything else you want to include</li>
+                           </ul>
+                        </p>
+                        <p>Remember, it’s OK if you’re not sure what to say.  You can use the white answer boxes to ask me for ideas at any time.</p>
+                     </div>
+                  </div>
+                  <div class="form-group confirmation">
+
+                     <div class="form_input ">
+                        <textarea name="confirmation" id="confirmation" onkeyup="textAreaAdjust(this)"
+                           style="overflow:hidden" placeholder="Some facts about Chris..."></textarea>
+                     </div>
+                     <div class="input-field-button-container">
+                        <button class="anim-btn confirmation-btn" type="submit">Send <img
+                            src="public/assets/images/icons_old/arrow-1.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons/water-lily.svg" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- ideas -->
+               <div class="chat-anim ideas required" style="display: none;">
+                  <div class="sec_title">
+                     <div class="wide-button-area">
+                        <button class="idea-button">Give me some ideas <img src="public/assets/images/icons/light-white.svg"></button>
+                     </div>
+                     <div class="desc field-area-label">
+                        <p>No problem, what about <span class="dead-person">Chris</span>’ accomplishments? Was there anything in particular s/he achieved at work or doing something he loved? What was s/he good at?<p>
+                     </div>
+                     <div class="desc">
+                        <p>Remember, you don’t need to worry about finding the right words. Let me worry about that. Type anything that comes to mind.</p>
+                     </div>
+                  </div>
+                  <div class="form-group ideas">
+
+                     <div class="form_input ">
+                        <textarea name="ideas" id="ideas" onkeyup="textAreaAdjust(this)"
+                                  style="overflow:hidden" placeholder="Type anything that comes to mind..."></textarea>
+                     </div>
+                     <div class="input-field-button-container">
+                        <button class="anim-btn ideas-btn" type="submit">Send <img
+                            src="public/assets/images/icons/up-arrow-white.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+                  <div class="wide-button-area">
+                     <button class="skip-btn ideas-skip-btn">I don't know what to say <img src="public/assets/images/icons/blue-question-mark.svg" /></button>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons/water-lily.svg" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- deep-thought -->
+               <div class="chat-anim deep-thought required" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>Thank you, is there anything more you’d like to tell me about, <span class="dead-person">Chris</span> before I draft something?</p>
+                     </div>
+                  </div>
+                  <div class="form-group deep-thought">
+                     <div class="form_input ">
+                        <textarea name="deep_thought" id="deep-thought" onkeyup="textAreaAdjust(this)"
+                           style="overflow:hidden" placeholder="Let me know anything...."></textarea>
+                     </div>
+                     <div class="input-field-button-container">
+                           <button id="generate-content-button" class="anim-btn deep-thought-btn" type="submit">Send <img
+                               src="public/assets/images/icons_old/arrow-1.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- sharing -->
+               <div class="chat-anim sharing" style="display: none;">
+                  <div class="sec_title">
+                     <div class="desc field-area-label">
+                        <p>Thanks for sharing those beautiful details about <span class="dead-person">Chris</span>. Here’s an optmistic and uplifting eulogy that reflects the friendship you shared, and <span class="dead-person">Chris</span>’ vibrant personality. </p>
+                     </div>
+                  </div>
+
+                  <div class="generated-content-area">
+                     <div class="generated-content-area-header">
+                        <img src="public/assets/images/icons/man-reading-eulogy.svg">
+                        <h3 class="generated-content-area-header-text">Eulogy for <span class="dead-person">Chris</span></h3>
+                     </div>
+                     <div class="generated-content-body" id="generated-content-body">Generating content ... .. .</div>
+                  </div>
+
+                  <div class="response-to-the-content-area">
+                     <h2 class="response-to-the-content-area-header-text">How is this feeling?</h2>
+                     <div class="wide-button-area">
+                        <button class="anim-btn response-to-content-button" data-response="Perfect">This is perfect, thanks <img src="public/assets/images/icons/tick-blue.svg" /> <img class="selected-image" src="public/assets/images/icons/tick-white.svg" /></button>
+                     </div>
+                     <div class="wide-button-area">
+                        <button class="anim-btn response-to-content-button" data-response="I want to make some edit">I want to make some edits <img src="public/assets/images/icons/edit-blue.svg" /> <img class="selected-image" src="public/assets/images/icons/edit-white.svg" /></button>
+                     </div>
+                     <div class="wide-button-area">
+                        <button class="anim-btn response-to-content-button" data-response="Give me some ideas">Give me some ideas <img src="public/assets/images/icons/light-blue.svg" /> <img class="selected-image" src="public/assets/images/icons/light-white.svg" /></button>
+                     </div>
+                     <div class="wide-button-area">
+                        <button class="anim-btn response-to-content-button" data-response="I want to change the tone">I want to change the tone <img src="public/assets/images/icons/sound-blue.svg" /> <img class="selected-image" src="public/assets/images/icons/sound-white.svg" /></button>
+                     </div>
+                  </div>
+               </div>
+
+
+               <!-- second-email -->
+               <div class="chat-anim second-email" style="display: none;">
+                  <div class="sec_title">
+                     <h1 class="title">I’m so glad to hear that.</h1>
+                     <h1 class="title">Now that you’ve used <span style="font-style: italic">Lost for Words</span> would you like me to send <span class="dead-person">Chris</span>’ eulogy to you by email?</h1>
+                     <div class="desc">
+                        <p>To keep it private, I won’t save your eulogy, but I can email it to you. I may also send updates and product offers now and then. You can unsubscribe at any time</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input second-email">
+                        <input type="text" name="second_email" id="second-email" placeholder="Your email address">
+                     </div>
+                     <div class="input-field-button-container has-skip">
+                        <div><a href="#" class="skip-btn second-email-skip">Skip</a></div>
+                        <button class="anim-btn second_email_btn disabled" type="submit" disabled>Send <img src="public/assets/images/icons/up-arrow-white.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+
+               <!-- feedback -->
+               <div class="chat-anim feedback" style="display: none;">
+                  <div class="sec_title">
+                     <h1 class="title">One last thing before you go – would you give me some feedback?</h1>
+                     <div class="desc field-area-label">
+                        <p>How would you rate Lost of Words?</p>
+                        <div class="feedback-start">
+                           <img src="public/assets/images/icons/feedback-star.svg" />
+                           <img src="public/assets/images/icons/feedback-star.svg" />
+                           <img src="public/assets/images/icons/feedback-star.svg" />
+                           <img src="public/assets/images/icons/feedback-star.svg" />
+                           <img src="public/assets/images/icons/feedback-star.svg" />
+                        </div>
+                        <p>How could this experience be better?</p>
+                     </div>
+                     <div class="desc">
+                        <p>What you say here will be saved anonymously, to protect your privacy.</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form_input feedback">
+                        <textarea type="text" name="text_feedback" id="feedback" placeholder="Let me know your thoughts..."></textarea>
+                     </div>
+                     <div class="input-field-button-container has-skip">
+                        <div><a href="#" class="skip-btn feedback-skip">Skip</a></div>
+                        <button class="anim-btn feedback_btn disabled" type="submit" disabled>Send <img src="public/assets/images/icons/up-arrow-white.svg" alt="Icons"></button>
+                     </div>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+               <!-- what-next -->
+               <div class="chat-anim what-next last-block" style="display: none;">
+                  <div class="sec_title">
+                     <h1 class="title">What next?</h1>
+                     <div class="desc field-area-label">
+                        <p>I hope you’re pleased that you’ve found the right words for your close friend. Here are some things you may like to do next:</p>
+                     </div>
+                  </div>
+                  <div class="cart-inner">
+                     <button class="cart-item style-2 what-next-cart" data-tone="share lost for words">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/share-solid.svg" alt="Icons" style="width: 32px;">
+                           Share Lost For Words
+                        </h3>
+                        <div class="desc">
+                           <p>Help someone else find the right words to say</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item style-2 what-next-cart" data-tone="get some support">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/together.svg" alt="Icons" style="width: 38px;">
+                           Get some support
+                        </h3>
+                        <div class="desc">
+                           <p>Get bereavement support for you or someone you care about</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                  </div>
+                  <div>
+                     <p>Or, if you need to arrange a funeral, or want to plan ahead:</p>
+                  </div>
+                  <div class="cart-inner">
+                     <button class="cart-item style-2 what-next-cart" data-tone="arrange a funeral">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/information.svg" alt="Icons" style="width: 32px;">
+                           Poetic
+                        </h3>
+                        <div class="desc">
+                           <p>Find out more about arranging a Pure Cremation funeral</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item style-2 what-next-cart" data-tone="get a funeral plan quote">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/send-text.svg" alt="Icons" style="width: 38px;">
+                           Get a Funeral Plan quote
+                        </h3>
+                        <div class="desc">
+                           <p>Plan ahead to protect against rising funeral costs</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                     <button class="cart-item style-2 what-next-cart" data-tone="plan a send-off">
+                        <h3 class="title story-cart-title">
+                           <img src="public/assets/images/icons/to-do-list.svg" alt="Icons" style="width: 28px;">
+                           Plan a send-off
+                        </h3>
+                        <div class="desc">
+                           <p>Find ideas and inspiration in our Celebration of Life guide</p>
+                        </div>
+                        <img class="story-cart-arrow" src="public/assets/images/icons/right-arrow-red.svg" alt="Icons">
+                     </button>
+                  </div>
+                  <div class="chat-icon-area">
+                     <img class="chat_icons" src="public/assets/images/icons_old/sec_icons.png" alt="Icons">
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </section>
+      <!-- end: eulogai-group -->
+
+   </main>
+   <script>
+      function textAreaAdjust(element) {
+         element.style.height = "1px";
+         element.style.height = 1 + element.scrollHeight + "px";
+      }
+   </script>
+
+   <!-- JS here -->
+   <script src="public/assets/js/jquery.min.js"></script>
+   <script src="public/assets/js/main.js"></script>
+   <script src="public/assets/js/animation.js"></script>
+</body>
+
+</html>

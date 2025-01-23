@@ -1,0 +1,59 @@
+<?php
+
+require_once __DIR__ . '/../config/OpenAIConfig.php';
+
+class OpenAIService {
+    private $apiKey;
+    private $model;
+    private $temperature;
+
+    public function __construct() {
+        $this->apiKey = OpenAIConfig::get('api_key');
+        $this->model = OpenAIConfig::get('model');
+        $this->temperature = OpenAIConfig::get('temperature');
+    }
+
+    public function generateEulogy($prompt) {
+        // Dummy response for testing
+        return [
+            'content' => "This is a test eulogy response.\n\n" .
+                        "Received prompt: " . $prompt . "\n\n" .
+                        "This is where the generated content will appear.\n" .
+                        "We're just testing the data flow for now.\n" .
+                        "Later this will be replaced with actual OpenAI API response."
+        ];
+    }
+
+    // public function generateEulogy($prompt) {
+    //     $url = 'https://api.openai.com/v1/chat/completions';
+        
+    //     $headers = [
+    //         'Content-Type: application/json',
+    //         'Authorization: Bearer ' . $this->apiKey
+    //     ];
+        
+    //     $data = [
+    //         'model' => $this->model,
+    //         'messages' => [
+    //             ['role' => 'user', 'content' => $prompt]
+    //         ],
+    //         'temperature' => $this->temperature
+    //     ];
+
+    //     $ch = curl_init($url);
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     curl_setopt($ch, CURLOPT_POST, true);
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        
+    //     $response = curl_exec($ch);
+    //     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    //     curl_close($ch);
+
+    //     if ($httpCode !== 200) {
+    //         throw new Exception('OpenAI API request failed with status ' . $httpCode);
+    //     }
+
+    //     return json_decode($response, true);
+    // }
+}

@@ -1,0 +1,4 @@
+<!-- Footer Section -->
+<footer id="footer">
+    <p>&copy; 2025 Your Company. All rights reserved.</p>
+</footer>

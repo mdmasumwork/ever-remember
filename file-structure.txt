@@ -1,0 +1,23 @@
+project-root/
+├── public/                  # Public-facing files
+│   ├── index.php            # Main entry point
+│   ├── api/                 # API endpoints
+│   │   ├── generate.php
+│   │   ├── feedback.php
+│   ├── assets/              # Static files
+│   │   ├── css/
+│   │   │   ├── styles.css
+│   │   ├── js/
+│   │   │   ├── app.js
+│   │   ├── images/
+├── src/                     # Core application logic
+│   ├── templates/           # Header, footer, and reusable templates
+│   ├── sections/            # Modular section files
+│   ├── config/              # Configuration files
+│   ├── utils/               # Utility scripts
+├── storage/                 # Non-public storage (logs, uploads, etc.)
+│   ├── logs/
+│   ├── uploads/
+├── .env                     # Environment variables
+├── composer.json            # PHP dependencies
+├── README.md                # Documentation
