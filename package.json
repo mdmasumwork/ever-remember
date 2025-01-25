@@ -2,8 +2,8 @@
     "name": "elogai",
     "version": "1.0.0",
     "scripts": {
-        "build:dev": "npx sass --watch public/assets/sass/main.scss:public/assets/css/main.css",
-        "build:prod": "npx sass public/assets/sass/main.scss:public/assets/css/main.css --style compressed"
+        "build:dev": "npx sass --watch src/assets/scss/main.scss:public/assets/css/main.css",
+        "build:prod": "npx sass src/assets/scss/main.scss:public/assets/css/main.css --style compressed"
     },
     "devDependencies": {
         "sass": "^1.79.5"

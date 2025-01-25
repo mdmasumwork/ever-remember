@@ -1,0 +1,45 @@
+.field-area {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+    border: 1px solid $border-light;
+    border-radius: $border-radius-md;
+    background-color: #FFFFFF;
+
+    input, 
+    textarea {
+        border: none;
+        font-size: $font-size-base;
+        color: $text-body;
+        width: 100%;
+        resize: none;
+
+        &::placeholder {
+            color: $text-light;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.field-button-area {
+    @include flex-between;
+    gap: $spacing-sm;
+}
+
+.field-caption {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    color: $text-muted;
+    font-size: 0.9rem;
+
+    .field-caption-icon {
+        width: 42px;
+        height: 36px;
+        padding-left: 4px;
+    }
+}

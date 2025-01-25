@@ -1,0 +1,62 @@
+// Responsive breakpoints
+@mixin mobile {
+    @media (max-width: $breakpoint-md) {
+        @content;
+    }
+}
+
+// @mixin tablet {
+//     @media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg) {
+//         @content;
+//     }
+// }
+
+// @mixin desktop {
+//     @media (min-width: $breakpoint-lg) {
+//         @content;
+//     }
+// }
+
+// // Flexbox helpers
+// @mixin flex-center {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+// // Typography
+// @mixin heading-1 {
+//     font-size: 2.5rem;
+//     font-weight: 700;
+//     line-height: 1.2;
+//     color: $text-heading;
+// }
+
+// @mixin heading-4 {
+//     font-size: 1.5rem;
+//     font-weight: 500;
+//     line-height: 1.4;
+//     color: $text-heading;
+// }
+
+// // Components
+// @mixin card {
+//     background: $surface-primary;
+//     border-radius: $border-radius-md;
+//     padding: $spacing-lg;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// }
+
+@mixin button-base {
+    padding: $spacing-md $spacing-xl;
+    border-radius: $border-radius-md;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-speed $transition-function;
+}

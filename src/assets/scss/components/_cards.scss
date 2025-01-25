@@ -1,0 +1,76 @@
+.card-area {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+    width: 100%;
+
+    .card {
+        background: #FFFFFF;
+        padding: $spacing-lg;
+        border-radius: $border-radius-md;
+        border: 2px solid transparent;
+        display: flex;
+        flex-direction: column;
+        transition: all $transition-speed ease;
+
+        &:hover {
+            cursor: pointer;
+            border-color: $border-dark;
+            background-color: $surface-secondary;
+        }
+
+        // Focus styles for keyboard navigation
+        &:focus {
+            outline: none;
+            border-color: $brand-primary;
+            background-color: $surface-secondary;
+            box-shadow: 0 0 0 2px $brand-primary;
+        }
+
+        // First card auto-focus style
+        &:first-child:focus {
+            border-color: $brand-primary;
+            background-color: $surface-secondary;
+        }
+    }
+
+    .card-header {
+        margin-bottom: $spacing-md;
+        display: flex;
+        gap: $spacing-md;
+        align-items: center; // Center align items vertically
+
+        img {
+            object-fit: contain; // Maintain aspect ratio
+            flex-shrink: 0; // Prevent image from shrinking
+        }
+
+        .card-title {
+            margin-bottom: 0;
+            line-height: 28px;
+        }
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: $font-weight-bold;
+        color: $brand-primary;
+    }
+
+    .card-body {
+        flex: 1;
+        color: $text-body;
+    }
+
+    .card-arrow {
+        margin-top: auto;
+        text-align: right;
+        width: 40px;
+    }
+
+    @include mobile {
+        grid-template-columns: 1fr;
+        gap: $spacing-md;
+        padding: 0 $spacing-sm;
+    }
+}

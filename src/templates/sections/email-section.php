@@ -6,9 +6,8 @@
     <div class="field-area">
         <input type="text" id="email-field" placeholder="Enter some value">
         <div class="field-button-area">
-            <button class="er-button primary-button">Send</button>
-            <button class="er-button tertiary-button">Skip</button>
+            <button class="er-button primary-button go-next-1">Send</button>
+            <button class="er-button tertiary-button go-next-1">Skip</button>
         </div>
     </div>
-    <img class="field-caption-icon" src="assets/logo_flower.png">
 </section>

@@ -1,0 +1,141 @@
+// Import the color file
+@import "color";
+@import "typography";
+@import "header";
+@import "footer";
+@import "slide-menu";
+@import "input";
+@import "progress-bar";
+
+
+p {
+    margin: 16px 0;
+    line-height: 22px;
+}
+
+.style-h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #55328f;
+    font-family: "Noto Serif Georgian", serif;
+}
+
+/* Reset and global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-content {
+    flex: 1; /* Occupies all available space */
+    overflow-y: auto; /* Enables scrolling within the main content */
+    background-color: $gray-light; /* Matches body background */
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Sections */
+section {
+    display: none;
+    padding: 20px;
+    max-width: 678px;
+    margin: 0 auto;
+    width: 678px;
+
+    &.active {
+        display: block;
+    }
+
+    & > * {
+        margin: 16px 0;
+    }
+
+    ul {
+        padding-left: 40px;
+    }
+}
+
+/* Vertical Progress Bar */
+.vertical-progress-bar {
+    position: fixed;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .progress-bar-item {
+        width: 5px;
+        height: 20px;
+        background-color: #ddd;
+        transition: background-color 0.3s ease;
+
+        &.active {
+            background-color: #3498db;
+        }
+    }
+}
+
+
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    &.show {
+        opacity: 1;
+    }
+}
+
+@keyframes copyPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+
+
+@keyframes loadingDots {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 678px) {
+    section {
+        width: 100%;
+    }
+}
+
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+}
+

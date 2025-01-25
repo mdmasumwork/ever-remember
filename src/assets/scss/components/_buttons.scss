@@ -1,0 +1,52 @@
+@use "sass:color";
+
+.er-button {
+    @include button-base;
+    display: inline-flex;
+    align-items: center;
+    font-size: $font-size-base;
+    gap: $spacing-sm;
+
+    &.primary-button {
+        background-color: $action-primary;
+        color: $text-white;
+        border: none;
+
+        &:hover {
+            background-color: color.adjust($action-primary, $lightness: -10%);
+        }
+    }
+
+    &.secondary-button {
+        background-color: transparent;
+        border: 2px solid $action-primary;
+        color: $action-primary;
+
+        &:hover {
+            background-color: $surface-secondary;
+        }
+    }
+
+    &.tertiary-button {
+        background-color: transparent;
+        border: none;
+        color: $text-muted;
+        padding: $spacing-sm;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        transition: color $transition-speed ease;
+
+        &::after {
+            display: none;
+        }
+
+        &:hover {
+            color: $action-primary;
+        }
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}

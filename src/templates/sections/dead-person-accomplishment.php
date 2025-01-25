@@ -4,7 +4,7 @@
     <div class="field-area">
     <textarea id="dead-person-accomplishment-field"></textarea>
         <div class="field-button-area">
-            <button class="er-button primary-button">Send</button>
+            <button class="er-button primary-button go-next-1">Send</button>
         </div>
     </div>
     <div class="field-caption">

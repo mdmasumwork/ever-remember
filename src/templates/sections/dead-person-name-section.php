@@ -3,8 +3,7 @@
     <div class="field-area">
         <input type="text" id="dead-person-name-field" placeholder="Their full name">
         <div class="field-button-area">
-            <button class="er-button primary-button">Send</button>
+            <button class="er-button primary-button go-next-1">Send</button>
         </div>
     </div>
-    <img class="field-caption-icon" src="assets/logo_flower.png">
 </section>

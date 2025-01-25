@@ -1,0 +1,36 @@
+#main-content {
+    flex: 1;
+    min-height: 0; // Fix for Firefox flexbox scrolling
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: $surface-primary;
+
+    // Scrollable container
+    .content-wrapper {
+        flex: 1;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    &::before {
+        content: '';
+        position: fixed; // Changed from absolute
+        bottom: 90px;
+        right: -36px;
+        width: 300px;
+        height: 300px;
+        background-image: url('../images/water_mark.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.08;
+        z-index: 0;
+        pointer-events: none;
+        transform: rotate(-15deg);
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+}

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('.er-button').on('click', function() {
+    $('.er-button, .card').on('click', function() {
         const classList = $(this).attr('class').split(/\s+/);
         let count = 0;
 
@@ -55,12 +55,6 @@ function goToNextSection(count = 1) {
     $nextSection.addClass('active');
     
     focusInputField($nextSection[0]);
-    
-    // Update progress bar
-    const $currentBar = $('.progress-bar-item.active');
-    if ($currentBar.next('.progress-bar-item').length) {
-        $currentBar.removeClass('active').next('.progress-bar-item').addClass('active');
-    }
 }
 
 // Focus on the input field of the active section

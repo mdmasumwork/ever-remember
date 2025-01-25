@@ -1,0 +1,47 @@
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Layout
+$header-height: 60px;
+$container-width: 678px;
+// $sidebar-width: 240px;
+
+// Components
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+// Typography
+$font-family-heading: "Noto Serif Georgian", serif;
+$font-family-body: "Raleway", sans-serif;
+
+// Font weights
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Font sizes
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+
+// Transitions
+$transition-speed: 0.3s;
+$transition-function: ease;
+
+// Z-index
+$z-header: 1000;
+$z-modal: 2000;
+$z-tooltip: 3000;

@@ -17,19 +17,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <?php include '../src/templates/slide-menu.php'; ?>
 
 <main id="main-content">
-    <!-- Progress Bar for Mobile -->
-    <div class="vertical-progress-bar">
-        <div class="progress-bar-item active"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-        <div class="progress-bar-item"></div>
-    </div>
+    
     
     <?php
 
@@ -61,9 +49,13 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <!-- Include Footer -->
 <?php include '../src/templates/footer.php'; ?>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="assets/js/script.js"></script>
-<script src="assets/js/data-sender.js"></script>
-<script src="assets/js/content-section.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="assets/js/components/accessibility.js"></script>
+<script src="assets/js/components/slide-menu.js"></script>
+<script src="assets/js/modules/section-manager.js"></script>
+<script src="assets/js/modules/payment.js"></script>
+<script src="assets/js/components/toast.js"></script>
+<script src="assets/js/components/tabs.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

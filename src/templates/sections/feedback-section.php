@@ -7,7 +7,4 @@
             <button class="er-button tertiary-button go-next-2">Mayber later</button>
         </div>
     </div>
-    <div class="field-caption">
-        <img class="field-caption-icon" src="assets/images/icons/logo_flower_purple.png">
-    </div>
 </section>

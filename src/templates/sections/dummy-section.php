@@ -9,5 +9,4 @@
             <button class="er-button tertiary-button">Skip</button>
         </div>
     </div>
-    <img class="field-caption-icon" src="assets/logo_flower.png">
 </section>

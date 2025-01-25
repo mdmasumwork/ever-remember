@@ -1,0 +1,33 @@
+@use "sass:color";
+
+// Brand Identity Colors
+$brand-primary: #9869D2;     // Main purple from logo
+$brand-secondary: #ff6600;   // Orange accent
+$brand-accent: #55328F;      // Dark purple
+
+// Text Colors
+$text-heading: $brand-accent;    // Headings
+$text-body: #2F394B;            // Body text
+$text-muted: #6B7280;           // Secondary text
+$text-light: #9CA3AF;           // Placeholder text
+$text-white: #FFFFFF;           // Text on dark backgrounds
+
+// Surface Colors
+$surface-primary: #F5F5F7;       // Main background
+$surface-secondary: #F9F4FF;     // Light purple background
+$surface-tertiary: #FFF3E6;      // Light orange background
+
+// Interactive Colors
+$action-primary: $brand-secondary;
+$action-secondary: $brand-secondary;
+$action-hover: color.adjust($brand-primary, $lightness: -10%);
+$action-pressed: color.adjust($brand-primary, $lightness: -15%);
+
+// Border Colors
+$border-light: #E5E7EB;
+$border-dark: #D1D5DB;
+
+// System Colors
+$success: #10B981;
+$error: #EF4444;
+$warning: #F59E0B;

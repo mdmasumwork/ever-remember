@@ -30,22 +30,20 @@
     <h4>Thank you for sharing these details about {dead-person}.</h4>
     <h4>To ensure the message truly honors them, could you let me know the tone that feels most appropriate? Here are some options to choose from:</h4>
     <div class="card-area">
-        <?php
-            foreach ($tone_data as $tone) {
-                ?>
-                <div class="card" data-message-tone="<?= $tone['type']; ?>">
-                    <div class="card-header">
-                        <img src="assets/images/icons/<?= $tone['header_icon']; ?>">
-                        <p class="card-title"><?= $tone['title']; ?></p>
-                    </div>
-                    <div class="card-body">
-                        <p><?= $tone['body_content']; ?></p>
-                    </div>
-                    <img src="assets/images/icons/right-arrow-orange.svg" class="card-arrow">
+        <?php foreach ($tone_data as $index => $tone): ?>
+            <div class="card go-next-1" 
+                 tabindex="<?= $index; ?>" 
+                 role="button"
+                 aria-label="<?= $tone['title']; ?>">
+                <div class="card-header">
+                    <img src="assets/images/icons/<?= $tone['header_icon']; ?>">
+                    <p class="card-title"><?= $tone['title']; ?></p>
                 </div>
-                <?php
-            }
-        ?>
+                <div class="card-body">
+                    <p><?= $tone['body_content']; ?></p>
+                </div>
+                <img src="assets/images/icons/right-arrow-orange.svg" class="card-arrow">
+            </div>
+        <?php endforeach; ?>
     </div>
-    <img class="field-caption-icon" src="assets/logo_flower.png">
 </section>
