@@ -32,6 +32,16 @@
             border-color: $brand-primary;
             background-color: $surface-secondary;
         }
+
+        &.selected {
+            border-color: $brand-primary;
+            background-color: $surface-secondary;
+        }
+
+        &.focused {
+            outline: 2px solid $brand-primary;
+            outline-offset: 2px;
+        }
     }
 
     .card-header {

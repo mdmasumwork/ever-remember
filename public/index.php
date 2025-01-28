@@ -49,13 +49,20 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <!-- Include Footer -->
 <?php include '../src/templates/footer.php'; ?>
 
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Components -->
 <script src="assets/js/components/accessibility.js"></script>
 <script src="assets/js/components/slide-menu.js"></script>
-<script src="assets/js/modules/section-manager.js"></script>
-<script src="assets/js/modules/payment.js"></script>
 <script src="assets/js/components/toast.js"></script>
 <script src="assets/js/components/tabs.js"></script>
+<script src="assets/js/components/card.js"></script>
+<!-- Modules -->
+<script src="assets/js/modules/data-manager.js"></script>
+<script src="assets/js/modules/section-manager.js"></script>
+<script src="assets/js/modules/payment.js"></script>
+<!-- Main -->
+<script src="https://js.stripe.com/v3/"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

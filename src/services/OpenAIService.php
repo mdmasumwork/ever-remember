@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../config/OpenAIConfig.php';
+require_once __DIR__ . '/../config/openai.php';
 
 class OpenAIService {
     private $apiKey;
@@ -13,18 +13,14 @@ class OpenAIService {
         $this->temperature = OpenAIConfig::get('temperature');
     }
 
-    public function generateEulogy($prompt) {
+    public function generateContent($prompt) {
         // Dummy response for testing
         return [
-            'content' => "This is a test eulogy response.\n\n" .
-                        "Received prompt: " . $prompt . "\n\n" .
-                        "This is where the generated content will appear.\n" .
-                        "We're just testing the data flow for now.\n" .
-                        "Later this will be replaced with actual OpenAI API response."
+            'content' => $prompt
         ];
     }
 
-    // public function generateEulogy($prompt) {
+    // public function generateContent($prompt) {
     //     $url = 'https://api.openai.com/v1/chat/completions';
         
     //     $headers = [

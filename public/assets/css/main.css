@@ -418,6 +418,14 @@ section h4 {
   border-color: #9869D2;
   background-color: #F9F4FF;
 }
+.card-area .card.selected {
+  border-color: #9869D2;
+  background-color: #F9F4FF;
+}
+.card-area .card.focused {
+  outline: 2px solid #9869D2;
+  outline-offset: 2px;
+}
 .card-area .card-header {
   margin-bottom: 16px;
   display: flex;
@@ -501,6 +509,12 @@ section h4 {
 .content-tabs .tab-content > div {
   padding: 1.5rem;
 }
+.content-tabs .content-copy-actions {
+  display: none;
+}
+.content-tabs .content-copy-actions.visible {
+  display: block;
+}
 .content-tabs .content-actions {
   display: flex;
   background-color: #F9F4FF;
@@ -514,6 +528,15 @@ section h4 {
 .content-tabs .content-actions .action-buttons {
   display: flex;
   gap: 1rem;
+}
+.content-tabs .content-actions.visible {
+  display: block;
+}
+.content-tabs .content-actions .feedback-section {
+  display: none;
+}
+.content-tabs .content-actions .feedback-section.visible {
+  display: block;
 }
 
 .loading-indicator {
@@ -579,6 +602,16 @@ section h4 {
   -webkit-mask-image: linear-gradient(180deg, rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0));
 }
 
+.generated-content {
+  white-space: pre-line;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.generated-content br {
+  display: block;
+  margin: 10px 0;
+}
+
 .payment-overlay {
   display: flex;
   flex-direction: column;
@@ -609,6 +642,77 @@ section h4 {
 }
 .payment-overlay .payment-button:hover {
   transform: translateY(-2px);
+}
+.payment-overlay .payment-button.payment-submit-button {
+  width: 100%;
+}
+.payment-overlay .payment-form {
+  width: 100%;
+  background-color: #fff;
+}
+.payment-overlay .payment-form .payment-form-actions {
+  display: flex;
+  justify-content: left;
+  gap: 1rem;
+  margin: 16px;
+}
+.payment-overlay .payment-form .security-badges {
+  text-align: center;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #E5E7EB;
+}
+.payment-overlay .payment-form .security-badges img {
+  height: 32px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.payment-overlay .payment-form .security-badges img:hover {
+  opacity: 1;
+}
+
+.card-element-container {
+  margin: 16px;
+  transition: all 0.3s ease;
+}
+.card-element-container .stripe-element {
+  background: #F5F5F7;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+.card-element-container .stripe-element#card-expiry-element, .card-element-container .stripe-element#card-cvc-element {
+  margin-bottom: 0;
+}
+.card-element-container .row {
+  display: flex;
+  gap: 12px;
+}
+.card-element-container .row .stripe-element {
+  flex: 1;
+}
+.card-element-container #card-element {
+  min-height: 45px;
+  padding: 12px;
+  background: #F5F5F7;
+  border-radius: 6px;
+}
+.card-element-container #card-element .StripeElement {
+  padding: 12px 8px;
+}
+.card-element-container #card-element .StripeElement--focus {
+  box-shadow: 0 0 0 2px rgba(152, 105, 210, 0.2);
+}
+.card-element-container #card-element .StripeElement--invalid {
+  border-color: #EF4444;
+}
+.card-element-container #card-errors {
+  display: none;
+  color: #EF4444;
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: left;
+  font-weight: 600;
 }
 
 /* Footer Section */

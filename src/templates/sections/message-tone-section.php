@@ -34,7 +34,8 @@
             <div class="card go-next-1" 
                  tabindex="<?= $index; ?>" 
                  role="button"
-                 aria-label="<?= $tone['title']; ?>">
+                 aria-label="<?= $tone['title']; ?>"
+                 data-message-tone="<?= $tone['type']; ?>">
                 <div class="card-header">
                     <img src="assets/images/icons/<?= $tone['header_icon']; ?>">
                     <p class="card-title"><?= $tone['title']; ?></p>

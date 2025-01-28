@@ -23,8 +23,9 @@ class SectionManager {
 
     static showNextSection(steps = 1) {
         const $currentSection = $('section.active');
-        let $targetSection = $currentSection;
+        DataManager.collectData($currentSection[0]);
 
+        let $targetSection = $currentSection;
         for (let i = 0; i < steps; i++) {
             $targetSection = $targetSection.next('section');
             if (!$targetSection.length) return;
