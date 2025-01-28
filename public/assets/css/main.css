@@ -519,6 +519,7 @@ section h4 {
   display: flex;
   background-color: #F9F4FF;
   flex-direction: column;
+  display: none;
 }
 .content-tabs .content-actions .action-question {
   margin-bottom: 1rem;
@@ -606,6 +607,11 @@ section h4 {
   white-space: pre-line;
   line-height: 1.6;
   margin-bottom: 24px;
+  margin-bottom: 16px;
+  display: none;
+}
+.generated-content.visible {
+  display: block;
 }
 .generated-content br {
   display: block;

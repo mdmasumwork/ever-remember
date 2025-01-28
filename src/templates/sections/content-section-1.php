@@ -22,7 +22,7 @@
 
                 <!-- Content Box -->
                 <div class="content-box masked">
-                    <div class="generated-content" style="display: none;">
+                    <div class="generated-content">
                         <!-- Content will be inserted here by JavaScript -->
                     </div>
                 </div>

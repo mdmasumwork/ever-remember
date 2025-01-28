@@ -15,6 +15,9 @@ class ContentController {
 
     public function handleRequest() {
         session_start();
+
+        // Code to delay 3 seconds
+        sleep(3);
         
         // Get POST data
         $jsonData = file_get_contents('php://input');

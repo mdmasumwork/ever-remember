@@ -64,7 +64,6 @@ class DataManager {
     static async sendToContentGeneration() {
         try {
             // Show loading state
-            $('.loading-indicator').show();
             $('.content-box').addClass('loading');
 
             // First request - get preview
@@ -83,8 +82,8 @@ class DataManager {
             // Update UI with preview
             $('.loading-indicator').hide();
             $('.generated-content')
-                .html(data.preview)
-                .show();
+                .html(data.preview).addClass('visible');
+            $('.content-actions').addClass('visible');
             $('.payment-overlay').show();
             $('.content-box').removeClass('loading').addClass('masked');
             
