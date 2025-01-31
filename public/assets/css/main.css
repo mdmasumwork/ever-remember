@@ -245,6 +245,12 @@ section h4 {
   opacity: 0.6;
   cursor: not-allowed;
 }
+@media (max-width: 768px) {
+  .er-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
 
 .field-area {
   display: flex;
@@ -462,6 +468,10 @@ section h4 {
   }
 }
 
+.content-tabs {
+  position: relative;
+  overflow: hidden;
+}
 .content-tabs .tab-navigation {
   display: flex;
   gap: 1rem;
@@ -486,6 +496,8 @@ section h4 {
 }
 .content-tabs .tab-content .tab-pane {
   display: none;
+  position: relative;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 .content-tabs .tab-content .tab-pane.active {
   display: block;
@@ -505,6 +517,20 @@ section h4 {
 }
 .content-tabs .tab-content .tab-pane img.copied {
   animation: copyPulse 0.3s ease;
+}
+.content-tabs .tab-content .tab-pane.slide-left-out {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.content-tabs .tab-content .tab-pane.slide-right-out {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.content-tabs .tab-content .tab-pane.slide-left-in {
+  animation: slideLeftIn 0.3s ease-out;
+}
+.content-tabs .tab-content .tab-pane.slide-right-in {
+  animation: slideRightIn 0.3s ease-out;
 }
 .content-tabs .tab-content > div {
   padding: 1.5rem;
@@ -720,6 +746,11 @@ section h4 {
 .payment-overlay .payment-form .security-badges img:hover {
   opacity: 1;
 }
+@media (max-width: 768px) {
+  .payment-overlay {
+    padding: 0;
+  }
+}
 
 @keyframes button-spinner {
   to {
@@ -814,6 +845,26 @@ section h4 {
   }
   to {
     transform: translateY(0);
+  }
+}
+@keyframes slideLeftIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideRightIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 .content-error * {

@@ -50,6 +50,27 @@
                     animation: copyPulse 0.3s ease;
                 }
             }
+
+            position: relative;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            
+            &.slide-left-out {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            
+            &.slide-right-out {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            
+            &.slide-left-in {
+                animation: slideLeftIn 0.3s ease-out;
+            }
+            
+            &.slide-right-in {
+                animation: slideRightIn 0.3s ease-out;
+            }
         }
 
         &>div {
@@ -95,6 +116,9 @@
             }
         }
     }
+
+    position: relative;
+    overflow: hidden;
 }
 
 .tab-navigation-dots {
@@ -297,6 +321,11 @@
             }
         }
     }
+
+    @include mobile {
+        padding: 0;
+    }
+    
 }
 
 @keyframes button-spinner {
@@ -403,6 +432,28 @@
 @keyframes slideUp {
     from { transform: translateY(100%); }
     to { transform: translateY(0); }
+}
+
+@keyframes slideLeftIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRightIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .content-error *{

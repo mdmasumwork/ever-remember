@@ -142,12 +142,7 @@ class DataManager {
                 throw new Error(data.error);
             }
 
-            // Update UI with full content
-            $('.generated-content')
-                .html(data.fullContent)
-                .show();
-            $('.payment-overlay').hide();
-            $('.content-box').removeClass('masked');
+            UIManager.updateContentSection(data.fullContent, data.version, true);
             
         } catch (error) {
             console.error('Failed to get full content:', error);

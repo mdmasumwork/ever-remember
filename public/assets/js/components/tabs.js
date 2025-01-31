@@ -6,51 +6,102 @@ class Tabs {
         this.bindSwipeNavigation();
     }
 
-    static switchToTab(selectedTabClass) {
-        const $tabContainer = $('.content-tabs');
-        $tabContainer.find('.tab-button, .dot').removeClass('active');
-        $tabContainer.find('.tab-pane').removeClass('active');
+    static switchToTab(selectedTabClass, direction = 'right', $section) {
+        const $tabContainer = $section.find('.content-tabs');
+        const $currentPane = $tabContainer.find('.tab-pane.active');
+        const $nextPane = $tabContainer.find(`.tab-pane.${selectedTabClass}`);
         
+        // Return if next pane doesn't exist
+        if (!$nextPane.length) return;
+        
+        // Add slide out animation
+        $currentPane.addClass(direction === 'right' ? 'slide-left-out' : 'slide-right-out');
+        
+        // Update navigation within this section
+        $tabContainer.find('.tab-button, .dot').removeClass('active');
         $tabContainer.find(`.tab-button[data-tab="${selectedTabClass}"]`).addClass('active');
         $tabContainer.find(`.dot[data-tab="${selectedTabClass}"]`).addClass('active');
-        $tabContainer.find(`.tab-pane.${selectedTabClass}`).addClass('active');
+        
+        // Add slide in animation after brief delay
+        setTimeout(() => {
+            $currentPane.removeClass('active');
+            $nextPane.addClass('active');
+            $nextPane.addClass(direction === 'right' ? 'slide-left-in' : 'slide-right-in');
+            
+            // Clean up classes after animation
+            setTimeout(() => {
+                $currentPane.removeClass('slide-left-out slide-right-out');
+                $nextPane.removeClass('slide-left-in slide-right-in');
+            }, 300);
+        }, 50);
     }
 
     static bindTabEvents() {
         $('.tab-button').on('click', function() {
-            const $tabContainer = $(this).closest('.content-tabs');
+            // Return if already active
+            if ($(this).hasClass('active')) return;
+
+            const $section = $(this).closest('.section');
             const selectedTabClass = $(this).data('tab');
+            const clickedVersion = parseInt(selectedTabClass.match(/version-(\d)/)[1]);
+            const currentVersion = parseInt($section.find('.tab-pane.active').attr('class').match(/version-(\d)/)[1]);
             
-            $tabContainer.find('.tab-button').removeClass('active');
-            $tabContainer.find('.tab-pane').removeClass('active');
+            // Determine direction based on version numbers
+            const direction = clickedVersion > currentVersion ? 'right' : 'left';
             
-            $(this).addClass('active');
-            $tabContainer.find('.tab-pane.' + selectedTabClass).addClass('active');
+            Tabs.switchToTab(selectedTabClass, direction, $section);
         });
     }
 
     static bindDotNavigation() {
         $('.dot').on('click', function() {
-            Tabs.switchToTab($(this).data('tab'));
+            // Return if already active
+            if ($(this).hasClass('active')) return;
+
+            const $section = $(this).closest('.section');
+            const selectedTabClass = $(this).data('tab');
+            const clickedVersion = parseInt(selectedTabClass.match(/version-(\d)/)[1]);
+            const currentVersion = parseInt($section.find('.tab-pane.active').attr('class').match(/version-(\d)/)[1]);
+            
+            // Determine direction based on version numbers
+            const direction = clickedVersion > currentVersion ? 'right' : 'left';
+            
+            Tabs.switchToTab(selectedTabClass, direction, $section);
         });
     }
 
     static bindSwipeNavigation() {
         let touchStartX = 0;
+        let touchStartY = 0;
         
-        $('.tab-pane').on('touchstart', function(e) {
+        $('.section .tab-pane').on('touchstart', function(e) {
             touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].pageY;
         });
 
-        $('.tab-pane').on('touchend', function(e) {
+        $('.section .tab-pane').on('touchend', function(e) {
+            const $section = $(this).closest('.section');
             const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].pageY;
             const currentVersion = parseInt($(this).attr('class').match(/version-(\d)/)[1]);
+            
+            const xDiff = touchStartX - touchEndX;
+            const yDiff = Math.abs(touchStartY - touchEndY);
             const swipeThreshold = 50;
-
-            if (touchStartX - touchEndX > swipeThreshold && currentVersion < 3) {
-                Tabs.switchToTab(`version-${currentVersion + 1}`);
-            } else if (touchEndX - touchStartX > swipeThreshold && currentVersion > 1) {
-                Tabs.switchToTab(`version-${currentVersion - 1}`);
+            
+            if (yDiff < 40 && Math.abs(xDiff) > swipeThreshold && Math.abs(xDiff) > yDiff * 2) {
+                // Check if next/previous pane exists before swipe
+                if (xDiff > 0 && currentVersion < 3) {
+                    const $nextPane = $section.find(`.tab-pane.version-${currentVersion + 1}`);
+                    if ($nextPane.length) {
+                        Tabs.switchToTab(`version-${currentVersion + 1}`, 'right', $section);
+                    }
+                } else if (xDiff < 0 && currentVersion > 1) {
+                    const $prevPane = $section.find(`.tab-pane.version-${currentVersion - 1}`);
+                    if ($prevPane.length) {
+                        Tabs.switchToTab(`version-${currentVersion - 1}`, 'left', $section);
+                    }
+                }
             }
         });
     }

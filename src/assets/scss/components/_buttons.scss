@@ -49,4 +49,9 @@
         opacity: 0.6;
         cursor: not-allowed;
     }
+
+    @include mobile {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }
