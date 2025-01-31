@@ -46,45 +46,6 @@ class Payment {
         this.cardCvc.mount('#card-cvc-element');
     }
 
-    static async handlePaymentSuccess(paymentIntent) {
-        try {
-            // 1. Verify payment with backend
-            const userName = $('#name-field').val() || 'John Doe';
-            const userEmail = $('#email-field').val() || 'john.doe@example.com';
-
-            const verifyResponse = await fetch('/api/verify-payment.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    paymentIntentId: paymentIntent.id,
-                    userName: userName,
-                    userEmail: userEmail
-                })
-            });
-
-            if (!verifyResponse.ok) throw new Error('Payment verification failed');
-
-            // 2. Get full content using GET request
-            const contentResponse = await fetch('/api/get-full-content.php');
-            const content = await contentResponse.json();
-
-            if (!content.success) {
-                throw new Error(content.error);
-            }
-
-            // 3. Update UI
-            $('.payment-overlay').hide();
-            $('.generated-content')
-                .html(content.fullContent);
-            $('.content-box').removeClass('masked');
-            $('.content-actions .feedback-section').show();
-            $('.content-copy-actions').show();
-
-        } catch (error) {
-            $('#card-errors').text('Error processing payment. Please contact support.').show();
-        }
-    }
-
     static bindPaymentButton() {
         $('.initial-button').on('click', () => {
             $('.initial-button').hide();
@@ -93,6 +54,9 @@ class Payment {
 
         $('.payment-submit-button').on('click', async (e) => {
             e.preventDefault();
+            
+            const $button = $(e.currentTarget);
+            $button.addClass('processing');
             
             try {
                 const response = await fetch('/api/create-payment-intent.php', {
@@ -123,7 +87,50 @@ class Payment {
                 $('#card-errors')
                     .text('Payment failed. Please try again.')
                     .show();
+            } finally {
+                $button.removeClass('processing').text('Pay Now');
             }
         });
+    }
+
+    static async handlePaymentSuccess(paymentIntent) {
+        try {
+            // 1. Verify payment with backend
+            const userName = $('#name-field').val() || 'John Doe';
+            const userEmail = $('#email-field').val() || 'john.doe@example.com';
+
+            const verifyResponse = await fetch('/api/verify-payment.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paymentIntentId: paymentIntent.id,
+                    userName: userName,
+                    userEmail: userEmail
+                })
+            });
+
+            if (!verifyResponse.ok) throw new Error('Payment verification failed');
+
+            // 2. Get full content using GET request
+            const contentResponse = await fetch('/api/get-full-content.php?version=1');
+            const content = await contentResponse.json();
+
+            if (!content.success) {
+                throw new Error(content.error);
+            }
+
+            // 3. Update UI
+            // $('.payment-overlay').hide();
+            // $(`tab-pane.version-${content.version} .generated-content`)
+            // .html(content.fullContent);
+            // $('.content-box').removeClass('masked');
+            // $('.content-actions .feedback-section').addClass('visible');
+            // $('.content-copy-actions').show();
+
+            UIManager.updateContentSection(content.fullContent, content.version, true);
+
+        } catch (error) {
+            $('#card-errors').text(error).show();
+        }
     }
 }

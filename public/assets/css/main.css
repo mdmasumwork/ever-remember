@@ -652,6 +652,24 @@ section h4 {
 .payment-overlay .payment-button.payment-submit-button {
   width: 100%;
 }
+.payment-overlay .payment-button.processing {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+.payment-overlay .payment-button.processing:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: button-spinner 0.8s linear infinite;
+}
 .payment-overlay .payment-form {
   width: 100%;
   background-color: #fff;
@@ -677,6 +695,11 @@ section h4 {
   opacity: 1;
 }
 
+@keyframes button-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .card-element-container {
   margin: 16px;
   transition: all 0.3s ease;

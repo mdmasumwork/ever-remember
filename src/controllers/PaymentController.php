@@ -26,42 +26,22 @@ class PaymentController {
 
     public function verifyAndLogPayment($paymentIntentId, $userName, $userEmail) {
         try {
-            // 1. Verify with Stripe
-            $paymentIntent = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+            // 1. Verify with Service (stateless)
+            $paymentResult = $this->paymentService->verifyPayment($paymentIntentId);
             
-            if ($paymentIntent->status !== 'succeeded') {
-                throw new Exception('Payment verification failed');
+            if ($paymentResult['success']) {
+                // 2. Log to database via Service
+                $this->paymentService->logPayment($paymentResult['payment'], $userName, $userEmail);
+                
+                // 3. Set session in Controller
+                session_start();
+                $_SESSION['payment_verified'] = true;
+                
+                return true;
             }
-
-            // 2. Get payment method details
-            $paymentMethod = $paymentIntent->payment_method;
-            $paymentDetails = \Stripe\PaymentMethod::retrieve($paymentMethod);
             
-            // 3. Log to database
-            $db = Database::getInstance();
-            $stmt = $db->prepare("
-                INSERT INTO payments (
-                    stripe_payment_id, user_name, user_email, 
-                    amount, payment_method, status
-                ) VALUES (?, ?, ?, ?, ?, ?)
-            ");
-            
-            $stmt->execute([
-                $paymentIntent->id,
-                $userName,
-                $userEmail,
-                $paymentIntent->amount / 100,
-                $paymentDetails->card->brand,
-                'completed'
-            ]);
-
-            // 4. Set payment verification in session
-            session_start();
-            $_SESSION['payment_verified'] = true;
-
-            return true;
+            return false;
         } catch (Exception $e) {
-            error_log("Payment verification failed: " . $e->getMessage());
             throw $e;
         }
     }

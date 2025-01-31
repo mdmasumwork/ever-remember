@@ -58,6 +58,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <script src="assets/js/components/tabs.js"></script>
 <script src="assets/js/components/card.js"></script>
 <!-- Modules -->
+<script src="assets/js/modules/ui-manager.js"></script>
 <script src="assets/js/modules/data-manager.js"></script>
 <script src="assets/js/modules/section-manager.js"></script>
 <script src="assets/js/modules/payment.js"></script>

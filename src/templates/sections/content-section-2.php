@@ -10,11 +10,13 @@
         <div class="tab-content">
             <div class="tab-pane version-1">
                 <div class="content-box">
-                    <p class="generated-content">
-                        Content 2 Verstion 1 content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu neque ornare, ultrices elit facilisis, auctor est. Aenean ut pellentesque augue. Phasellus vitae mauris mattis elit blandit tempor a eget lorem. Morbi at nisl vulputate, ornare neque sed, pellentesque diam. Sed viverra nisl nec viverra volutpat. Vestibulum commodo rhoncus ultricies. Etiam a congue felis. Nullam mauris justo, commodo at condimentum quis, fermentum nec dui. Nulla facilisi. Morbi quis sem nisi. Donec quis hendrerit tortor. Integer venenatis, urna id efficitur fringilla, sapien mauris facilisis dui, eu vestibulum mauris metus at mauris. Donec euismod odio quis mi mollis dignissim eu nec elit.
-                    </p>
+                    <div class="generated-content">
+                    </div>
                 </div>
-                <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
+                <div class="content-copy-actions visible">
+                    <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
+                    <img class="email-icon" src="assets/images/icons/email-orange.svg">
+                </div>
             </div>
 
             <div class="tab-pane version-2 active">
@@ -29,17 +31,13 @@
                     </div>
                 </div>
                 <div class="content-box">
-                    <p class="generated-content">
-                        Version 2 content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu neque ornare, ultrices elit facilisis, auctor est. Aenean ut pellentesque augue. Phasellus vitae mauris mattis elit blandit tempor a eget lorem. Morbi at nisl vulputate, ornare neque sed, pellentesque diam. Sed viverra nisl nec viverra volutpat. Vestibulum commodo rhoncus ultricies. Etiam a congue felis. Nullam mauris justo, commodo at condimentum quis, fermentum nec dui. Nulla facilisi. Morbi quis sem nisi. Donec quis hendrerit tortor. Integer venenatis, urna id efficitur fringilla, sapien mauris facilisis dui, eu vestibulum mauris metus at mauris. Donec euismod odio quis mi mollis dignissim eu nec elit.
-                    </p>
-                    <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu neque ornare, ultrices elit facilisis, auctor est. Aenean ut pellentesque augue. Phasellus vitae mauris mattis elit blandit tempor a eget lorem. Morbi at nisl vulputate, ornare neque sed, pellentesque diam. Sed viverra nisl nec viverra volutpat. Vestibulum commodo rhoncus ultricies. Etiam a congue felis. Nullam mauris justo, commodo at condimentum quis, fermentum nec dui. Nulla facilisi. Morbi quis sem nisi. Donec quis hendrerit tortor. Integer venenatis, urna id efficitur fringilla, sapien mauris facilisis dui, eu vestibulum mauris metus at mauris. Donec euismod odio quis mi mollis dignissim eu nec elit.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu neque ornare, ultrices elit facilisis, auctor est. Aenean ut pellentesque augue. Phasellus vitae mauris mattis elit blandit tempor a eget lorem. Morbi at nisl vulputate, ornare neque sed, pellentesque diam. Sed viverra nisl nec viverra volutpat. Vestibulum commodo rhoncus ultricies. Etiam a congue felis. Nullam mauris justo, commodo at condimentum quis, fermentum nec dui. Nulla facilisi. Morbi quis sem nisi. Donec quis hendrerit tortor. Integer venenatis, urna id efficitur fringilla, sapien mauris facilisis dui, eu vestibulum mauris metus at mauris. Donec euismod odio quis mi mollis dignissim eu nec elit.
-                    </p>
+                    <div class="generated-content">                        
+                    </div>
                 </div>
-                <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
+                <div class="content-copy-actions">
+                    <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
+                    <img class="email-icon" src="assets/images/icons/email-orange.svg">
+                </div>
             </div>
             
             <div class="content-actions">

@@ -220,6 +220,26 @@
         &.payment-submit-button {
             width: 100%;
         }
+
+        &.processing {
+            position: relative;
+            color: transparent;
+            pointer-events: none;
+            
+            &:after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 20px;
+                height: 20px;
+                margin: -10px 0 0 -10px;
+                border: 2px solid rgba(255,255,255,0.2);
+                border-top-color: white;
+                border-radius: 50%;
+                animation: button-spinner .8s linear infinite;
+            }
+        }
     }
 
     .payment-form {
@@ -250,6 +270,10 @@
             }
         }
     }
+}
+
+@keyframes button-spinner {
+    to { transform: rotate(360deg); }
 }
 
 .card-element-container {

@@ -23,7 +23,6 @@
                 <!-- Content Box -->
                 <div class="content-box masked">
                     <div class="generated-content">
-                        <!-- Content will be inserted here by JavaScript -->
                     </div>
                 </div>
                 <div class="content-copy-actions">
@@ -61,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="feedback-section" style="display: none;">
+                <div class="feedback-section">
                     <p class="action-question">How do you feel about this content?</p>
                     <div class="action-buttons">
                         <button class="er-button primary-button go-next-5">I like it</button>

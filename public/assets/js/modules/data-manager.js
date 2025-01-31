@@ -12,7 +12,8 @@ class DataManager {
         details: '',
         accomplishments: '',
         tone: '',
-        finalQuestion: ''
+        finalQuestion: '',
+        additionalInstructions: []
     };
 
     static collectData(section) {
@@ -56,21 +57,42 @@ class DataManager {
                 this.formData.finalQuestion = $section.find('#final-question-field').val();
                 this.sendToContentGeneration();
                 break;
+
+            case sectionId.includes('section-additional-question-1'):
+                const additionalInstruction_1 = $section.find('#additional-question-1-field').val();
+                this.formData.additionalInstructions.push(additionalInstruction_1);
+                this.sendToContentGeneration(true);
+                break;
+
+            case sectionId.includes('section-additional-question-2'):
+                const additionalInstruction_2 = $section.find('#additional-question-2-field').val();
+                this.formData.additionalInstructions.push(additionalInstruction_2);
+                this.sendToContentGeneration(true);
+                break;
         }
 
         console.log('Collected data:', this.formData);
     }
 
-    static async sendToContentGeneration() {
+    static async sendToContentGeneration(hasAdditionalInstruction = false) {
         try {
-            // Show loading state
             $('.content-box').addClass('loading');
+            $('.loading-indicator').show();
 
-            // First request - get preview
+            const payload = hasAdditionalInstruction 
+                ? { 
+                    additionalInstruction: this.formData.additionalInstructions.slice(-1)[0],
+                    isFirstRequest: false
+                  } 
+                : { 
+                    ...this.formData,
+                    isFirstRequest: true
+                  };
+
             const response = await fetch('/api/generate-content.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(this.formData)
+                body: JSON.stringify(payload)
             });
 
             const data = await response.json();
@@ -79,13 +101,26 @@ class DataManager {
                 throw new Error(data.error);
             }
 
-            // Update UI with preview
-            $('.loading-indicator').hide();
-            $('.generated-content')
-                .html(data.preview).addClass('visible');
-            $('.content-actions').addClass('visible');
-            $('.payment-overlay').show();
-            $('.content-box').removeClass('loading').addClass('masked');
+            // Update UI based on version
+            // $('.loading-indicator').hide();
+            // if (data.version === 1) {
+            //     $(`.version-${data.version} .generated-content`)
+            //         .html(data.preview)
+            //         .addClass('visible');                
+            //     // $('.payment-overlay').show();
+            // } else {
+            //     $(`.version-${data.version} .generated-content`)
+            //         .html(data.fullContent)
+            //         .addClass('visible');
+            //     $(`.section-content-${data.version} .tab-pane.version-${data.version} .content-copy-actions`).addClass('visible');
+            // }
+            // $(`.section-content-${data.version} .content-actions`).addClass('visible');
+
+            if (data.version === 1) {
+                UIManager.updateContentSection(data.preview, data.version);
+            } else {
+                UIManager.updateContentSection(data.fullContent, data.version, true);
+            }
             
         } catch (error) {
             console.error('Content generation failed:', error);

@@ -6,8 +6,8 @@ function sendResponse($success, $data) {
         'success' => $success,
         'preview' => $data['preview'] ?? '',
         'version' => $data['version'] ?? 1,
-        'remainingVersions' => $data['remainingVersions'] ?? 2,
-        'fullContent' => isset($data['isPaid']) && $data['isPaid'] ? ($data['fullContent'] ?? '') : null
+        'fullContent' => isset($data['payment_verified']) && $data['payment_verified'] ? ($data['fullContent'] ?? '') : null,
+        'error' => $data['error'] ?? ''
     ]);
     exit;
 }

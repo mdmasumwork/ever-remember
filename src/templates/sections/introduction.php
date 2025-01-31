@@ -1,4 +1,4 @@
-<section class="section-introduction active">
+<section class="section-introduction">
     <h2>Hello, I'm Serenity.</h2>
     <p>Welcome to <span class="style-h2">Ever Remember</span> AI-powered condolence and sympathy assistant.</p>
     <p>Expressing the right words during a time of loss can be difficult. Together, we’ll create a heartfelt and meaningful message to share your thoughts and emotions with care.</p>
