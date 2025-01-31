@@ -95,7 +95,7 @@ class Payment {
 
     static async handlePaymentSuccess(paymentIntent) {
         try {
-            // 1. Verify payment with backend
+            // 1. Verify payment
             const userName = $('#name-field').val() || 'John Doe';
             const userEmail = $('#email-field').val() || 'john.doe@example.com';
 
@@ -111,26 +111,37 @@ class Payment {
 
             if (!verifyResponse.ok) throw new Error('Payment verification failed');
 
-            // 2. Get full content using GET request
-            const contentResponse = await fetch('/api/get-full-content.php?version=1');
-            const content = await contentResponse.json();
+            // 2. Show success message
+            $('.payment-overlay').hide();
+            $('.payment-success-overlay').addClass('visible');
 
-            if (!content.success) {
-                throw new Error(content.error);
-            }
-
-            // 3. Update UI
-            // $('.payment-overlay').hide();
-            // $(`tab-pane.version-${content.version} .generated-content`)
-            // .html(content.fullContent);
-            // $('.content-box').removeClass('masked');
-            // $('.content-actions .feedback-section').addClass('visible');
-            // $('.content-copy-actions').show();
-
-            UIManager.updateContentSection(content.fullContent, content.version, true);
+            // 3. Handle continue button click
+            $('.payment-success-overlay .continue-button').one('click', async () => {
+                try {
+                    const content = await this.loadFullContent();
+                    UIManager.updateContentSection(content.fullContent, content.version, true);
+                } catch (error) {
+                    $('.payment-success-overlay').html(`
+                        <div class="content-error">
+                            <p>Error loading content. Please refresh the page or contact support.</p>
+                        </div>
+                    `);
+                }
+            });
 
         } catch (error) {
-            $('#card-errors').text(error).show();
+            $('#card-errors').text(error.message).show();
         }
+    }
+
+    static async loadFullContent() {
+        const response = await fetch('/api/get-full-content.php?version=1');
+        const content = await response.json();
+        
+        if (!content.success) {
+            throw new Error(content.error);
+        }
+        
+        return content;
     }
 }

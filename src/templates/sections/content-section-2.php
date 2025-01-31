@@ -17,6 +17,11 @@
                     <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
                     <img class="email-icon" src="assets/images/icons/email-orange.svg">
                 </div>
+
+                <div class="tab-navigation-dots">
+                    <span class="dot" data-tab="version-1"></span>
+                    <span class="dot" data-tab="version-2"></span>
+                </div>
             </div>
 
             <div class="tab-pane version-2 active">
@@ -37,6 +42,10 @@
                 <div class="content-copy-actions">
                     <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
                     <img class="email-icon" src="assets/images/icons/email-orange.svg">
+                </div>
+                <div class="tab-navigation-dots">
+                    <span class="dot" data-tab="version-1"></span>
+                    <span class="dot active" data-tab="version-2"></span>
                 </div>
             </div>
             

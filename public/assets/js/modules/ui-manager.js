@@ -19,16 +19,12 @@ class UIManager {
             
             // Hide payment overlay if showing
             $('.payment-overlay').hide();
+            $('.payment-success-overlay').removeClass('visible');
             $('.content-box').removeClass('masked');
             $('.content-actions .feedback-section').addClass('visible');
         }
         
         $(`.section-content-${version} .content-actions`).addClass('visible');
 
-        // Activate correct tab
-        // $('.tab-button').removeClass('active');
-        // $(`.tab-button[data-tab="version-${version}"]`).addClass('active');
-        // $('.tab-pane').removeClass('active');
-        // $(`.tab-pane.version-${version}`).addClass('active');
     }
 }

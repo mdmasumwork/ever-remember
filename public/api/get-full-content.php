@@ -9,17 +9,18 @@ if (!isset($_SESSION['payment_verified']) || !$_SESSION['payment_verified']) {
     return sendResponse(false, ['error' => 'Payment required']);
 }
 
-// Check if content exists
-if (!isset($_SESSION['full_content'])) {
-    return sendResponse(false, ['error' => 'Content not found']);
-}
-
 // Check if version is set
 if (!isset($_GET['version'])) {
     return sendResponse(false, ['error' => 'Version not specified']);
 }
 
 $version = $_GET['version'];
+
+
+// Check if content exists
+if (!isset($_SESSION['contents'][$version])) {
+    return sendResponse(false, ['error' => 'Content not found']);
+}
 
 // Check if the requested version exists
 if (!isset($_SESSION['contents'][$version])) {
@@ -30,6 +31,6 @@ if (!isset($_SESSION['contents'][$version])) {
 return sendResponse(true, [
     'preview' => '',  // Empty since we're only sending full content
     'fullContent' => $_SESSION['contents'][$version],
-    'isPaid' => true,
+    'payment_verified' => true,
     'version' => $version
 ]);
