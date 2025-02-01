@@ -4,10 +4,10 @@
     <p>If you prefer, I can also email it to you. This is entirely optional, as the message will still be displayed on your screen.</p>
     <h4>Shall I send the words we write to your email?</h4>
     <div class="field-area">
-        <input type="text" id="email-field" placeholder="Enter some value">
+        <input type="text" id="email-field" placeholder="Enter your email">
         <div class="field-button-area">
             <button class="er-button primary-button go-next-1">Send</button>
-            <button class="er-button tertiary-button go-next-1">Skip</button>
         </div>
     </div>
+    <div class="field-error-area"></div>
 </section>

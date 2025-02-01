@@ -16,9 +16,38 @@ class SectionManager {
             });
 
             if (steps > 0) {
-                SectionManager.showNextSection(steps);
+                const $currentSection = $('section.active');
+                if (SectionManager.validateCurrentSection($currentSection)) {
+                    SectionManager.showNextSection(steps);
+                }
             }
         });
+    }
+
+    static validateCurrentSection($section) {
+        if ($section.hasClass('section-introduction')) {
+            const $nameField = $('#first-person-name-field');
+            return FormValidator.validateName($nameField);
+        } else if ($section.hasClass('section-email')) {
+            const $emailField = $('#email-field');
+            return FormValidator.validateEmail($emailField);
+        } else if ($section.hasClass('section-deceased-person-name')) {
+            const $deceasedPersonNameField = $('#deceased-person-name-field');
+            return FormValidator.validateName($deceasedPersonNameField);
+        } else if ($section.hasClass('section-deceased-person-relation')) {
+            const $deceasedPersonRelationField = $('#deceased-person-relation-field');
+            return FormValidator.validateRelation($deceasedPersonRelationField);
+        } else if ($section.hasClass('section-deceased-person-details')) {
+            const $deceasedPersonDetailsField = $('#deceased-person-details-field');
+            return FormValidator.validateDetails($deceasedPersonDetailsField);
+        } else if ($section.hasClass('section-deceased-person-accomplishment')) {
+            const $deceasedPersonAccomplishmentField = $('#deceased-person-accomplishment-field');
+            return FormValidator.validateDetails($deceasedPersonAccomplishmentField);
+        } else if ($section.hasClass('section-final-question')) {
+            const $finalQuestionField = $('#final-question-field');
+            return FormValidator.validateDetails($finalQuestionField);
+        }
+        return true;
     }
 
     static showNextSection(steps = 1) {

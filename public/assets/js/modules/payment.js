@@ -96,8 +96,10 @@ class Payment {
     static async handlePaymentSuccess(paymentIntent) {
         try {
             // 1. Verify payment
-            const userName = $('#name-field').val() || 'John Doe';
-            const userEmail = $('#email-field').val() || 'john.doe@example.com';
+            const userName = $('#first-person-name-field').val() || '-';
+            const userEmail = $('#email-field').val() || '-';
+
+            console.log('Name:', userName);
 
             const verifyResponse = await fetch('/api/verify-payment.php', {
                 method: 'POST',

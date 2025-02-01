@@ -6,7 +6,7 @@ class DataManager {
     static formData = {
         firstPersonName: '',
         email: '',
-        deadPersonName: '',
+        deceasedPersonName: '',
         messageType: '',
         relationship: '',
         details: '',
@@ -19,6 +19,10 @@ class DataManager {
     static collectData(section) {
         const $section = $(section);
         const sectionId = $section.attr('id') || $section.attr('class');
+        const clickedButton = document.activeElement;
+        const isSkipButtonClicked = clickedButton && 
+            (clickedButton.classList.contains('secondary-button') || 
+             clickedButton.classList.contains('tertiary-button'));
 
         switch(true) {
             case sectionId.includes('section-introduction'):
@@ -29,24 +33,28 @@ class DataManager {
                 this.formData.email = $section.find('#email-field').val();
                 break;
 
-            case sectionId.includes('dead-person-name'):
-                this.formData.deadPersonName = $section.find('#dead-person-name-field').val();
+            case sectionId.includes('deceased-person-name'):
+                this.formData.deceasedPersonName = $section.find('#deceased-person-name-field').val();
                 break;
 
             case sectionId.includes('message-type'):
                 this.formData.messageType = $section.find('.card.selected').data('message-type');
                 break;
 
-            case sectionId.includes('dead-person-relation'):
-                this.formData.relationship = $section.find('#dead-person-relation-field').val();
+            case sectionId.includes('deceased-person-relation'):
+                this.formData.relationship = $section.find('#deceased-person-relation-field').val();
                 break;
 
-            case sectionId.includes('dead-person-details'):
-                this.formData.details = $section.find('#dead-person-details-field').val();
+            case sectionId.includes('deceased-person-details'):
+                this.formData.details = $section.find('#deceased-person-details-field').val();
                 break;
 
-            case sectionId.includes('dead-person-accomplishment'):
-                this.formData.accomplishments = $section.find('#dead-person-accomplishment-field').val();
+            case sectionId.includes('deceased-person-accomplishment'):
+                if (!isSkipButtonClicked) {
+                    this.formData.accomplishments = $section.find('#deceased-person-accomplishment-field').val();
+                } else {
+                    this.formData.accomplishments = ''; // Clear any existing value
+                }
                 break;
 
             case sectionId.includes('message-tone'):
@@ -54,21 +62,46 @@ class DataManager {
                 break;
 
             case sectionId.includes('final-question'):
-                this.formData.finalQuestion = $section.find('#final-question-field').val();
+                if (!isSkipButtonClicked) {
+                    this.formData.finalQuestion = $section.find('#final-question-field').val();
+                } else {
+                    this.formData.finalQuestion = ''; // Clear any existing value
+                }
                 this.sendToContentGeneration();
                 break;
 
             case sectionId.includes('section-additional-question-1'):
-                const additionalInstruction_1 = $section.find('#additional-question-1-field').val();
-                this.formData.additionalInstructions.push(additionalInstruction_1);
+                if (!isSkipButtonClicked) {
+                    const additionalInstruction_1 = $section.find('#additional-question-1-field').val();
+                    this.formData.additionalInstructions.push(additionalInstruction_1);
+                } else {
+                    this.formData.additionalInstructions.push(''); // Push empty string when skipped
+                }
                 this.sendToContentGeneration(true);
                 break;
 
             case sectionId.includes('section-additional-question-2'):
-                const additionalInstruction_2 = $section.find('#additional-question-2-field').val();
-                this.formData.additionalInstructions.push(additionalInstruction_2);
+                if (!isSkipButtonClicked) {
+                    const additionalInstruction_2 = $section.find('#additional-question-2-field').val();
+                    this.formData.additionalInstructions.push(additionalInstruction_2);
+                } else {
+                    this.formData.additionalInstructions.push(''); // Push empty string when skipped
+                }
                 this.sendToContentGeneration(true);
                 break;
+
+            case sectionId.includes('section-feedback-2'):
+                    const feedback2 = $section.find('#feedback-field-2').val();
+                    this.sendFeedback(feedback2);
+                    break;
+
+            case sectionId.includes('section-feedback'):
+                if (!isSkipButtonClicked) {
+                    const feedback = $section.find('#feedback-field').val();
+                    this.sendFeedback(feedback);
+                }
+                break;
+        
         }
 
         console.log('Collected data:', this.formData);
@@ -101,21 +134,6 @@ class DataManager {
                 throw new Error(data.error);
             }
 
-            // Update UI based on version
-            // $('.loading-indicator').hide();
-            // if (data.version === 1) {
-            //     $(`.version-${data.version} .generated-content`)
-            //         .html(data.preview)
-            //         .addClass('visible');                
-            //     // $('.payment-overlay').show();
-            // } else {
-            //     $(`.version-${data.version} .generated-content`)
-            //         .html(data.fullContent)
-            //         .addClass('visible');
-            //     $(`.section-content-${data.version} .tab-pane.version-${data.version} .content-copy-actions`).addClass('visible');
-            // }
-            // $(`.section-content-${data.version} .content-actions`).addClass('visible');
-
             if (data.version === 1) {
                 UIManager.updateContentSection(data.preview, data.version);
             } else {
@@ -126,6 +144,24 @@ class DataManager {
             console.error('Content generation failed:', error);
             $('.loading-indicator').hide();
             $('.error-message').text(error.message).show();
+        }
+    }
+
+    static async sendFeedback(feedback) {
+        try {
+            const response = await fetch('/api/store-feedback.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ feedback })
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            console.error('Failed to store feedback:', error);
+            // Optionally show error to user
         }
     }
 

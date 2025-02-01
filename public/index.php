@@ -24,11 +24,11 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
     include '../src/templates/sections/introduction.php';
     include '../src/templates/sections/email-section.php';
     include '../src/templates/sections/disclaimer-section.php';
-    include '../src/templates/sections/dead-person-name-section.php';
+    include '../src/templates/sections/deceased-person-name-section.php';
     include '../src/templates/sections/message-type-section.php';
-    include '../src/templates/sections/dead-person-relation-section.php';
-    include '../src/templates/sections/dead-person-details-section.php';
-    include '../src/templates/sections/dead-person-accomplishment.php';
+    include '../src/templates/sections/deceased-person-relation-section.php';
+    include '../src/templates/sections/deceased-person-details-section.php';
+    include '../src/templates/sections/deceased-person-accomplishment.php';
     include '../src/templates/sections/message-tone-section.php';
     include '../src/templates/sections/final-question-section.php';
 
@@ -61,6 +61,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <script src="assets/js/modules/ui-manager.js"></script>
 <script src="assets/js/modules/data-manager.js"></script>
 <script src="assets/js/modules/section-manager.js"></script>
+<script src="assets/js/modules/form-validator.js"></script>
 <script src="assets/js/modules/payment.js"></script>
 <!-- Main -->
 <script src="https://js.stripe.com/v3/"></script>

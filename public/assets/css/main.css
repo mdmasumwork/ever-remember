@@ -90,6 +90,29 @@ ul, ol {
   padding-left: 32px;
 }
 
+.section-deceased-person-details ul {
+  list-style: none;
+  padding-left: 0;
+}
+.section-deceased-person-details ul li {
+  padding-left: 30px;
+  position: relative;
+  margin-bottom: 10px;
+}
+.section-deceased-person-details ul li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/flower.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 #header {
   display: flex;
   align-items: center;
@@ -260,6 +283,22 @@ section h4 {
   border: 1px solid #E5E7EB;
   border-radius: 8px;
   background-color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+.field-area.error {
+  border-color: #EF4444;
+  animation: shake 0.3s;
+}
+.field-area::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: url("/path/to/wave.svg") repeat-x;
+  animation: wave-animation 5s linear infinite;
 }
 .field-area input,
 .field-area textarea {
@@ -278,6 +317,28 @@ section h4 {
   outline: none;
 }
 
+@keyframes wave-animation {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 1000px;
+  }
+}
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
 .field-button-area {
   display: flex;
   align-items: center;
@@ -296,6 +357,12 @@ section h4 {
   width: 42px;
   height: 36px;
   padding-left: 4px;
+}
+
+.field-error-area {
+  margin-top: 8px;
+  color: #EF4444;
+  font-size: 0.9rem;
 }
 
 #header .main-nav ul {

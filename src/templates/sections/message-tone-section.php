@@ -27,7 +27,7 @@
     )
 ?>
 <section class="section-message-tone">
-    <h4>Thank you for sharing these details about {dead-person}.</h4>
+    <h4>Thank you for sharing these details about {deceased-person}.</h4>
     <h4>To ensure the message truly honors them, could you let me know the tone that feels most appropriate? Here are some options to choose from:</h4>
     <div class="card-area">
         <?php foreach ($tone_data as $index => $tone): ?>

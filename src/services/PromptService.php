@@ -2,7 +2,7 @@
 class PromptService {
 
     private function getQuestionsAndAnswers(
-        $deadPersonName, 
+        $deceasedPersonName, 
         $messageType,
         $relationship,
         $details,
@@ -12,9 +12,9 @@ class PromptService {
     ) {
         // define associative array to store the questions and answers
         $questionsAndAnswers = [
-            "deadPersonName" => [
+            "deceasedPersonName" => [
             "question" => "Who is it you want to write a message about today?",
-            "answer" => $deadPersonName
+            "answer" => $deceasedPersonName
             ],
             "messageType" => [
             "question" => "What kind of message would you like me to write?\n" . 
@@ -31,12 +31,12 @@ class PromptService {
             }
             ],
             "relationship" => [
-            "question" => "Please can you tell me a little more about " . $deadPersonName . "? Let's start with how you knew each other.",
+            "question" => "Please can you tell me a little more about " . $deceasedPersonName . "? Let's start with how you knew each other.",
             "answer" => $relationship
             ],
             "details" => [
-            "question" => "Thank you for sharing that, and I'm truly sorry for your loss. To help me write something that truly captures " . $deadPersonName . ", please could you tell me a bit more about them? You can start with simple details, like:\n" .
-                      "- When and where " . $deadPersonName . " was born\n" .
+            "question" => "Thank you for sharing that, and I'm truly sorry for your loss. To help me write something that truly captures " . $deceasedPersonName . ", please could you tell me a bit more about them? You can start with simple details, like:\n" .
+                      "- When and where " . $deceasedPersonName . " was born\n" .
                       "- Their profession or what they did for a living\n" .
                       "- Hobbies and interests that brought them joy\n" .
                       "- Where they grew up and lived\n" .
@@ -46,7 +46,7 @@ class PromptService {
             "answer" => $details
             ],
             "accomplishments" => [
-            "question" => "Would you like to share any of " . $deadPersonName . "’s accomplishments? Were there particular achievements at work or in something they were passionate about? What were they especially good at?\n\n" . 
+            "question" => "Would you like to share any of " . $deceasedPersonName . "’s accomplishments? Were there particular achievements at work or in something they were passionate about? What were they especially good at?\n\n" . 
                       "Remember, you don’t need to stress about finding the perfect words—that’s my job. Just type whatever comes to mind, and I’ll take care of the rest.",
             "answer" => $accomplishments
             ],
@@ -59,7 +59,7 @@ class PromptService {
             "answer" => $tone
             ],
             "finalQuestion" => [
-            "question" => "Thank you! Before I begin drafting, is there anything else you’d like me to know about " . $deadPersonName . "?",
+            "question" => "Thank you! Before I begin drafting, is there anything else you’d like me to know about " . $deceasedPersonName . "?",
             "answer" => $finalQuestion
             ]
         ];
@@ -69,7 +69,7 @@ class PromptService {
 
     private function getStructuredPrompt($data) {
         $questionsAndAnswers = $this->getQuestionsAndAnswers(
-            $data['deadPersonName'],
+            $data['deceasedPersonName'],
             $data['messageType'],
             $data['relationship'],
             $data['details'],
@@ -91,7 +91,7 @@ class PromptService {
             $structuredPrompt .= "Question: Did you like it?\n\n";
             $structuredPrompt .= "Answer: No, I want changes.\n\n";
 
-            $structuredPrompt .= "Question: Ok, no problem. Would you like to share anything more about {$data['deadPersonName']} or provide any specific instructions to help improve the content? But no worries! if you don't have additional details or instructions, I'll generate another version of the content.\n\n"; 
+            $structuredPrompt .= "Question: Ok, no problem. Would you like to share anything more about {$data['deceasedPersonName']} or provide any specific instructions to help improve the content? But no worries! if you don't have additional details or instructions, I'll generate another version of the content.\n\n"; 
             $structuredPrompt .= "Answer: " . $data['additionalInstructions'][0] . "\n\n";
         }
 
@@ -109,17 +109,17 @@ class PromptService {
         return $structuredPrompt;
     }
 
-    private function getBeginningSystemPrompt($deadPerson, $version = 1) {
+    private function getBeginningSystemPrompt($deceasedPerson, $version = 1) {
         if ($version === 2) {
             return "You are a highly empathetic and professional condolence and sympathy message assistant.The user has already received a first version of the message and now wants to refine or modify it based on additional instructions. Your task is to follow the user's instructions carefully while also improving the message based on the details provided in the conversation.\n\n";
         } elseif ($version === 3) {
             return "You are a highly empathetic and professional condolence and sympathy message assistant. The user has already received a refined version of the message but wants to make further modifications based on additional instructions. Your task is to follow the user's instructions carefully while also improving the message based on the details provided in the conversation.\n\n";
         } else {
-            return "You are a highly empathetic and professional condolence and sympathy message assistant. Based on the following inputs, create a heartfelt, meaningful, and respectful content that captures the essence of {$deadPerson}'s life and reflects the user's emotions and relationship with them. Follow these guidelines:\n\n";
+            return "You are a highly empathetic and professional condolence and sympathy message assistant. Based on the following inputs, create a heartfelt, meaningful, and respectful content that captures the essence of {$deceasedPerson}'s life and reflects the user's emotions and relationship with them. Follow these guidelines:\n\n";
         }
     }
 
-    private function getEndingSystemPrompt($deadPerson, $version = 1) {
+    private function getEndingSystemPrompt($deceasedPerson, $version = 1) {
         if ($version === 2) {
             return "\n\nKey Requirements for Refinement:\n" .
                    "- Follow the user's instructions exactly as much as possible.\n" .
@@ -136,10 +136,10 @@ class PromptService {
                     "- Keep the response respectful, heartfelt, and fitting for the intended purpose.";
         } else {
             return "\n\nKey Requirements:\n" .
-                   "- Begin the message with an empathetic greeting, such as \"Dear family of {$deadPerson}\" or \"To all who loved them,\" depending on the relationship and context provided. If the recipient is unclear, use a general greeting like \"To all who knew and loved {$deadPerson}.\"\n" .
+                   "- Begin the message with an empathetic greeting, such as \"Dear family of {$deceasedPerson}\" or \"To all who loved them,\" depending on the relationship and context provided. If the recipient is unclear, use a general greeting like \"To all who knew and loved {$deceasedPerson}.\"\n" .
                    "- Maintain a tone that aligns with the user’s selection (e.g., compassionate, formal, poetic, or uplifting). For a compassionate tone, use gentle and heartfelt language that is warm and accessible. For a formal tone, maintain professionalism and dignity without being overly rigid or detached. For a poetic tone, keep it elegant and expressive without being overly ornate. For an uplifting tone, focus on celebrating the joy and achievements of the deceased’s life.\n" .
                    "- Respect the sensitivity of the topic by avoiding overly casual or informal language.\n" .
-                   "- Incorporate the details provided by the user (e.g., relationship, accomplishments, special memories) to make the message personal, meaningful, and reflective of {$deadPerson}'s life.\n" .
+                   "- Incorporate the details provided by the user (e.g., relationship, accomplishments, special memories) to make the message personal, meaningful, and reflective of {$deceasedPerson}'s life.\n" .
                    "- Identify the gender of the deceased from the conversation (if mentioned) and use the appropriate pronouns and terms (e.g., \"she/her,\" \"he/him,\" or \"they/them\") throughout the message. If the gender is unclear, use neutral pronouns (\"they/them\") to ensure inclusivity.\n" .
                    "- If any answers appear mistyped, misplaced, or unclear, interpret them thoughtfully based on the context and other inputs. Use the surrounding questions and answers to infer the user’s intent while ensuring the output remains meaningful and accurate.\n" .
                    "- If any details are vague or missing, thoughtfully expand and infer appropriate attributes based on the context to create a complete and respectful message.\n" .
@@ -151,9 +151,9 @@ class PromptService {
     }
 
     public function generatePrompt($data) {
-        $beginningSystemPrompt = $this->getBeginningSystemPrompt($data['deadPersonName'], $data['version']);
+        $beginningSystemPrompt = $this->getBeginningSystemPrompt($data['deceasedPersonName'], $data['version']);
         $structuredPrompt = $this->getStructuredPrompt($data);      
-        $enddingSystemPrompt = $this->getEndingSystemPrompt($data['deadPersonName'], $data['version']);        
+        $enddingSystemPrompt = $this->getEndingSystemPrompt($data['deceasedPersonName'], $data['version']);        
         return $beginningSystemPrompt . $structuredPrompt . $enddingSystemPrompt;
     }
 }

@@ -18,20 +18,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'email-field':
                     formData.email = field.value;
                     break;
-                case 'dead-person-name-field':
-                    formData.deadPersonName = field.value;
+                case 'deceased-person-name-field':
+                    formData.deceasedPersonName = field.value;
                     break;
                 case 'message-type-input':
                     formData.messageType = field.value;
                     break;
-                case 'dead-person-relation-field':
-                    formData.deadPersonRelation = field.value;
+                case 'deceased-person-relation-field':
+                    formData.deceasedPersonRelation = field.value;
                     break;
-                case 'dead-person-details-field':
-                    formData.deadPersonDetails = field.value;
+                case 'deceased-person-details-field':
+                    formData.deceasedPersonDetails = field.value;
                     break;
-                case 'dead-person-accomplishment-field':
-                    formData.deadPersonAccomplishment = field.value;
+                case 'deceased-person-accomplishment-field':
+                    formData.deceasedPersonAccomplishment = field.value;
                     break;
                 case 'message-tone-input':
                     formData.messageTone = field.value;

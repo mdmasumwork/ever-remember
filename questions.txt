@@ -32,7 +32,7 @@ button - I understand, let's write
 
 ===========================================
 
-Dead persona name section
+deceased persona name section
 
 Who is it you want to write a message about today?
 
@@ -49,23 +49,23 @@ What kind of message would you like me to write?
 
 ===========================================
 
-Dead person relation section
+deceased person relation section
 
 I’d be honored to assist you in creating a {message type}.
-Please can you tell me a little more about {dead-person}? Let's start with how you knew each other
+Please can you tell me a little more about {deceased-person}? Let's start with how you knew each other
 
-field placeholder - {dead-person} was my ...
+field placeholder - {deceased-person} was my ...
 field below text - (with heart icon at the start) It’s OK if you’re not sure what to say at any point. You can use the answer boxes to let me know. I’m here to help you.
 
 ==========================================
 
-Dead person details section
+deceased person details section
 
 "Thank you for sharing that, and I'm truly sorry for your loss..
-TTo help me write something that truly captures {dead-person}, please could you tell me a bit more about them?
+TTo help me write something that truly captures {deceased-person}, please could you tell me a bit more about them?
 You can start with simple details, like:"
 
-When and where {dead-person} was born
+When and where {deceased-person} was born
 Their profession or what they did for a living
 Hobbies and interests that brought them joy
 Where they grew up and lived
@@ -76,9 +76,9 @@ Field Below Text:
 "It’s completely okay if you’re unsure what to say. Feel free to use the white answer boxes to ask for ideas or guidance whenever you need."
 ==========================================
 
-Dead person accomplishment section
+deceased person accomplishment section
 
-"Would you like to share any of {dead-person}’s accomplishments?
+"Would you like to share any of {deceased-person}’s accomplishments?
 Were there particular achievements at work or in something they were passionate about? What were they especially good at?"
 
 Field Below Text:
@@ -88,7 +88,7 @@ Field Below Text:
 
 Message tone section
 
-Thank you for sharing these details about {dead-person}.
+Thank you for sharing these details about {deceased-person}.
 To ensure the message truly honors them, could you let me know the tone that feels most appropriate? Here are some options to choose from:
 
 Compassionate – Gentle and heartfelt, ideal for creating a comforting and personal message.
@@ -101,7 +101,7 @@ Uplifting – Positive and hopeful, celebrating the joy and achievements of a li
 
 Final question section
 
-Thank you for sharing so much about {dead-person}.
+Thank you for sharing so much about {deceased-person}.
 
 Before I begin drafting, is there anything else you’d like me to know about them?
 
@@ -109,7 +109,7 @@ Before I begin drafting, is there anything else you’d like me to know about th
 
 Draft section
 
-Thanks for sharing those beautiful details about {dead-person}. Here’s an optimistic and uplifting eulogy that reflects the friendship you shared, and {dead-person}'s vibrant personality.
+Thanks for sharing those beautiful details about {deceased-person}. Here’s an optimistic and uplifting eulogy that reflects the friendship you shared, and {deceased-person}'s vibrant personality.
 
 ==========================================
 
@@ -131,7 +131,7 @@ That's wonderful to hear! Would you mind taking a moment to share your feedback 
 //////////////////////
 // if 'No' in the previous Feedback section
 
-I understand. Would you like to share anything more about {dead-person} or provide any specific instructions to help improve the content?
+I understand. Would you like to share anything more about {deceased-person} or provide any specific instructions to help improve the content?
 
 Field below text - No worries! Even if you don’t have additional details or instructions, I’ll generate another version of the content. You’ll then have the option to choose between the two.
 

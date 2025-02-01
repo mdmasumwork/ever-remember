@@ -54,7 +54,7 @@ class PaymentService {
                 'completed'
             ]);
 
-            return true;
+            return $this->db->lastInsertId(); // Return the payment ID
         } catch (Exception $e) {
             error_log("Payment logging failed: " . $e->getMessage());
             throw $e;

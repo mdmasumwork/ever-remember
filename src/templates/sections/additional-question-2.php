@@ -7,6 +7,7 @@
             <button class="er-button tertiary-button go-next-1">Skip</button>
         </div>
     </div>
+    <div class="field-error-area"></div>
     <div class="field-caption">
         <img class="field-caption-icon" src="assets/images/icons/heart_purple.png">
         <p>Remember, even if you don’t have additional details or instructions, I’ll still generate another version of the content. You’ll then have the option to choose from all three versions.</p>

@@ -17,7 +17,7 @@
         array(
             'header_icon' => 'man-reading-eulogy.svg',
             'title' => 'A eulogy',
-            'body_content' => 'Help me write a heartfelt eulogy to honor and remember <span class="dead-person-name"></span>',
+            'body_content' => 'Help me write a heartfelt eulogy to honor and remember <span class="deceased-person-name"></span>',
             'type'          => 'eulogy',
             'dimantion'   => '38px',
         ),

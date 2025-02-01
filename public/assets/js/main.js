@@ -1,4 +1,5 @@
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', () => {
+    FormValidator.init();
     SlideMenu.init();
     Toast.init();
     Tabs.init();

@@ -31,11 +31,12 @@ class PaymentController {
             
             if ($paymentResult['success']) {
                 // 2. Log to database via Service
-                $this->paymentService->logPayment($paymentResult['payment'], $userName, $userEmail);
+                $paymentId = $this->paymentService->logPayment($paymentResult['payment'], $userName, $userEmail);
                 
                 // 3. Set session in Controller
                 session_start();
                 $_SESSION['payment_verified'] = true;
+                $_SESSION['payment_id'] = $paymentId; // Store payment ID in session
                 
                 return true;
             }

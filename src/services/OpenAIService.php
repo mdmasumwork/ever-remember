@@ -50,6 +50,11 @@ class OpenAIService {
     //         throw new Exception('OpenAI API request failed with status ' . $httpCode);
     //     }
 
-    //     return json_decode($response, true);
+    //     $responseData = json_decode($response, true);
+        
+    //     // Format response to match ContentController expectations
+    //     return [
+    //         'content' => $responseData['choices'][0]['message']['content']
+    //     ];
     // }
 }

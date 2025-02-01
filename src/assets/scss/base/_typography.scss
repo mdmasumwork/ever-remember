@@ -45,3 +45,30 @@ p {
 ul, ol {
     padding-left: $spacing-xl;
 }
+
+.section-deceased-person-details {
+    ul {
+        list-style: none;
+        padding-left: 0;
+        
+        li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 10px;
+            
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                background-image: url('../images/flower.png');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        }
+    }
+}
