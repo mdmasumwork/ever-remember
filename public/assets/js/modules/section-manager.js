@@ -7,6 +7,7 @@ class SectionManager {
         $('.er-button, .card').on('click', function() {
             const classList = $(this).attr('class').split(/\s+/);
             let steps = 0;
+            const isSkipButton = $(this).hasClass('secondary-button');
 
             classList.forEach(function(className) {
                 const match = className.match(/^go-next-(\d+)$/);
@@ -17,7 +18,7 @@ class SectionManager {
 
             if (steps > 0) {
                 const $currentSection = $('section.active');
-                if (SectionManager.validateCurrentSection($currentSection)) {
+                if (isSkipButton || SectionManager.validateCurrentSection($currentSection)) {
                     SectionManager.showNextSection(steps);
                 }
             }
