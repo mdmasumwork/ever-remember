@@ -21,26 +21,26 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
     
     <?php
 
-    include '../src/templates/sections/introduction.php';
-    include '../src/templates/sections/email-section.php';
-    include '../src/templates/sections/disclaimer-section.php';
-    include '../src/templates/sections/deceased-person-name-section.php';
-    include '../src/templates/sections/message-type-section.php';
-    include '../src/templates/sections/deceased-person-relation-section.php';
-    include '../src/templates/sections/deceased-person-details-section.php';
-    include '../src/templates/sections/deceased-person-accomplishment.php';
-    include '../src/templates/sections/message-tone-section.php';
-    include '../src/templates/sections/final-question-section.php';
+    include '../src/templates/steps/introduction.php';
+    include '../src/templates/steps/email.php';
+    include '../src/templates/steps/disclaimer.php';
+    include '../src/templates/steps/deceased-person-name.php';
+    include '../src/templates/steps/message-type.php';
+    include '../src/templates/steps/deceased-person-relation.php';
+    include '../src/templates/steps/deceased-person-details.php';
+    include '../src/templates/steps/deceased-person-accomplishment.php';
+    include '../src/templates/steps/message-tone.php';
+    include '../src/templates/steps/final-question.php';
 
 
-    include '../src/templates/sections/content-section-1.php';
-    include '../src/templates/sections/additional-question-1.php';
-    include '../src/templates/sections/content-section-2.php';
-    include '../src/templates/sections/additional-question-2.php';
-    include '../src/templates/sections/content-section-3.php';
-    include '../src/templates/sections/feedback-section.php';
-    include '../src/templates/sections/feedback-section-2.php';
-    include '../src/templates/sections/goodbye-section.php';
+    include '../src/templates/steps/content-1.php';
+    include '../src/templates/steps/additional-question-1.php';
+    include '../src/templates/steps/content-2.php';
+    include '../src/templates/steps/additional-question-2.php';
+    include '../src/templates/steps/content-3.php';
+    include '../src/templates/steps/feedback-1.php';
+    include '../src/templates/steps/feedback-2.php';
+    include '../src/templates/steps/goodbye.php';
 
     ?>
     
@@ -60,7 +60,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <!-- Modules -->
 <script src="assets/js/modules/ui-manager.js"></script>
 <script src="assets/js/modules/data-manager.js"></script>
-<script src="assets/js/modules/section-manager.js"></script>
+<script src="assets/js/modules/step-manager.js"></script>
 <script src="assets/js/modules/form-validator.js"></script>
 <script src="assets/js/modules/payment.js"></script>
 <!-- Main -->

@@ -90,16 +90,16 @@ ul, ol {
   padding-left: 32px;
 }
 
-.section-deceased-person-details ul {
+.step-deceased-person-details ul {
   list-style: none;
   padding-left: 0;
 }
-.section-deceased-person-details ul li {
+.step-deceased-person-details ul li {
   padding-left: 30px;
   position: relative;
   margin-bottom: 10px;
 }
-.section-deceased-person-details ul li:before {
+.step-deceased-person-details ul li:before {
   content: "";
   position: absolute;
   left: 0;
@@ -159,7 +159,7 @@ ul, ol {
     display: flex;
   }
 }
-section {
+.step {
   display: none;
   padding: 32px;
   max-width: 678px;
@@ -169,23 +169,23 @@ section {
   transform: translateY(20px);
   transition: opacity 0.3s, transform 0.3s;
 }
-section.active {
+.step.active {
   display: block;
   opacity: 1;
   transform: translateY(0);
 }
-section > * {
+.step > * {
   margin-bottom: 16px;
 }
-section > *:last-child {
+.step > *:last-child {
   margin-bottom: 0;
 }
-section h4 {
+.step h4 {
   color: #55328F;
 }
 
 @media (max-width: 768px) {
-  section {
+  step {
     padding: 24px;
   }
 }
@@ -626,10 +626,11 @@ section h4 {
 .content-tabs .content-actions.visible {
   display: block;
 }
-.content-tabs .content-actions .feedback-section {
+
+.step-content-1 .content-action {
   display: none;
 }
-.content-tabs .content-actions .feedback-section.visible {
+.step-content-1 .content-action.visible {
   display: block;
 }
 
@@ -939,7 +940,7 @@ section h4 {
   font-weight: 500;
 }
 
-/* Footer Section */
+/* Footer step */
 #footer {
   background-color: #55328F;
   text-align: center;

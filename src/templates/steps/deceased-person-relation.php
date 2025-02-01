@@ -1,4 +1,4 @@
-<section class="section-deceased-person-relation">
+<section class="step step-deceased-person-relation">
     <h4>I’d be honored to assist you in creating a {message-type}</h4>
     <h4>Could you share a bit more about <span class="deceased-person"></span>? Let’s begin with how you were connected.</h4>
     <div class="field-area">

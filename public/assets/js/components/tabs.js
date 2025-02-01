@@ -6,8 +6,8 @@ class Tabs {
         this.bindSwipeNavigation();
     }
 
-    static switchToTab(selectedTabClass, direction = 'right', $section) {
-        const $tabContainer = $section.find('.content-tabs');
+    static switchToTab(selectedTabClass, direction = 'right', $step) {
+        const $tabContainer = $step.find('.content-tabs');
         const $currentPane = $tabContainer.find('.tab-pane.active');
         const $nextPane = $tabContainer.find(`.tab-pane.${selectedTabClass}`);
         
@@ -17,7 +17,7 @@ class Tabs {
         // Add slide out animation
         $currentPane.addClass(direction === 'right' ? 'slide-left-out' : 'slide-right-out');
         
-        // Update navigation within this section
+        // Update navigation within this step
         $tabContainer.find('.tab-button, .dot').removeClass('active');
         $tabContainer.find(`.tab-button[data-tab="${selectedTabClass}"]`).addClass('active');
         $tabContainer.find(`.dot[data-tab="${selectedTabClass}"]`).addClass('active');
@@ -41,15 +41,15 @@ class Tabs {
             // Return if already active
             if ($(this).hasClass('active')) return;
 
-            const $section = $(this).closest('.section');
+            const $step = $(this).closest('.step');
             const selectedTabClass = $(this).data('tab');
             const clickedVersion = parseInt(selectedTabClass.match(/version-(\d)/)[1]);
-            const currentVersion = parseInt($section.find('.tab-pane.active').attr('class').match(/version-(\d)/)[1]);
+            const currentVersion = parseInt($step.find('.tab-pane.active').attr('class').match(/version-(\d)/)[1]);
             
             // Determine direction based on version numbers
             const direction = clickedVersion > currentVersion ? 'right' : 'left';
             
-            Tabs.switchToTab(selectedTabClass, direction, $section);
+            Tabs.switchToTab(selectedTabClass, direction, $step);
         });
     }
 
@@ -58,15 +58,15 @@ class Tabs {
             // Return if already active
             if ($(this).hasClass('active')) return;
 
-            const $section = $(this).closest('.section');
+            const $step = $(this).closest('.step');
             const selectedTabClass = $(this).data('tab');
             const clickedVersion = parseInt(selectedTabClass.match(/version-(\d)/)[1]);
-            const currentVersion = parseInt($section.find('.tab-pane.active').attr('class').match(/version-(\d)/)[1]);
+            const currentVersion = parseInt($step.find('.tab-pane.active').attr('class').match(/version-(\d)/)[1]);
             
             // Determine direction based on version numbers
             const direction = clickedVersion > currentVersion ? 'right' : 'left';
             
-            Tabs.switchToTab(selectedTabClass, direction, $section);
+            Tabs.switchToTab(selectedTabClass, direction, $step);
         });
     }
 
@@ -74,13 +74,13 @@ class Tabs {
         let touchStartX = 0;
         let touchStartY = 0;
         
-        $('.section .tab-pane').on('touchstart', function(e) {
+        $('.step .tab-pane').on('touchstart', function(e) {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].pageY;
         });
 
-        $('.section .tab-pane').on('touchend', function(e) {
-            const $section = $(this).closest('.section');
+        $('.step .tab-pane').on('touchend', function(e) {
+            const $step = $(this).closest('.step');
             const touchEndX = e.changedTouches[0].clientX;
             const touchEndY = e.changedTouches[0].pageY;
             const currentVersion = parseInt($(this).attr('class').match(/version-(\d)/)[1]);
@@ -92,14 +92,14 @@ class Tabs {
             if (yDiff < 40 && Math.abs(xDiff) > swipeThreshold && Math.abs(xDiff) > yDiff * 2) {
                 // Check if next/previous pane exists before swipe
                 if (xDiff > 0 && currentVersion < 3) {
-                    const $nextPane = $section.find(`.tab-pane.version-${currentVersion + 1}`);
+                    const $nextPane = $step.find(`.tab-pane.version-${currentVersion + 1}`);
                     if ($nextPane.length) {
-                        Tabs.switchToTab(`version-${currentVersion + 1}`, 'right', $section);
+                        Tabs.switchToTab(`version-${currentVersion + 1}`, 'right', $step);
                     }
                 } else if (xDiff < 0 && currentVersion > 1) {
-                    const $prevPane = $section.find(`.tab-pane.version-${currentVersion - 1}`);
+                    const $prevPane = $step.find(`.tab-pane.version-${currentVersion - 1}`);
                     if ($prevPane.length) {
-                        Tabs.switchToTab(`version-${currentVersion - 1}`, 'left', $section);
+                        Tabs.switchToTab(`version-${currentVersion - 1}`, 'left', $step);
                     }
                 }
             }

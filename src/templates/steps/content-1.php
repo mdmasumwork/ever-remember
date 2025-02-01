@@ -1,4 +1,4 @@
-<section class="section section-content-1">
+<section class="step step-content-1">
     <h4>Thanks for sharing those beautiful details. Here's what I've created...</h4>
     
     <div class="content-tabs">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <div class="feedback-section">
+                <div class="content-action">
                     <p class="action-question">How do you feel about this content?</p>
                     <div class="action-buttons">
                         <button class="er-button primary-button go-next-5">I like it</button>

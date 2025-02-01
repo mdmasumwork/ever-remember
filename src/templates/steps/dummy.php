@@ -1,4 +1,4 @@
-<section class="section-dummy">
+<section class="step step-dummy">
     <h2>BigHeading</h2>
     <p>Paragraph</p>
     <h4>SmallHeading</h4>

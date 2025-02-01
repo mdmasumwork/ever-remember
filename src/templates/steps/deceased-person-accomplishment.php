@@ -1,4 +1,4 @@
-<section class="section-deceased-person-accomplishment">
+<section class="step step-deceased-person-accomplishment">
     <h4>Would you like to share any of {deceased-person}’s accomplishments? Were there particular achievements at work or in something they were passionate about? What were they especially good at?</h4>
     <p>Remember, you don’t need to stress about finding the perfect words—that’s my job. Just type whatever comes to mind, and I’ll take care of the rest.</p>
     <div class="field-area">

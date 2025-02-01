@@ -1,4 +1,4 @@
-<section class="section-additional-question-2">
+<section class="step step-additional-question-2">
     <h4>Thank you for your patience. This is the final opportunity to make modifications. Please let us know any specific details or instructions to help us craft a version that truly meets your expectations.</h4>
     <div class="field-area">
         <textarea id="additional-question-2-field" placeholder="Your additional details will help create a better version..."></textarea>

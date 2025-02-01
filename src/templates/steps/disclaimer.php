@@ -1,4 +1,4 @@
-<section class="section-disclaimer">
+<section class="step step-disclaimer">
     <h2>Ok, we're ready to start</h2>
     <p>In a moment, you’ll be able to share what you’d like me to help you write. However, I want to make you aware of my limitations.</p>
     <p>My suggestions may not always perfectly capture your thoughts, and I may make mistakes. Please take a moment to review what I write to ensure it truly reflects your memories and feelings.</p>

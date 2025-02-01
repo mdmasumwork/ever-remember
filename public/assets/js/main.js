@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Toast.init();
     Tabs.init();
     CardComponent.init();
-    SectionManager.init();
+    StepManager.init();
     Payment.init();
     Accessibility.init();
 });

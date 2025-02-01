@@ -1,4 +1,4 @@
-<!-- Header Section -->
+<!-- Header Step -->
 <header id="header" class="sticky-header">
     <div class="logo">
         <img src="assets/images/logo.png" alt="Logo" id="logo">

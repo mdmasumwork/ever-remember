@@ -1,4 +1,4 @@
-section {
+.step {
     display: none;
     padding: $spacing-xl;
     max-width: $container-width;
@@ -28,7 +28,7 @@ section {
 }
 
 @include mobile {
-    section {
+    step {
         padding: $spacing-lg;
     }
 }

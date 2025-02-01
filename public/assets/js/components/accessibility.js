@@ -1,47 +1,47 @@
 class Accessibility {
     static init() {
-        this.bindSectionEvents();
+        this.bindstepEvents();
         this.bindKeyboardNavigation();
-        this.initFirstSectionFocus();
+        this.initFirststepFocus();
     }
 
-    static initFirstSectionFocus() {
-        // Focus first element in active section on page load
-        const $activeSection = $('section.active');
-        if ($activeSection.length) {
-            this.focusFirstElement($activeSection[0]);
+    static initFirststepFocus() {
+        // Focus first element in active step on page load
+        const $activestep = $('step.active');
+        if ($activestep.length) {
+            this.focusFirstElement($activestep[0]);
         }
     }
 
-    static bindSectionEvents() {
-        // Listen for section activation
-        $('section').on('sectionActive', function() {
+    static bindstepEvents() {
+        // Listen for step activation
+        $('step').on('stepActive', function() {
             Accessibility.focusFirstElement(this);
         });
     }
 
-    static focusFirstElement(section) {
-        const $section = $(section);
-        const sectionId = $section.attr('id') || $section.attr('class');
+    static focusFirstElement(step) {
+        const $step = $(step);
+        const stepId = $step.attr('id') || $step.attr('class');
 
-        // Special handling for message-tone section
-        if (sectionId.includes('message-tone')) {
-            const $firstCard = $section.find('.card').first();
+        // Special handling for message-tone step
+        if (stepId.includes('message-tone')) {
+            const $firstCard = $step.find('.card').first();
             if ($firstCard.length) {
                 $firstCard.focus();
                 return;
             }
         }
 
-        const $input = $section.find('input, textarea').first();
+        const $input = $step.find('input, textarea').first();
         if ($input.length) {
             $input.focus();
         } else {
-            const $primaryButton = $section.find('.er-button.primary-button').first();
+            const $primaryButton = $step.find('.er-button.primary-button').first();
             if ($primaryButton.length) {
                 $primaryButton.focus();
             } else {
-                const $firstCard = $section.find('.card[tabindex="0"]');
+                const $firstCard = $step.find('.card[tabindex="0"]');
                 if ($firstCard.length) {
                     $firstCard.focus();
                 }

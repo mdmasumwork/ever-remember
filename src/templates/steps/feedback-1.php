@@ -1,4 +1,4 @@
-<section class="section-feedback">
+<section class="step step-feedback-1">
     <h4>That's wonderful to hear! Would you mind taking a moment to share your feedback or any suggestions for improvement?</h4>
     <div class="field-area">
         <textarea id="feedback-field" placeholder="Let us know how did you like this tool ..."></textarea>

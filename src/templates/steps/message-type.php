@@ -30,7 +30,7 @@
         )
     )
 ?>
-<section class="section-message-type">
+<section class="step step-message-type">
     <h4>What kind of message would you like me to write?</h4>
     <div class="card-area">
         <?php

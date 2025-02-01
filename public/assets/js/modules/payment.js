@@ -4,6 +4,8 @@ class Payment {
             // Fetch Stripe public key from backend
             const response = await fetch('/api/get-stripe-key.php');
             const data = await response.json();
+
+            console.log('Stripe key:', data.publicKey);
             
             if (!data.publicKey) {
                 throw new Error('Stripe key not found');
@@ -121,7 +123,7 @@ class Payment {
             $('.payment-success-overlay .continue-button').one('click', async () => {
                 try {
                     const content = await this.loadFullContent();
-                    UIManager.updateContentSection(content.fullContent, content.version, true);
+                    UIManager.updateContentStep(content.fullContent, content.version, true);
                 } catch (error) {
                     $('.payment-success-overlay').html(`
                         <div class="content-error">

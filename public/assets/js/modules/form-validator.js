@@ -257,17 +257,17 @@ class FormValidator {
         $field.addClass('error');
         const $fieldArea = $field.closest('.field-area');
         $fieldArea.addClass('error');
-        // Find error area within the current section
-        const $section = $field.closest('section');
-        $section.find('.field-error-area').html(`<div class="field-error">${message}</div>`);
+        // Find error area within the current step
+        const $step = $field.closest('.step');
+        $step.find('.field-error-area').html(`<div class="field-error">${message}</div>`);
     }
 
     static removeError($field) {
         $field.removeClass('error');
         const $fieldArea = $field.closest('.field-area');
         $fieldArea.removeClass('error');
-        // Clear error only in the current section
-        const $section = $field.closest('section');
-        $section.find('.field-error-area').empty();
+        // Clear error only in the current step
+        const $step = $field.closest('.step');
+        $step.find('.field-error-area').empty();
     }
 }

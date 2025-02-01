@@ -107,18 +107,20 @@
         &.visible {
             display: block;
         }
-
-        .feedback-section {
-            display: none;
-            
-            &.visible {
-                display: block;
-            }
-        }
     }
 
     position: relative;
     overflow: hidden;
+}
+
+.step-content-1 {
+    .content-action{
+        display: none;
+        
+        &.visible {
+            display: block;
+        }
+    }
 }
 
 .tab-navigation-dots {
