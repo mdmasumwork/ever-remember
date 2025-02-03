@@ -154,9 +154,9 @@
     background: rgba(255,255,255,0.9);
     border-radius: 8px;
     margin-bottom: 1rem;
-    display: block;
+    display: none;
 
-    &.show {
+    &.visible {
         display: block;
     }
 
@@ -206,8 +206,14 @@
 }
 
 .content-box {
+    display: none;
+
+    &.visible {
+        display: block;
+    }
     
     &.masked {
+        display: block;
         position: relative;
         max-height: 150px; // Show first few lines
         overflow: hidden;
@@ -221,11 +227,6 @@
     line-height: 1.6;
     margin-bottom: $spacing-lg;
     margin-bottom: $spacing-md;
-    display: none;
-
-    &.visible {
-        display: block;
-    }
 
     br {
         display: block;
@@ -235,12 +236,16 @@
 
 
 .payment-overlay {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 2rem;
     text-align: center;
+
+    &.visible {
+        display: flex;
+    }
     
     h5 {
         color: $brand-accent;

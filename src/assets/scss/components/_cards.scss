@@ -15,8 +15,6 @@
 
         &:hover {
             cursor: pointer;
-            border-color: $border-dark;
-            background-color: $surface-secondary;
         }
 
         // Focus styles for keyboard navigation
@@ -27,20 +25,17 @@
             box-shadow: 0 0 0 2px $brand-primary;
         }
 
-        // First card auto-focus style
-        &:first-child:focus {
-            border-color: $brand-primary;
-            background-color: $surface-secondary;
-        }
-
         &.selected {
             border-color: $brand-primary;
             background-color: $surface-secondary;
         }
 
-        &.focused {
-            outline: 2px solid $brand-primary;
-            outline-offset: 2px;
+        * {
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
     }
 

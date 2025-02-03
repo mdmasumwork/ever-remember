@@ -1,10 +1,10 @@
 <section class="step step-additional-question-1">
-    <h4>I understand. Would you like to share anything more about {deceased-person} or provide any specific instructions to help improve the content?</h4>
+    <h4>I understand. Would you like to share anything more about <span class='deceased-person-name-placeholder'>the deceased person</span> or provide any specific instructions to help improve the content?</h4>
     <div class="field-area">
         <textarea id="additional-question-1-field" placeholder="Your additional details will help create a better version..."></textarea>
         <div class="field-button-area">
             <button class="er-button primary-button go-next-1">Send</button>
-            <button class="er-button tertiary-button go-next-1">Skip</button>
+            <button class="er-button tertiary-button go-next-1 skip-button">Skip</button>
         </div>
     </div>
     <div class="field-error-area"></div>

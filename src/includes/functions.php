@@ -5,6 +5,7 @@ function sendResponse($success, $data) {
     echo json_encode([
         'success' => $success,
         'preview' => $data['preview'] ?? '',
+        'prompt' => $data['prompt'] ?? '',
         'version' => $data['version'] ?? 1,
         'fullContent' => isset($data['payment_verified']) && $data['payment_verified'] ? ($data['fullContent'] ?? '') : null,
         'error' => $data['error'] ?? ''

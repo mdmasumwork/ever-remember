@@ -7,7 +7,7 @@ class PromptService {
         $relationship,
         $details,
         $accomplishments,
-        $tone,
+        $messageTone,
         $finalQuestion
     ) {
         // define associative array to store the questions and answers
@@ -23,8 +23,8 @@ class PromptService {
                     "- A eulogy (eulogy)\n" .
                     "- An obituary or something else (obituary)",
             "answer" => match ($messageType) {
-                "condolence-message" => "A message for cards or flowers",
-                "sympathy-letter" => "A letter for sympathy",
+                "condolence message" => "A message for cards or flowers",
+                "sympathy letter" => "A letter for sympathy",
                 "eulogy" => "A eulogy",
                 "obituary" => "An obituary or something else",
                 default => "Unknown message type"
@@ -50,13 +50,13 @@ class PromptService {
                       "Remember, you don’t need to stress about finding the perfect words—that’s my job. Just type whatever comes to mind, and I’ll take care of the rest.",
             "answer" => $accomplishments
             ],
-            "tone" => [
+            "messageTone" => [
             "question" => "Thank you! To ensure the message truly honors them, could you let me know the tone that feels most appropriate? Here are some options to choose from:\n" .
                       "- Compassionate – Gentle and heartfelt, ideal for creating a comforting and personal message.\n" .
                       "- Formal – Professional and traditional, suitable for a more dignified tribute.\n" .
                       "- Poetic – Elegant and expressive, focusing on deep emotions for an artistic touch.\n" .
                       "- Uplifting – Positive and hopeful, celebrating the joy and achievements of a life well-lived.",
-            "answer" => $tone
+            "answer" => $messageTone
             ],
             "finalQuestion" => [
             "question" => "Thank you! Before I begin drafting, is there anything else you’d like me to know about " . $deceasedPersonName . "?",
@@ -74,7 +74,7 @@ class PromptService {
             $data['relationship'],
             $data['details'],
             $data['accomplishments'],
-            $data['tone'],
+            $data['messageTone'],
             $data['finalQuestion']
         );
 
@@ -85,7 +85,7 @@ class PromptService {
         }
         
         // Add the restored content from the session
-        if (isset($data['contents'][1]) && $data['version'] === 2) {
+        if ((isset($data['contents'][1]) && $data['version'] === 2) || (isset($data['contents'][2]) && $data['version'] === 3)) {
             $structuredPrompt .= "First version:\n" . $data['contents'][1] . "\n\n";
 
             $structuredPrompt .= "Question: Did you like it?\n\n";
@@ -102,7 +102,7 @@ class PromptService {
             $structuredPrompt .= "Question: Does this revised content meet your expectations?\n\n";
             $structuredPrompt .= "Answer: No, I still need it to be improved.\n\n";
 
-            $structuredPrompt .= "Question: Could you please provide any additional instructions or specific details to help us craft a version that truly meets your expectations. But it's totally fine if you don’t have additional details or instructions, I’ll still generate another version of the content.\n\n";
+            $structuredPrompt .= "Question: OK, could you please provide any additional instructions or specific details to help us craft a version that truly meets your expectations. But it's totally fine if you don’t have additional details or instructions, I’ll still generate another version of the content.\n\n";
             $structuredPrompt .= "Answer: " . $data['additionalInstructions'][1] . "\n\n";
         }
 

@@ -3,6 +3,19 @@ class DataManager {
     // TODO: Add CSRF protection
     // TODO: Add data sanitization
     // TODO: Add secure transmission
+    // static formData = {
+    //     firstPersonName: 'Md Masum',
+    //     email: 'md.masum@gmail.com',
+    //     deceasedPersonName: 'Nanet',
+    //     messageType: 'eulogy',
+    //     relationship: 'neighbor',
+    //     details: 'nice person',
+    //     accomplishments: 'teacher',
+    //     messageTone: 'formal',
+    //     finalQuestion: '',
+    //     additionalInstructions: []
+    // };
+
     static formData = {
         firstPersonName: '',
         email: '',
@@ -11,97 +24,106 @@ class DataManager {
         relationship: '',
         details: '',
         accomplishments: '',
-        tone: '',
+        messageTone: '',
         finalQuestion: '',
         additionalInstructions: []
     };
 
-    static collectData(step) {
+    static collectData(step, toSkip = false) {
+        console.log('Collecting data from step:', step);
         const $step = $(step);
         const stepId = $step.attr('id') || $step.attr('class');
-        const clickedButton = document.activeElement;
-        const isSkipButtonClicked = clickedButton && 
-            (clickedButton.classList.contains('secondary-button') || 
-             clickedButton.classList.contains('tertiary-button'));
 
         switch(true) {
             case stepId.includes('step-introduction'):
-                this.formData.firstPersonName = $step.find('#first-person-name-field').val();
+                if (!toSkip) {
+                    this.formData.firstPersonName = $step.find('#first-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
+                    $('.first-person-name-placeholder').text(this.formData.firstPersonName);
+                }
                 break;
 
             case stepId.includes('step-email'):
-                this.formData.email = $step.find('#email-field').val();
+                if (!toSkip) {
+                    this.formData.email = $step.find('#email-field').val();
+                }
                 break;
 
             case stepId.includes('deceased-person-name'):
-                this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val();
+                if (!toSkip) {
+                    this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
+                    $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonName);
+                }
                 break;
 
             case stepId.includes('message-type'):
-                this.formData.messageType = $step.find('.card.selected').data('message-type');
+                if (!toSkip) {
+                    this.formData.messageType = $step.find('.card.selected').data('message-type');
+                    $('.message-type-placeholder').text(this.formData.messageType);
+                }
                 break;
 
             case stepId.includes('deceased-person-relation'):
-                this.formData.relationship = $step.find('#deceased-person-relation-field').val();
+                if (!toSkip) {
+                    this.formData.relationship = $step.find('#deceased-person-relation-field').val();
+                }
                 break;
 
             case stepId.includes('deceased-person-details'):
-                this.formData.details = $step.find('#deceased-person-details-field').val();
+                if (!toSkip) {
+                    this.formData.details = $step.find('#deceased-person-details-field').val();
+                }
                 break;
 
             case stepId.includes('deceased-person-accomplishment'):
-                if (!isSkipButtonClicked) {
+                if (!toSkip && $step.find('#deceased-person-accomplishment-field').val().length) {
                     this.formData.accomplishments = $step.find('#deceased-person-accomplishment-field').val();
                 } else {
-                    this.formData.accomplishments = ''; // Clear any existing value
+                    this.formData.accomplishments = 'I am not sure what to say.';
                 }
                 break;
 
             case stepId.includes('message-tone'):
-                this.formData.tone = $step.find('.card.selected').data('message-tone');
+                if (!toSkip) {
+                    this.formData.messageTone = $step.find('.card.selected').data('message-tone');
+                }
                 break;
 
             case stepId.includes('final-question'):
-                if (!isSkipButtonClicked) {
+                if (!toSkip && $step.find('#final-question-field').val().length) {
                     this.formData.finalQuestion = $step.find('#final-question-field').val();
                 } else {
-                    this.formData.finalQuestion = ''; // Clear any existing value
+                    this.formData.finalQuestion = 'No, I have noting more to add.';
                 }
                 this.sendToContentGeneration();
                 break;
 
             case stepId.includes('step-additional-question-1'):
-                if (!isSkipButtonClicked) {
-                    const additionalInstruction_1 = $step.find('#additional-question-1-field').val();
-                    this.formData.additionalInstructions.push(additionalInstruction_1);
-                } else {
-                    this.formData.additionalInstructions.push(''); // Push empty string when skipped
+                let additionalInstruction_1 = 'No, I have noting more to add.';
+                if (!toSkip) {
+                    additionalInstruction_1 = $step.find('#additional-question-1-field').val();                    
                 }
+                this.formData.additionalInstructions.push(additionalInstruction_1);
                 this.sendToContentGeneration(true);
                 break;
 
             case stepId.includes('step-additional-question-2'):
-                if (!isSkipButtonClicked) {
-                    const additionalInstruction_2 = $step.find('#additional-question-2-field').val();
-                    this.formData.additionalInstructions.push(additionalInstruction_2);
-                } else {
-                    this.formData.additionalInstructions.push(''); // Push empty string when skipped
+                let additionalInstruction_2 = 'No, I have noting more to add.';
+                if (!toSkip) {
+                    additionalInstruction_2 = $step.find('#additional-question-2-field').val();                    
                 }
+                this.formData.additionalInstructions.push(additionalInstruction_2);
                 this.sendToContentGeneration(true);
                 break;
 
             case stepId.includes('step-feedback-2'):
-                    const feedback2 = $step.find('#feedback-field-2').val();
-                    this.sendFeedback(feedback2);
-                    break;
+                const feedback2 = $step.find('#feedback-field-2').val();
+                this.sendFeedback(feedback2);
+                break;
 
             case stepId.includes('step-feedback'):
-                if (!isSkipButtonClicked) {
-                    const feedback = $step.find('#feedback-field').val();
-                    this.sendFeedback(feedback);
-                }
+                const feedback = $step.find('#feedback-field').val();
+                this.sendFeedback(feedback);
                 break;
-        
         }
 
         console.log('Collected data:', this.formData);
@@ -109,19 +131,8 @@ class DataManager {
 
     static async sendToContentGeneration(hasAdditionalInstruction = false) {
         try {
-            $('.content-box').addClass('loading');
-            $('.loading-indicator').show();
-
-            const payload = hasAdditionalInstruction 
-                ? { 
-                    additionalInstruction: this.formData.additionalInstructions.slice(-1)[0],
-                    isFirstRequest: false
-                  } 
-                : { 
-                    ...this.formData,
-                    isFirstRequest: true
-                  };
-
+            const payload = hasAdditionalInstruction ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } : this.formData;
+            
             const response = await fetch('/api/generate-content.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -129,20 +140,21 @@ class DataManager {
             });
 
             const data = await response.json();
+            console.log(data.prompt);
             
             if (!data.success) {
                 throw new Error(data.error);
             }
 
             if (data.version === 1) {
-                UIManager.updateContentStep(data.preview, data.version);
+                UIManager.updateContentStep(data.version, data.preview);
             } else {
-                UIManager.updateContentStep(data.fullContent, data.version, true);
+                UIManager.updateContentStep(data.version, data.fullContent, true);
             }
             
         } catch (error) {
             console.error('Content generation failed:', error);
-            $('.loading-indicator').hide();
+            $('.loading-indicator').removeClass('visible');
             $('.error-message').text(error.message).show();
         }
     }
@@ -162,27 +174,6 @@ class DataManager {
         } catch (error) {
             console.error('Failed to store feedback:', error);
             // Optionally show error to user
-        }
-    }
-
-    static async getFullContent() {
-        try {
-            const response = await fetch('/api/get-full-content.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            const data = await response.json();
-            
-            if (!data.success) {
-                throw new Error(data.error);
-            }
-
-            UIManager.updateContentStep(data.fullContent, data.version, true);
-            
-        } catch (error) {
-            console.error('Failed to get full content:', error);
-            $('#card-errors').text('Failed to retrieve content. Please try again.').show();
         }
     }
 }

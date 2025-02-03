@@ -1,6 +1,6 @@
-<section class="step step-deceased-person-relation">
-    <h4>I’d be honored to assist you in creating a {message-type}</h4>
-    <h4>Could you share a bit more about <span class="deceased-person"></span>? Let’s begin with how you were connected.</h4>
+<section class="step step-deceased-person-relation required">
+    <h4>I’d be honored to assist you in creating a <span class="message-type-placeholder">message</span>.</h4>
+    <h4>Could you share a bit more about <span class="deceased-person-name-placeholder">them</span>? Let’s begin with how you were connected.</h4>
     <div class="field-area">
         <textarea id="deceased-person-relation-field" placeholder="Describe your relation"></textarea>
         <div class="field-button-area">

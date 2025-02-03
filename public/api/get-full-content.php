@@ -1,36 +1,37 @@
 <?php
+header('Content-Type: application/json');
 require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/controllers/ContentController.php';
 
 session_start();
 
-// Verify payment status
-if (!isset($_SESSION['payment_verified']) || !$_SESSION['payment_verified']) {
-    return sendResponse(false, ['error' => 'Payment required']);
+sleep(1);
+
+try {
+    $version = isset($_GET['version']) ? (int)$_GET['version'] : null;
+    
+    if (!$version) {
+        throw new Exception('Version parameter is required');
+    }
+    
+    if (!isset($_SESSION['contents'][$version])) {
+        throw new Exception('Content not found for this version');
+    }
+    
+    if (!isset($_SESSION['payment_verified']) || !$_SESSION['payment_verified']) {
+        throw new Exception('Payment verification required');
+    }
+    
+    echo json_encode([
+        'success' => true,
+        'fullContent' => $_SESSION['contents'][$version],
+        'version' => $version
+    ]);
+    
+} catch (Exception $e) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
 }
-
-// Check if version is set
-if (!isset($_GET['version'])) {
-    return sendResponse(false, ['error' => 'Version not specified']);
-}
-
-$version = $_GET['version'];
-
-
-// Check if content exists
-if (!isset($_SESSION['contents'][$version])) {
-    return sendResponse(false, ['error' => 'Content not found']);
-}
-
-// Check if the requested version exists
-if (!isset($_SESSION['contents'][$version])) {
-    return sendResponse(false, ['error' => 'This version of content is not found']);
-}
-
-// Use same response format
-return sendResponse(true, [
-    'preview' => '',  // Empty since we're only sending full content
-    'fullContent' => $_SESSION['contents'][$version],
-    'payment_verified' => true,
-    'version' => $version
-]);

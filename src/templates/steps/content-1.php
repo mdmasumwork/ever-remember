@@ -9,7 +9,7 @@
         <div class="tab-content">
             <div class="tab-pane version-1 active">
                 <!-- Loading State -->
-                <div class="loading-indicator">
+                <div class="loading-indicator visible">
                     <div class="loading-text">
                         <h4>Creating your personalized content</h4>
                         <div class="loading-dots">
@@ -21,7 +21,7 @@
                 </div>
 
                 <!-- Content Box -->
-                <div class="content-box masked">
+                <div class="content-box">
                     <div class="generated-content">
                     </div>
                 </div>

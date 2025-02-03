@@ -4,7 +4,7 @@
         <textarea id="feedback-field" placeholder="Let us know how did you like this tool ..."></textarea>
         <div class="field-button-area">
             <button class="er-button primary-button go-next-2">Send</button>
-            <button class="er-button tertiary-button go-next-2">Mayber later</button>
+            <button class="er-button tertiary-button go-next-2 skip-button">Mayber later</button>
         </div>
     </div>
     <div class="field-error-area"></div>

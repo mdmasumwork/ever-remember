@@ -1,10 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-    FormValidator.init();
+$(document).ready(function() {
+    Accessibility.init();
+    StepManager.init();
     SlideMenu.init();
     Toast.init();
     Tabs.init();
-    CardComponent.init();
-    StepManager.init();
     Payment.init();
-    Accessibility.init();
+    SessionManager.init();
 });

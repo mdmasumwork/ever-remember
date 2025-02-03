@@ -15,6 +15,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <!-- Include Header -->
 <?php include '../src/templates/header.php'; ?>
 <?php include '../src/templates/slide-menu.php'; ?>
+<?php include '../src/templates/overlays/session-restore.php'; ?>
 
 <main id="main-content">
     
@@ -56,13 +57,13 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <script src="assets/js/components/slide-menu.js"></script>
 <script src="assets/js/components/toast.js"></script>
 <script src="assets/js/components/tabs.js"></script>
-<script src="assets/js/components/card.js"></script>
 <!-- Modules -->
 <script src="assets/js/modules/ui-manager.js"></script>
 <script src="assets/js/modules/data-manager.js"></script>
 <script src="assets/js/modules/step-manager.js"></script>
 <script src="assets/js/modules/form-validator.js"></script>
 <script src="assets/js/modules/payment.js"></script>
+<script src="assets/js/modules/session-manager.js"></script>
 <!-- Main -->
 <script src="https://js.stripe.com/v3/"></script>
 <script src="assets/js/main.js"></script>

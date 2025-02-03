@@ -1,8 +1,8 @@
-<section class="step step-email">
-    <h2>Welcome, <span class="first-person-name"></span>!</h2>
+<section class="step step-email required required-email">
+    <h2>Welcome, <span class="first-person-name-placeholder"></span>!</h2>
     <p>Everything we create together will be visible here but will not be stored, ensuring complete privacy.</p>
-    <p>If you prefer, I can also email it to you. This is entirely optional, as the message will still be displayed on your screen.</p>
-    <h4>Shall I send the words we write to your email?</h4>
+    <p>To proceed, please provide your email. I will send the words we write directly to your inbox so you have a copy.</p>
+    <h4>Enter your email to continue:</h4>
     <div class="field-area">
         <input type="text" id="email-field" placeholder="Enter your email">
         <div class="field-button-area">

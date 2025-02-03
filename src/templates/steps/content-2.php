@@ -9,11 +9,21 @@
 
         <div class="tab-content">
             <div class="tab-pane version-1">
+                <div class="loading-indicator visible">
+                    <div class="loading-text">
+                        <h4>Creating your personalized content</h4>
+                        <div class="loading-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="content-box">
                     <div class="generated-content">
                     </div>
                 </div>
-                <div class="content-copy-actions visible">
+                <div class="content-copy-actions">
                     <img class="copy-icon" src="assets/images/icons/letter-orange.svg">
                     <img class="email-icon" src="assets/images/icons/email-orange.svg">
                 </div>
@@ -25,9 +35,9 @@
             </div>
 
             <div class="tab-pane version-2 active">
-                <div class="loading-indicator">
+                <div class="loading-indicator visible">
                     <div class="loading-text">
-                        <p>Creating your personalized content...</p>
+                        <h4>Creating your personalized content</h4>
                         <div class="loading-dots">
                             <span></span>
                             <span></span>

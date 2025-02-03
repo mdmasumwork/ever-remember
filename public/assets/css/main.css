@@ -107,7 +107,7 @@ ul, ol {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url("../images/flower.png");
+  background-image: url("/assets/images/logo_flower.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -232,6 +232,7 @@ ul, ol {
   align-items: center;
   font-size: 16px;
   gap: 8px;
+  justify-content: center;
 }
 .er-button.primary-button {
   background-color: #ff6600;
@@ -478,8 +479,6 @@ ul, ol {
 }
 .card-area .card:hover {
   cursor: pointer;
-  border-color: #D1D5DB;
-  background-color: #F9F4FF;
 }
 .card-area .card:focus {
   outline: none;
@@ -487,17 +486,16 @@ ul, ol {
   background-color: #F9F4FF;
   box-shadow: 0 0 0 2px #9869D2;
 }
-.card-area .card:first-child:focus {
-  border-color: #9869D2;
-  background-color: #F9F4FF;
-}
 .card-area .card.selected {
   border-color: #9869D2;
   background-color: #F9F4FF;
 }
-.card-area .card.focused {
-  outline: 2px solid #9869D2;
-  outline-offset: 2px;
+.card-area .card * {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 .card-area .card-header {
   margin-bottom: 16px;
@@ -664,9 +662,9 @@ ul, ol {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   margin-bottom: 1rem;
-  display: block;
+  display: none;
 }
-.loading-indicator.show {
+.loading-indicator.visible {
   display: block;
 }
 .loading-indicator .loading-text {
@@ -713,7 +711,14 @@ ul, ol {
     opacity: 1;
   }
 }
+.content-box {
+  display: none;
+}
+.content-box.visible {
+  display: block;
+}
 .content-box.masked {
+  display: block;
   position: relative;
   max-height: 150px;
   overflow: hidden;
@@ -726,10 +731,6 @@ ul, ol {
   line-height: 1.6;
   margin-bottom: 24px;
   margin-bottom: 16px;
-  display: none;
-}
-.generated-content.visible {
-  display: block;
 }
 .generated-content br {
   display: block;
@@ -737,12 +738,15 @@ ul, ol {
 }
 
 .payment-overlay {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
   text-align: center;
+}
+.payment-overlay.visible {
+  display: flex;
 }
 .payment-overlay h5 {
   color: #55328F;
@@ -940,6 +944,50 @@ ul, ol {
   font-weight: 500;
 }
 
+.overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-container .overlay-content {
+  background: #F5F5F7;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+}
+.overlay-container .message-card {
+  text-align: center;
+}
+.overlay-container .message-card h3 {
+  color: #55328F;
+  margin-bottom: 16px;
+}
+.overlay-container .message-card p {
+  color: #2F394B;
+  margin-bottom: 24px;
+}
+.overlay-container .message-card .action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.overlay-container .message-card .action-buttons button {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .overlay-container .overlay-content {
+    padding: 24px;
+  }
+}
 /* Footer step */
 #footer {
   background-color: #55328F;

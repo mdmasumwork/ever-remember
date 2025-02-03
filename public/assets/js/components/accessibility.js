@@ -1,82 +1,108 @@
 class Accessibility {
     static init() {
-        this.bindstepEvents();
-        this.bindKeyboardNavigation();
-        this.initFirststepFocus();
+        this.bindStepForwardTriggers();
+        this.bindCardInteractions();
+        this.focusActiveStepElement();
     }
 
-    static initFirststepFocus() {
-        // Focus first element in active step on page load
-        const $activestep = $('step.active');
-        if ($activestep.length) {
-            this.focusFirstElement($activestep[0]);
-        }
-    }
+    static bindStepForwardTriggers() {
+        // Handle button clicks with go-next-{number} class
+        $(document).on('click', '[class*="go-next-"]', function(e) {            
+            Accessibility.triggerStepForwardEvent(this);
+        });
 
-    static bindstepEvents() {
-        // Listen for step activation
-        $('step').on('stepActive', function() {
-            Accessibility.focusFirstElement(this);
+        // Handle Enter key on elements with both go-next-{number} and card classes
+        $(document).on('keypress', '[class*="go-next-"].card', function(e) {
+            if (e.which === 13) { // Enter key
+            Accessibility.triggerStepForwardEvent(this);
+            }
+        });
+
+        // Handle Enter key on input fields (excluding textarea)
+        $(document).on('keypress', 'input', function(e) {
+            if (e.which === 13) { // Enter key
+            const $submitButton = $(this).closest('.step').find('button[type="submit"]');
+            if ($submitButton.length) {
+                Accessibility.triggerStepForwardEvent($submitButton.get(0));
+            } else {
+                $(document).trigger('stepForwardRequested', [1]);
+            }
+            }
         });
     }
 
-    static focusFirstElement(step) {
-        const $step = $(step);
-        const stepId = $step.attr('id') || $step.attr('class');
+    static triggerStepForwardEvent(element) {
 
-        // Special handling for message-tone step
-        if (stepId.includes('message-tone')) {
-            const $firstCard = $step.find('.card').first();
-            if ($firstCard.length) {
-                $firstCard.focus();
-                return;
-            }
+        if ($(element).hasClass('card')) {
+            $(element).addClass('selected').siblings().removeClass('selected');
         }
 
-        const $input = $step.find('input, textarea').first();
-        if ($input.length) {
-            $input.focus();
+        const classList = $(element).attr('class').split(/\s+/);
+        let steps = 0;
+        let skip = false;
+
+        classList.forEach(function(className) {
+            const match = className.match(/^go-next-(\d+)$/);
+            if (match) {
+                steps = parseInt(match[1], 10);
+            }
+            if (className === 'skip-button') {
+                skip = true;
+            }
+        });
+
+        if (steps > 0) {
+            $(document).trigger('stepForwardRequested', [steps, skip]);
+        }
+    }
+
+    static focusActiveStepElement() {
+        const $activeStep = $('.step.active');
+        if (!$activeStep.length) return;
+
+        // If it's the message type step, focus first card
+        if ($activeStep.hasClass('card-step')) {
+            const $firstCard = $activeStep.find('.card').first();
+            if ($firstCard.length) {
+                $firstCard.attr('tabindex', '0').focus();
+            }
+            return;
         } else {
-            const $primaryButton = $step.find('.er-button.primary-button').first();
-            if ($primaryButton.length) {
-                $primaryButton.focus();
-            } else {
-                const $firstCard = $step.find('.card[tabindex="0"]');
-                if ($firstCard.length) {
-                    $firstCard.focus();
+            // Try to find the first interactive element
+            let $focusElement = $activeStep.find('input:visible, textarea:visible').first();
+            if (!$focusElement.length) {
+                $focusElement = $activeStep.find('.er-button').first();
+            }
+
+            if ($focusElement.length) {
+                // Clear any existing content and prevent default input
+                if ($focusElement.is('textarea')) {
+                    $focusElement.val(''); // Clear any existing content
+                    
+                    // Use setTimeout to ensure focus happens after current event loop
+                    setTimeout(() => {
+                        $focusElement.focus();
+                        // Place cursor at start
+                        $focusElement[0].setSelectionRange(0, 0);
+                    }, 0);
+                } else {
+                    $focusElement.focus();
                 }
             }
         }
     }
 
-    static bindKeyboardNavigation() {
-        $('.card').on('keydown', function(e) {
-            const $cards = $('.card');
-            const currentIndex = $cards.index(this);
-            
-            switch(e.keyCode) {
-                case 13: // Enter
-                case 32: // Space
-                    e.preventDefault();
-                    $(this).trigger('click');
-                    break;
-                    
-                case 38: // Up
-                case 37: // Left
-                    e.preventDefault();
-                    if (currentIndex > 0) {
-                        $cards.eq(currentIndex - 1).focus();
-                    }
-                    break;
+    static bindCardInteractions() {
+        // Add tabindex to all cards
+        $('.card').attr('tabindex', '0');
 
-                case 40: // Down
-                case 39: // Right
-                    e.preventDefault();
-                    if (currentIndex < $cards.length - 1) {
-                        $cards.eq(currentIndex + 1).focus();
-                    }
-                    break;
-            }
+        // Add hover to focus behavior
+        $(document).on('mouseenter', '.card', function() {
+            $(this).focus();
+        });
+
+        $(document).on('mouseleave', '.card', function() {
+            $(this).blur();
         });
     }
 }

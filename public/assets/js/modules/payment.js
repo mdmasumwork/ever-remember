@@ -49,9 +49,8 @@ class Payment {
     }
 
     static bindPaymentButton() {
-        $('.initial-button').on('click', () => {
-            $('.initial-button').hide();
-            $('.payment-form').slideDown();
+        $('.payment-overlay .initial-button').on('click', () => {
+            UIManager.updatePaymentUI('payment-initiated');
         });
 
         $('.payment-submit-button').on('click', async (e) => {
@@ -116,14 +115,14 @@ class Payment {
             if (!verifyResponse.ok) throw new Error('Payment verification failed');
 
             // 2. Show success message
-            $('.payment-overlay').hide();
-            $('.payment-success-overlay').addClass('visible');
+            UIManager.updatePaymentUI('payment-success');
 
             // 3. Handle continue button click
             $('.payment-success-overlay .continue-button').one('click', async () => {
+                UIManager.updatePaymentUI('continue-after-payment');
                 try {
                     const content = await this.loadFullContent();
-                    UIManager.updateContentStep(content.fullContent, content.version, true);
+                    UIManager.updateContentStep(content.version, content.fullContent, true);
                 } catch (error) {
                     $('.payment-success-overlay').html(`
                         <div class="content-error">

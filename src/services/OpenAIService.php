@@ -15,8 +15,10 @@ class OpenAIService {
 
     public function generateContent($prompt) {
         // Dummy response for testing
+        // session_start();
+        $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
         return [
-            'content' => $prompt
+            'content' => 'version ' . $version . ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut metus felis. Nulla lobortis velit elit, et interdum nunc euismod vel. Fusce laoreet a est in posuere. Sed egestas ut nunc eu efficitur. Donec est ex, auctor non pharetra viverra, scelerisque nec mauris. Nam metus'
         ];
     }
 

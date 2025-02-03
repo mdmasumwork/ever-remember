@@ -1,9 +1,9 @@
-<section class="step step-deceased-person-details">
+<section class="step step-deceased-person-details required">
     <h4>Thank you for sharing that, and I'm truly sorry for your loss.</h4>
-    <h4>To help me write something that truly captures <span class='deceased-person-name'>the deceased person</span>, please could you tell me a bit more about them?</h4>
+    <h4>To help me write something that truly captures <span class='deceased-person-name-placeholder'>the deceased person</span>, please could you tell me a bit more about them?</h4>
     <p>You can start with simple details, like:</p>
     <ul>
-        <li>When and Where <span class='deceased-person-name'>the deceased person</span> was born</li>
+        <li>When and Where <span class='deceased-person-name-placeholder'>the deceased person</span> was born</li>
         <li>Their profession or what they did for a living</li>
         <li>Hobbies and interests that brought them joy</li>
         <li>Where they grew up and lived</li>

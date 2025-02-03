@@ -6,6 +6,7 @@
             'body_content' => 'Help me express my condolences in a short message',
             'type'          => 'condolence-message',
             'dimantion'   => '40px',
+            'short_title' => 'condolence message'
         ),
         array(
             'header_icon' => 'pen-tip.svg',
@@ -13,6 +14,7 @@
             'body_content' => 'Help me write a longer letter of sympathy to someone I care about',
             'type'          => 'sympathy-letter',
             'dimantion'   => '48px',
+            'short_title' => 'sympathy letter'
         ),
         array(
             'header_icon' => 'man-reading-eulogy.svg',
@@ -20,6 +22,7 @@
             'body_content' => 'Help me write a heartfelt eulogy to honor and remember <span class="deceased-person-name"></span>',
             'type'          => 'eulogy',
             'dimantion'   => '38px',
+            'short_title' => 'eulogy'
         ),
         array(
             'header_icon' => 'message.svg',
@@ -27,17 +30,18 @@
             'body_content' => 'Help me write a social post, an obituary, or anything else',
             'type'          => 'obituary',
             'dimantion'   => '42px',
+            'short_title' => 'obituary'
         )
     )
 ?>
-<section class="step step-message-type">
+<section class="step step-message-type card-step">
     <h4>What kind of message would you like me to write?</h4>
     <div class="card-area">
         <?php
             foreach ($card_data as $index => $card) {
                 ?>
                 <div class="card go-next-1" 
-                     data-message-type="<?= $card['type']; ?>"
+                     data-message-type="<?= $card['short_title']; ?>"
                      tabindex="<?= $index; ?>" 
                      role="button"
                      aria-label="Select <?= $card['title']; ?>">

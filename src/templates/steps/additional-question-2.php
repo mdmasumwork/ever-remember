@@ -4,7 +4,7 @@
         <textarea id="additional-question-2-field" placeholder="Your additional details will help create a better version..."></textarea>
         <div class="field-button-area">
             <button class="er-button primary-button go-next-1">Send</button>
-            <button class="er-button tertiary-button go-next-1">Skip</button>
+            <button class="er-button tertiary-button go-next-1 skip-button">Skip</button>
         </div>
     </div>
     <div class="field-error-area"></div>
