@@ -28,7 +28,9 @@
 }
 
 @include mobile {
-    step {
+    .step {
         padding: $spacing-lg;
+        padding-left: $spacing-xl;
+        padding-right: $spacing-md;
     }
 }

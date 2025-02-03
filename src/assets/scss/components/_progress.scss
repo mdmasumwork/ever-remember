@@ -1,0 +1,35 @@
+#main-content .vertical-progress {
+    position: fixed;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px; // Small gap between vertical lines
+    z-index: 10;
+
+    &__step {
+        position: relative;
+        width: 8px; // Thin vertical line
+        height: 28px; // Height of each line segment
+        background: $border-dark;
+
+        &.active {            
+            background: $brand-accent;
+        }
+
+        &.completed {
+            background: lighten($brand-primary, 5%);
+        }
+
+        @include mobile {
+            width: 6px;
+            height: 24px;
+        }
+    }
+
+    @include mobile {
+        left: 0.7rem;
+    }
+}

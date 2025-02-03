@@ -18,7 +18,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <?php include '../src/templates/overlays/session-restore.php'; ?>
 
 <main id="main-content">
-    
+    <?php include '../src/templates/progress-bar.php'; ?>
     
     <?php
 
@@ -57,6 +57,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <script src="assets/js/components/slide-menu.js"></script>
 <script src="assets/js/components/toast.js"></script>
 <script src="assets/js/components/tabs.js"></script>
+<script src="assets/js/components/progress-bar.js"></script>
 <!-- Modules -->
 <script src="assets/js/modules/ui-manager.js"></script>
 <script src="assets/js/modules/data-manager.js"></script>

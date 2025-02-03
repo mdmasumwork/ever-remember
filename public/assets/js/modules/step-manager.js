@@ -9,6 +9,13 @@ class StepManager {
             if (FormValidator.validateStep($currentStep)) {
                 DataManager.collectData($currentStep[0], isSkipButton);
                 UIManager.showNextStep(steps);
+
+                // trigger our custom event 'stepForwarded' with the current step number
+                const currentStepNumber = $('.step').index($currentStep) + 2;
+                const detail = { currentStep: currentStepNumber };
+                const event = new CustomEvent('stepForwarded', { detail });
+                document.dispatchEvent(event);
+
             }
         });
     }

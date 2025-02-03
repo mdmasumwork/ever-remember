@@ -29,6 +29,11 @@ class SessionManager {
 
     static bindRestoreActions() {
         $('#restore-session').on('click', async () => {
+            // Trigger event 'stepForwarded' with current step number
+            const detail = { currentStep: 11 };
+            const event = new CustomEvent('stepForwarded', { detail });
+            document.dispatchEvent(event);
+
             try {
                 const $overlay = $('#session-restore-overlay');
                 // Hide overlay immediately
@@ -67,6 +72,11 @@ class SessionManager {
         });
 
         $('#start-new-session').on('click', () => {
+            // Trigger event 'stepForwarded' with step number 11
+            const detail = { currentStep: 1 };
+            const event = new CustomEvent('stepForwarded', { detail });
+            document.dispatchEvent(event);
+
             $.post('/api/clear-session.php')
                 .done(() => {
                     $('.step').removeClass('active');
@@ -95,6 +105,19 @@ class SessionManager {
     static async updateUIForVersions(versions, currentVersion) {
         for (let i = 1; i <= currentVersion; i++) {
             UIManager.updateContentStep(i, versions[i - 1].fullContent, true);
+        }
+    }
+
+    static async getSessionVersion() {
+        try {
+            const response = await $.get('/api/check-session.php');
+            if (response.success && response.data.version) {
+                return response.data.version;
+            }
+            return false;
+        } catch (error) {
+            console.error('Error checking session version:', error);
+            return false;
         }
     }
 }

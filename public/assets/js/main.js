@@ -4,6 +4,7 @@ $(document).ready(function() {
     SlideMenu.init();
     Toast.init();
     Tabs.init();
+    ProgressBar.init();
     Payment.init();
     SessionManager.init();
 });
