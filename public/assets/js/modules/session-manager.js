@@ -1,6 +1,7 @@
 class SessionManager {
     static init() {
         this.checkExistingSession();
+        this.bindGoodbyeActions();
     }
 
     static checkExistingSession() {
@@ -17,7 +18,7 @@ class SessionManager {
                             console.error('Failed to clear session');
                         });
                     $('.step').removeClass('active');
-                    $('.step-message-tone').addClass('active');
+                    $('.step-introduction').addClass('active');
                 }
             });
     }
@@ -72,17 +73,7 @@ class SessionManager {
         });
 
         $('#start-new-session').on('click', () => {
-            // Trigger event 'stepForwarded' with step number 11
-            const detail = { currentStep: 1 };
-            const event = new CustomEvent('stepForwarded', { detail });
-            document.dispatchEvent(event);
-
-            $.post('/api/clear-session.php')
-                .done(() => {
-                    $('.step').removeClass('active');
-                    $('.step-introduction').addClass('active');
-                    $('#session-restore-overlay').fadeOut();
-                });
+            this.startNewSession();
         });
     }
 
@@ -120,4 +111,52 @@ class SessionManager {
             return false;
         }
     }
+
+    static bindGoodbyeActions() {
+        $('.step-goodbye .restart-session').on('click', async () => {
+            $.post('/api/clear-session.php')
+            .done(() => {
+                location.reload();
+            });
+        });
+
+        $('.step-goodbye .view-content').on('click', async () => {
+            try {
+                const response = await $.get('/api/check-session.php');
+                
+                if (response.success && response.data.version) {
+                    const currentVersionNumber = response.data.version;
+                    
+                    // Just switch to the correct content step
+                    $('.step').removeClass('active');
+                    $(`.step-content-${currentVersionNumber}`).addClass('active');
+                    
+                    // Activate the correct tab
+                    $(`.step-content-${currentVersionNumber} .tab-button[data-tab="version-${currentVersionNumber}"]`).click();
+                } else {
+                    throw new Error('No valid session found');
+                }
+            } catch (error) {
+                console.error('Error getting version:', error);
+                Toast.show('Error loading content. Please try again.', 'error');
+                await this.handleSessionClear();
+            }
+        });
+    }
+
+    static startNewSession() {
+        // Trigger event 'stepForwarded' with step number 11, this event will be listened by progress bar
+        const detail = { currentStep: 1 };
+        const event = new CustomEvent('stepForwarded', { detail });
+        document.dispatchEvent(event);
+
+        $.post('/api/clear-session.php')
+            .done(() => {
+                $('.step').removeClass('active');
+                $('.step-introduction').addClass('active');
+                $('#session-restore-overlay').fadeOut();
+            });
+    }
+            
+
 }

@@ -224,6 +224,16 @@ ul, ol {
   z-index: 1;
 }
 
+.goodbye-actions {
+  display: flex;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .goodbye-actions {
+    flex-direction: column;
+  }
+}
+
 .er-button {
   padding: 16px 32px;
   border-radius: 8px;
@@ -235,18 +245,18 @@ ul, ol {
   font-size: 16px;
   gap: 8px;
   justify-content: center;
+  border: 2px solid #ff6600;
 }
 .er-button.primary-button {
   background-color: #ff6600;
   color: #FFFFFF;
-  border: none;
 }
 .er-button.primary-button:hover {
   background-color: rgb(204, 81.6, 0);
+  border-color: rgb(204, 81.6, 0);
 }
 .er-button.secondary-button {
   background-color: transparent;
-  border: 2px solid #ff6600;
   color: #ff6600;
 }
 .er-button.secondary-button:hover {
@@ -1032,7 +1042,7 @@ ul, ol {
 .overlay-container .message-card .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
 }
 .overlay-container .message-card .action-buttons button {
   width: 100%;

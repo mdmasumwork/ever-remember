@@ -3,4 +3,8 @@
     <div class="field-caption">
         <img class="field-caption-icon" src="assets/images/icons/heart_purple.png">
     </div>
+    <div class="goodbye-actions">
+        <button class="er-button primary-button view-content">View Generated Content</button>
+        <button class="er-button secondary-button restart-session">Start New Session</button>
+    </div>
 </section>

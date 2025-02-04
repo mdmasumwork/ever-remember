@@ -34,3 +34,12 @@
         z-index: 1;
     }
 }
+
+.goodbye-actions {
+    display: flex;
+    gap: $spacing-md;
+
+    @include mobile {
+        flex-direction: column;
+    }
+}

@@ -7,20 +7,20 @@
     font-size: $font-size-base;
     gap: $spacing-sm;
     justify-content: center;
+    border: 2px solid $action-primary;
 
     &.primary-button {
         background-color: $action-primary;
         color: $text-white;
-        border: none;
 
         &:hover {
             background-color: color.adjust($action-primary, $lightness: -10%);
+            border-color: color.adjust($action-primary, $lightness: -10%);
         }
     }
 
     &.secondary-button {
         background-color: transparent;
-        border: 2px solid $action-primary;
         color: $action-primary;
 
         &:hover {
