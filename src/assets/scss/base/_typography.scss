@@ -60,11 +60,11 @@ ul, ol {
                 content: '';
                 position: absolute;
                 left: 0;
-                top: 50%;
+                top: 12px;
                 transform: translateY(-50%);
-                width: 20px;
-                height: 20px;
-                background-image: url('/assets/images/logo_flower.png'); // Updated path
+                width: 24px;
+                height: 24px;
+                background-image: url('/assets/images/icons/right-arrow-orange.svg'); // Updated path
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center;

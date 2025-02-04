@@ -103,11 +103,11 @@ ul, ol {
   content: "";
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 12px;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background-image: url("/assets/images/logo_flower.png");
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/images/icons/right-arrow-orange.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -500,7 +500,6 @@ ul, ol {
 }
 
 .card-area {
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   width: 100%;
@@ -511,8 +510,11 @@ ul, ol {
   border-radius: 8px;
   border: 2px solid transparent;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   transition: all 0.3s ease;
+  margin: 16px 0;
 }
 .card-area .card:hover {
   cursor: pointer;
@@ -534,10 +536,15 @@ ul, ol {
   -moz-user-select: none;
   -ms-user-select: none;
 }
+.card-area .card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .card-area .card-header {
   margin-bottom: 16px;
   display: flex;
-  gap: 16px;
+  gap: 12px;
   align-items: center;
 }
 .card-area .card-header img {
@@ -546,27 +553,38 @@ ul, ol {
 }
 .card-area .card-header .card-title {
   margin-bottom: 0;
-  line-height: 28px;
+  line-height: 22px;
 }
 .card-area .card-title {
-  font-size: 1.25rem;
+  font-size: 18px;
   font-weight: 700;
   color: #9869D2;
 }
 .card-area .card-body {
   flex: 1;
   color: #2F394B;
+  font-size: 15px;
+}
+.card-area .card-body p {
+  margin-bottom: 10px;
 }
 .card-area .card-arrow {
-  margin-top: auto;
-  text-align: right;
-  width: 40px;
+  margin-top: 0;
+  margin-left: 24px;
+  flex-shrink: 0;
+  width: 30px;
+  border: 2px solid #9869D2;
+  border-radius: 50%;
+  padding: 3px;
+  height: 30px;
 }
 @media (max-width: 768px) {
   .card-area {
     grid-template-columns: 1fr;
     gap: 16px;
-    padding: 0 8px;
+  }
+  .card-area .card {
+    flex-direction: row;
   }
 }
 

@@ -17,7 +17,7 @@ class SessionManager {
                             console.error('Failed to clear session');
                         });
                     $('.step').removeClass('active');
-                    $('.step-introduction').addClass('active');
+                    $('.step-message-tone').addClass('active');
                 }
             });
     }

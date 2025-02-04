@@ -5,31 +5,31 @@
             'title' => 'A message for cards or flowers',
             'body_content' => 'Help me express my condolences in a short message',
             'type'          => 'condolence-message',
-            'dimantion'   => '40px',
+            'dimantion'   => '34px',
             'short_title' => 'condolence message'
         ),
         array(
-            'header_icon' => 'pen-tip.svg',
+            'header_icon' => 'email-orange.svg',
             'title' => 'A letter of sympathy',
             'body_content' => 'Help me write a longer letter of sympathy to someone I care about',
             'type'          => 'sympathy-letter',
-            'dimantion'   => '48px',
+            'dimantion'   => '36px',
             'short_title' => 'sympathy letter'
         ),
         array(
-            'header_icon' => 'man-reading-eulogy.svg',
+            'header_icon' => 'book.svg',
             'title' => 'A eulogy',
             'body_content' => 'Help me write a heartfelt eulogy to honor and remember <span class="deceased-person-name"></span>',
             'type'          => 'eulogy',
-            'dimantion'   => '38px',
+            'dimantion'   => '40px',
             'short_title' => 'eulogy'
         ),
         array(
-            'header_icon' => 'message.svg',
+            'header_icon' => 'badge.svg',
             'title' => 'An obituary or something else',
             'body_content' => 'Help me write a social post, an obituary, or anything else',
             'type'          => 'obituary',
-            'dimantion'   => '42px',
+            'dimantion'   => '32px',
             'short_title' => 'obituary'
         )
     )
@@ -45,14 +45,16 @@
                      tabindex="<?= $index; ?>" 
                      role="button"
                      aria-label="Select <?= $card['title']; ?>">
-                    <div class="card-header">
-                        <img src="assets/images/icons/<?= $card['header_icon']; ?>" 
-                             width="<?= $card['dimantion']; ?>" 
-                             height="<?= $card['dimantion']; ?>">
-                        <h4 class="card-title"><?= $card['title']; ?></h4>
-                    </div>
-                    <div class="card-body">
-                        <p><?= $card['body_content']; ?></p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <img src="assets/images/icons/<?= $card['header_icon']; ?>" 
+                                 width="<?= $card['dimantion']; ?>" 
+                                 height="<?= $card['dimantion']; ?>">
+                            <h4 class="card-title"><?= $card['title']; ?></h4>
+                        </div>
+                        <div class="card-body">
+                            <p><?= $card['body_content']; ?></p>
+                        </div>
                     </div>
                     <img src="assets/images/icons/right-arrow-orange.svg" class="card-arrow">
                 </div>

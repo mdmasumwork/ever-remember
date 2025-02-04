@@ -1,5 +1,4 @@
 .card-area {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-lg;
     width: 100%;
@@ -10,8 +9,11 @@
         border-radius: $border-radius-md;
         border: 2px solid transparent;
         display: flex;
-        flex-direction: column;
+        flex-direction: row; // Change to row layout
+        justify-content: space-between; // Space between content and arrow
+        align-items: center; // Center items vertically
         transition: all $transition-speed ease;
+        margin: $spacing-md 0;
 
         &:hover {
             cursor: pointer;
@@ -39,10 +41,16 @@
         }
     }
 
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
     .card-header {
         margin-bottom: $spacing-md;
         display: flex;
-        gap: $spacing-md;
+        gap: 12px;
         align-items: center; // Center align items vertically
 
         img {
@@ -52,12 +60,12 @@
 
         .card-title {
             margin-bottom: 0;
-            line-height: 28px;
+            line-height: 22px;
         }
     }
 
     .card-title {
-        font-size: 1.25rem;
+        font-size: 18px;
         font-weight: $font-weight-bold;
         color: $brand-primary;
     }
@@ -65,17 +73,30 @@
     .card-body {
         flex: 1;
         color: $text-body;
+        font-size: 15px;
+
+        p {
+            margin-bottom: 10px;
+        }
     }
 
     .card-arrow {
-        margin-top: auto;
-        text-align: right;
-        width: 40px;
+        margin-top: 0; // Remove top margin
+        margin-left: $spacing-lg; // Add left margin
+        flex-shrink: 0; // Prevent arrow from shrinking
+        width: 30px; // Reduce width for better proportion
+        border: 2px solid $brand-primary;
+        border-radius: 50%;
+        padding: 3px;
+        height: 30px; // Match width for perfect circle
     }
 
     @include mobile {
         grid-template-columns: 1fr;
         gap: $spacing-md;
-        padding: 0 $spacing-sm;
+
+        .card {
+            flex-direction: row; // Maintain row layout on mobile
+        }
     }
 }
