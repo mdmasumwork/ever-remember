@@ -53,6 +53,24 @@ class UIManager {
         Accessibility.focusActiveStepElement();
     }
 
+    static showPreviousStep(steps = 1) {
+        const $currentStep = $('.step.active');
+
+        // Find target step
+        let $targetStep = $currentStep;
+        for (let i = 0; i < steps; i++) {
+            $targetStep = $targetStep.prev('.step');
+            if (!$targetStep.length) return;
+        }
+
+        // Perform transition
+        $currentStep.removeClass('active');
+        $targetStep.addClass('active');
+        
+        // Call focus after transition
+        Accessibility.focusActiveStepElement();
+    }
+
     static showFieldError($field, message) {
         // First clear any existing error state
         this.clearFieldError($field);

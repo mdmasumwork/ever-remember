@@ -168,6 +168,7 @@ ul, ol {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.3s, transform 0.3s;
+  position: relative;
 }
 .step.active {
   display: block;
@@ -183,12 +184,111 @@ ul, ol {
 .step h4 {
   color: #55328F;
 }
+.step .step-content {
+  position: relative;
+  z-index: 1;
+}
+.step .step-navigation {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  border-top: 1px solid #E5E7EB;
+  padding-top: 24px;
+}
+.step .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #2F394B;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+.step .nav-link.disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+.step .nav-link:hover {
+  color: #ff6600;
+}
+.step .nav-link:hover .nav-arrow {
+  transform: scale(1.1);
+}
+.step .nav-link .nav-text {
+  display: flex;
+  flex-direction: column;
+}
+.step .nav-link .nav-label {
+  font-size: 14px;
+  color: #ff6600;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.step .nav-link .nav-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+.step .nav-link .nav-arrow {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s;
+}
+.step .nav-link.prev {
+  margin-right: auto;
+}
+.step .nav-link.next {
+  margin-left: auto;
+  text-align: right;
+  flex-direction: row-reverse;
+}
+.step .nav-arrow-circle {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.step .nav-arrow-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.step .nav-arrow-circle:active {
+  transform: scale(0.95);
+}
+.step .nav-arrow-circle:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.step .nav-arrow.disabled {
+  pointer-events: none;
+}
 
 @media (max-width: 768px) {
   .step {
     padding: 24px;
     padding-left: 32px;
     padding-right: 16px;
+  }
+  .step .step-navigation .nav-arrow-circle {
+    width: 40px;
+    height: 40px;
+  }
+  .step .nav-link .nav-label {
+    font-size: 12px;
+  }
+  .step .nav-link .nav-title {
+    font-size: 14px;
   }
 }
 #main-content {
