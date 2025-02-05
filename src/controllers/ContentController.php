@@ -19,7 +19,7 @@ class ContentController {
     public function handleRequest() {
 
         //add a sleep for 2 seconds.
-        sleep(1);
+        // sleep(1);
 
         session_start();
         

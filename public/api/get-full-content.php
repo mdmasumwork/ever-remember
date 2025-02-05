@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../src/controllers/ContentController.php';
 
 session_start();
 
-sleep(1);
+// sleep(1);
 
 try {
     $version = isset($_GET['version']) ? (int)$_GET['version'] : null;

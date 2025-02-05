@@ -109,51 +109,115 @@ class PromptService {
         return $structuredPrompt;
     }
 
-    private function getBeginningSystemPrompt($deceasedPerson, $version = 1) {
-        if ($version === 2) {
-            return "You are a highly empathetic and professional condolence and sympathy message assistant.The user has already received a first version of the message and now wants to refine or modify it based on additional instructions. Your task is to follow the user's instructions carefully while also improving the message based on the details provided in the conversation.\n\n";
-        } elseif ($version === 3) {
-            return "You are a highly empathetic and professional condolence and sympathy message assistant. The user has already received a refined version of the message but wants to make further modifications based on additional instructions. Your task is to follow the user's instructions carefully while also improving the message based on the details provided in the conversation.\n\n";
-        } else {
-            return "You are a highly empathetic and professional condolence and sympathy message assistant. Based on the following inputs, create a heartfelt, meaningful, and respectful content that captures the essence of {$deceasedPerson}'s life and reflects the user's emotions and relationship with them. Follow these guidelines:\n\n";
+    private function getBeginningSystemPrompt($deceasedPerson, $messageType, $version = 1) {
+        $basePrompt = "You are a professional memorial content writer specializing in creating heartfelt and respectful messages. ";
+        
+        if ($version > 1) {
+            return $basePrompt . "This is version {$version} of the content after the user requested changes. Review the previous version(s) and their feedback carefully to maintain continuity while implementing the requested improvements.\n\n";
         }
+        
+        return $basePrompt . "Create a " . $this->getContentTypeDescription($messageType) . " that honors {$deceasedPerson}.\n\n";
     }
 
-    private function getEndingSystemPrompt($deceasedPerson, $version = 1) {
-        if ($version === 2) {
-            return "\n\nKey Requirements for Refinement:\n" .
-                   "- Follow the user's instructions exactly as much as possible.\n" .
-                   "- Make necessary refinements based on the conversation (questions, answers, and first version).\n" .
-                   "- Ensure coherence, clarity, and meaningful expression while improving readability.\n" .
-                   "- Maintain warmth, empathy, and an appropriate tone based on the user's selected style.\n" .
-                   "- Keep the response respectful, heartfelt, and fitting for the intended purpose.";
-        } elseif ($version === 3) {
-            return "\n\nKey Requirements for Further Refinement:\n" .
-                    "- Follow the user's instructions exactly as much as possible.\n" .
-                    "- Make necessary refinements based on the conversation (questions, answers, and previous versions).\n" .
-                    "- Ensure coherence, clarity, and meaningful expression while improving readability.\n" .
-                    "- Maintain warmth, empathy, and an appropriate tone based on the user's selected style.\n" .
-                    "- Keep the response respectful, heartfelt, and fitting for the intended purpose.";
-        } else {
-            return "\n\nKey Requirements:\n" .
-                   "- Begin the message with an empathetic greeting, such as \"Dear family of {$deceasedPerson}\" or \"To all who loved them,\" depending on the relationship and context provided. If the recipient is unclear, use a general greeting like \"To all who knew and loved {$deceasedPerson}.\"\n" .
-                   "- Maintain a tone that aligns with the user’s selection (e.g., compassionate, formal, poetic, or uplifting). For a compassionate tone, use gentle and heartfelt language that is warm and accessible. For a formal tone, maintain professionalism and dignity without being overly rigid or detached. For a poetic tone, keep it elegant and expressive without being overly ornate. For an uplifting tone, focus on celebrating the joy and achievements of the deceased’s life.\n" .
-                   "- Respect the sensitivity of the topic by avoiding overly casual or informal language.\n" .
-                   "- Incorporate the details provided by the user (e.g., relationship, accomplishments, special memories) to make the message personal, meaningful, and reflective of {$deceasedPerson}'s life.\n" .
-                   "- Identify the gender of the deceased from the conversation (if mentioned) and use the appropriate pronouns and terms (e.g., \"she/her,\" \"he/him,\" or \"they/them\") throughout the message. If the gender is unclear, use neutral pronouns (\"they/them\") to ensure inclusivity.\n" .
-                   "- If any answers appear mistyped, misplaced, or unclear, interpret them thoughtfully based on the context and other inputs. Use the surrounding questions and answers to infer the user’s intent while ensuring the output remains meaningful and accurate.\n" .
-                   "- If any details are vague or missing, thoughtfully expand and infer appropriate attributes based on the context to create a complete and respectful message.\n" .
-                   "- Ensure coherence and flow by interpreting the context from the questions and answers. Address any unclear or mistyped inputs with thoughtful inferences.\n" .
-                   "- If humor or lighthearted traits are mentioned, incorporate them subtly and respectfully to reflect the deceased’s personality, without detracting from the message's overall tone.\n" .
-                   "- Keep the message concise and appropriate for the selected message type (e.g., card, sympathy letter, eulogy, or obituary).\n" .
-                   "- Close the message with a warm and supportive note, offering comfort and hope to the recipient.";
+    private function getContentTypeDescription($messageType) {
+        return match($messageType) {
+            "condolence message" => "brief, heartfelt condolence message suitable for cards or flowers (2-4 sentences, no formal greeting or closing)",
+            "sympathy letter" => "personal sympathy letter (3-4 paragraphs with appropriate greeting and closing)",
+            "eulogy" => "touching eulogy to be delivered at the memorial service (5-7 minutes when spoken)",
+            "obituary" => "formal obituary announcement following standard newspaper format",
+            default => "memorial message"
+        };
+    }
+
+    private function getEndingSystemPrompt($messageType, $tone, $version = 1) {
+        $formatGuidelines = $this->getFormatGuidelines($messageType);
+        $toneGuidelines = $this->getToneGuidelines($tone);
+        
+        $baseGuidelines = "
+- Never address the deceased person directly
+- Never address the user of the application
+- Focus on comforting those grieving
+- Use appropriate pronouns based on context
+- Maintain consistency with previous versions if applicable\n";
+
+        if ($version > 1) {
+            $baseGuidelines .= "- Preserve elements the user liked from previous versions\n";
+            $baseGuidelines .= "- Focus on implementing the specific changes requested\n";
         }
+
+        return "\n\nFormat Requirements:\n{$formatGuidelines}\n\nTone Guidelines:\n{$toneGuidelines}\n\nGeneral Guidelines:{$baseGuidelines}";
+    }
+
+    private function getFormatGuidelines($messageType) {
+        return match($messageType) {
+            "condolence message" => 
+                "- Keep it brief and focused (2-4 sentences)\n" .
+                "- No formal greeting or closing\n" .
+                "- Express sympathy and offer comfort\n" .
+                "- Suitable for cards or flower arrangements",
+            
+            "sympathy letter" => 
+                "- Start with appropriate greeting (e.g., 'Dear [Family Name] Family')\n" .
+                "- 3-4 paragraphs structure\n" .
+                "- Include personal memories if available\n" .
+                "- End with a warm closing and signature line",
+            
+            "eulogy" => 
+                "- Opening that captures attention\n" .
+                "- Balance of personal stories and accomplishments\n" .
+                "- Clear structure with smooth transitions\n" .
+                "- Meaningful conclusion that honors legacy\n" .
+                "- Appropriate length for spoken delivery (5-7 minutes)",
+            
+            "obituary" => 
+                "- Standard newspaper format\n" .
+                "- Begin with basic biographical information\n" .
+                "- Include family members, career, achievements\n" .
+                "- End with funeral arrangement details if provided\n" .
+                "- Factual yet respectful tone",
+            
+            default => "- Maintain appropriate length and structure\n- Include relevant details"
+        };
+    }
+
+    private function getToneGuidelines($tone) {
+        return match($tone) {
+            "Compassionate" => 
+                "- Use warm, gentle language\n" .
+                "- Express genuine empathy\n" .
+                "- Focus on comfort and support",
+            
+            "Formal" => 
+                "- Maintain professional language\n" .
+                "- Use traditional phrasing\n" .
+                "- Respect formal conventions",
+            
+            "Poetic" => 
+                "- Include tasteful metaphors\n" .
+                "- Use elegant expressions\n" .
+                "- Maintain emotional depth",
+            
+            "Uplifting" => 
+                "- Focus on positive memories\n" .
+                "- Celebrate life achievements\n" .
+                "- Include hopeful messages",
+            
+            default => "- Maintain appropriate emotional tone"
+        };
     }
 
     public function generatePrompt($data) {
-        $beginningSystemPrompt = $this->getBeginningSystemPrompt($data['deceasedPersonName'], $data['version']);
+        $beginningSystemPrompt = $this->getBeginningSystemPrompt(
+            $data['deceasedPersonName'], 
+            $data['messageType'],
+            $data['version']
+        );
         $structuredPrompt = $this->getStructuredPrompt($data);      
-        $enddingSystemPrompt = $this->getEndingSystemPrompt($data['deceasedPersonName'], $data['version']);        
-        return $beginningSystemPrompt . $structuredPrompt . $enddingSystemPrompt;
+        $endingSystemPrompt = $this->getEndingSystemPrompt(
+            $data['messageType'],
+            $data['messageTone'], 
+            $data['version']
+        );        
+        return $beginningSystemPrompt . $structuredPrompt . $endingSystemPrompt;
     }
 }
