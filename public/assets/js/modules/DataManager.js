@@ -3,31 +3,31 @@ class DataManager {
     // TODO: Add CSRF protection
     // TODO: Add data sanitization
     // TODO: Add secure transmission
-    // static formData = {
-    //     firstPersonName: 'Md Masum',
-    //     email: 'md.masum@gmail.com',
-    //     deceasedPersonName: 'Nanet',
-    //     messageType: 'eulogy',
-    //     relationship: 'neighbor',
-    //     details: 'nice person',
-    //     accomplishments: 'teacher',
-    //     messageTone: 'formal',
-    //     finalQuestion: '',
-    //     additionalInstructions: []
-    // };
-
     static formData = {
-        firstPersonName: '',
-        email: '',
-        deceasedPersonName: '',
-        messageType: '',
-        relationship: '',
-        details: '',
-        accomplishments: '',
-        messageTone: '',
+        firstPersonName: 'Md Masum',
+        email: 'md.masum@gmail.com',
+        deceasedPersonName: 'Nanet',
+        messageType: 'eulogy',
+        relationship: 'neighbor',
+        details: 'nice person',
+        accomplishments: 'teacher',
+        messageTone: 'formal',
         finalQuestion: '',
         additionalInstructions: []
     };
+
+    // static formData = {
+    //     firstPersonName: '',
+    //     email: '',
+    //     deceasedPersonName: '',
+    //     messageType: '',
+    //     relationship: '',
+    //     details: '',
+    //     accomplishments: '',
+    //     messageTone: '',
+    //     finalQuestion: '',
+    //     additionalInstructions: []
+    // };
 
     static collectData(step, toSkip = false) {
         console.log('Collecting data from step:', step);
@@ -131,15 +131,11 @@ class DataManager {
 
     static async sendToContentGeneration(hasAdditionalInstruction = false) {
         try {
-            const payload = hasAdditionalInstruction ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } : this.formData;
+            const payload = hasAdditionalInstruction 
+                ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } 
+                : this.formData;
             
-            const response = await fetch('/api/generate-content.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
+            const data = await HttpService.post('/api/generate-content.php', payload);
             console.log(data.prompt);
             
             if (!data.success) {
@@ -161,13 +157,8 @@ class DataManager {
 
     static async sendFeedback(feedback) {
         try {
-            const response = await fetch('/api/store-feedback.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ feedback })
-            });
-
-            const data = await response.json();
+            const data = await HttpService.post('/api/store-feedback.php', { feedback });
+            
             if (!data.success) {
                 throw new Error(data.error);
             }

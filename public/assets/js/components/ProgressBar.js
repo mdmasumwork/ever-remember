@@ -1,18 +1,18 @@
-const ProgressBar = {
-    init: function() {
+class ProgressBar {
+    static init() {
         this.$steps = $('.vertical-progress__step');
         this.$steps.first().addClass('active');
         this.bindEvents();
-    },
+    }
 
-    bindEvents: function() {
+    static bindEvents() {
         $(document).on('stepForwarded', (event) => {
             const currentStep = event.detail.currentStep;
             this.updateProgress(currentStep < 11 ? currentStep : 11);
         });
-    },
+    }
 
-    updateProgress: function(currentStep) {
+    static updateProgress(currentStep) {
         this.$steps.each(function(index) {
             const stepNumber = index + 1;
             const $step = $(this);

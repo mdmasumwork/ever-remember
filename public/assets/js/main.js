@@ -5,6 +5,6 @@ $(document).ready(function() {
     Toast.init();
     Tabs.init();
     ProgressBar.init();
-    Payment.init();
-    SessionManager.init();
+    PaymentService.init();
+    SessionService.init();
 });

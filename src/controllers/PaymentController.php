@@ -1,20 +1,34 @@
 <?php
 require_once __DIR__ . '/../services/PaymentService.php';
+require_once __DIR__ . '/../services/SessionService.php';
 require_once __DIR__ . '/../config/Database.php';
+require_once __DIR__ . '/../middleware/RateLimitMiddleware.php';
 
 class PaymentController {
     private $paymentService;
+    private $rateLimitMiddleware;
+    private $sessionService;
 
     public function __construct() {
         $this->paymentService = new PaymentService();
+        $this->rateLimitMiddleware = new RateLimitMiddleware();
+        $this->sessionService = new SessionService();
     }
 
     public function createPaymentIntent() {
         try {
+            // Apply rate limiting
+            $this->rateLimitMiddleware->handle('payment');
+            
             $paymentIntent = $this->paymentService->createPaymentIntent(9.99);
             return [
                 'success' => true,
                 'clientSecret' => $paymentIntent->client_secret
+            ];
+        } catch (RateLimitExceededException $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage()
             ];
         } catch (\Exception $e) {
             return [
@@ -33,8 +47,6 @@ class PaymentController {
                 // 2. Log to database via Service
                 $paymentId = $this->paymentService->logPayment($paymentResult['payment'], $userName, $userEmail);
                 
-                // 3. Set session in Controller
-                session_start();
                 $_SESSION['payment_verified'] = true;
                 $_SESSION['payment_id'] = $paymentId; // Store payment ID in session
                 

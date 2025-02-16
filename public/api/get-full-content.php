@@ -1,11 +1,12 @@
 <?php
-header('Content-Type: application/json');
+
 require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/controllers/ContentController.php';
+require_once __DIR__ . '/../../src/services/SessionService.php';
 
-session_start();
+sleep(5);
 
-// sleep(1);
+$sessionService = new SessionService(); // Will initiate session in constructor
 
 try {
     $version = isset($_GET['version']) ? (int)$_GET['version'] : null;
@@ -18,20 +19,13 @@ try {
         throw new Exception('Content not found for this version');
     }
     
-    if (!isset($_SESSION['payment_verified']) || !$_SESSION['payment_verified']) {
-        throw new Exception('Payment verification required');
-    }
-    
-    echo json_encode([
-        'success' => true,
-        'fullContent' => $_SESSION['contents'][$version],
-        'version' => $version
+    // Use sendResponse to handle both verified and non-verified cases
+    sendResponse(true, [
+        'content' => $_SESSION['contents'][$version] ?? '',
+        'version' => $version,
+        'payment_verified' => $_SESSION['payment_verified'] ?? false
     ]);
     
 } catch (Exception $e) {
-    http_response_code(400);
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ]);
+    sendResponse(false, ['error' => $e->getMessage()]);
 }

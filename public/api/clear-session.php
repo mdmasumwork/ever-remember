@@ -1,26 +1,24 @@
 <?php
+
+use Stripe\BillingPortal\Session;
+
+require_once __DIR__ . '/../../src/services/SessionService.php';
+
 header('Content-Type: application/json');
 
 try {
-    // Start session if not already started
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    
-    // Clear all session variables
-    $_SESSION = array();
-    
-    // Destroy the session
-    session_destroy();
+    SessionService::clearSession();
     
     echo json_encode([
         'success' => true,
         'message' => 'Session cleared successfully'
     ]);
+    
 } catch (Exception $e) {
+    error_log('Session clear error: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'error' => $e->getMessage()
+        'error' => 'Failed to clear session: ' . $e->getMessage()
     ]);
 }

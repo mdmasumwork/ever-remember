@@ -6,22 +6,22 @@ class OpenAIService {
     private $apiKey;
     private $model;
     private $temperature;
-
+    
     public function __construct() {
         $this->apiKey = OpenAIConfig::get('api_key');
         $this->model = OpenAIConfig::get('model');
         $this->temperature = OpenAIConfig::get('temperature');
     }
-
+    
     public function generateContent($prompt) {
-        // Dummy response for testing
-        // session_start();
+        sleep(5);
+        
         $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
         return [
             'content' => 'version ' . $version . ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut metus felis. Nulla lobortis velit elit, et interdum nunc euismod vel. Fusce laoreet a est in posuere. Sed egestas ut nunc eu efficitur. Donec est ex, auctor non pharetra viverra, scelerisque nec mauris. Nam metus'
         ];
     }
-
+    
     // public function generateContent($prompt) {
     //     $url = 'https://api.openai.com/v1/chat/completions';
         
@@ -37,7 +37,7 @@ class OpenAIService {
     //         ],
     //         'temperature' => $this->temperature
     //     ];
-
+        
     //     $ch = curl_init($url);
     //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     //     curl_setopt($ch, CURLOPT_POST, true);
@@ -47,11 +47,11 @@ class OpenAIService {
     //     $response = curl_exec($ch);
     //     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     //     curl_close($ch);
-
+        
     //     if ($httpCode !== 200) {
     //         throw new Exception('OpenAI API request failed with status ' . $httpCode);
     //     }
-
+        
     //     $responseData = json_decode($response, true);
         
     //     // Format response to match ContentController expectations

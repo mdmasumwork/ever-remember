@@ -1,4 +1,4 @@
-class Payment {
+class PaymentService {
     static async init() {
         try {
             // Fetch Stripe public key from backend

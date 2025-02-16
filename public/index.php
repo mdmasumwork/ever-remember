@@ -1,6 +1,24 @@
 <?php
-require_once '../src/utils/validation.php'; // Validation utility
-require_once '../src/utils/sanitize.php'; // Sanitization utility
+
+//error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+require_once __DIR__ . '/../src/utils/EnvUtil.php';
+require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
+require_once __DIR__ . '/../src/utils/DebugUtil.php';
+require_once __DIR__ . '/../src/utils/sanitize.php';
+require_once __DIR__ . '/../src/utils/CSRFUtil.php';
+
+// Load environment variables
+EnvUtil::loadEnvFile();
+
+// Start secure session
+SessionSecurityUtil::initiateSession();
+
+// Generate CSRF token
+$csrfToken = CSRFUtil::generateToken();
 
 ?>
 <!DOCTYPE html>
@@ -8,6 +26,7 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo $csrfToken; ?>">
     <title>Memorial Content Generator</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -52,19 +71,26 @@ require_once '../src/utils/sanitize.php'; // Sanitization utility
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+<!-- Services -->
+<script src="assets/js/services/SessionService.js"></script>
+<script src="assets/js/services/PaymentService.js"></script>
+<script src="assets/js/services/HttpService.js"></script>
+<script src="assets/js/services/ValidationService.js"></script>
+
 <!-- Components -->
-<script src="assets/js/components/accessibility.js"></script>
-<script src="assets/js/components/slide-menu.js"></script>
-<script src="assets/js/components/toast.js"></script>
-<script src="assets/js/components/tabs.js"></script>
-<script src="assets/js/components/progress-bar.js"></script>
+<script src="assets/js/components/Accessibility.js"></script>
+<script src="assets/js/components/SlideMenu.js"></script>
+<script src="assets/js/components/Toast.js"></script>
+<script src="assets/js/components/Tabs.js"></script>
+<script src="assets/js/components/ProgressBar.js"></script>
+
 <!-- Modules -->
-<script src="assets/js/modules/ui-manager.js"></script>
-<script src="assets/js/modules/data-manager.js"></script>
-<script src="assets/js/modules/step-manager.js"></script>
-<script src="assets/js/modules/form-validator.js"></script>
-<script src="assets/js/modules/payment.js"></script>
-<script src="assets/js/modules/session-manager.js"></script>
+<script src="assets/js/modules/UIManager.js"></script>
+<script src="assets/js/modules/DataManager.js"></script>
+<script src="assets/js/modules/StepManager.js"></script>
+
 <!-- Main -->
 <script src="https://js.stripe.com/v3/"></script>
 <script src="assets/js/main.js"></script>

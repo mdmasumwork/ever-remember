@@ -1,4 +1,4 @@
-class SessionManager {
+class SessionService {
     static init() {
         this.checkExistingSession();
         this.bindGoodbyeActions();
@@ -7,18 +7,11 @@ class SessionManager {
     static checkExistingSession() {
         $.get('/api/check-session.php')
             .done(response => {
-                if (response.success && response.data.hasExistingSession && response.data.paymentVerified) {
+                if (response.success && response.data.version) {
                     this.showSessionRestoreOverlay();
                 } else {
-                    $.post('/api/clear-session.php')
-                        .done(() => {
-                            console.log('Session cleared successfully');
-                        })
-                        .fail(() => {
-                            console.error('Failed to clear session');
-                        });
                     $('.step').removeClass('active');
-                    $('.step-introduction').addClass('active');
+                    $('.step-final-question').addClass('active');
                 }
             });
     }
@@ -44,22 +37,32 @@ class SessionManager {
                 
                 if (response.success && response.data.version) {
                     const currentVersionNumber = response.data.version;
+
+                    
                     
                     // Show loading state for current version
-                    $('.step').removeClass('active');
-                    $(`.step-content-${currentVersionNumber}`).addClass('active');
-                    $(`.step-content-${currentVersionNumber} .loading-indicator`).addClass('visible').find(`.loading-text h4`).text('Retrieving your session');
+                    if (response.data.paymentVerified) {
+                        $('.step').removeClass('active');
+                        $(`.step-content-${currentVersionNumber}`).addClass('active');
+                        $(`.step-content-${currentVersionNumber} .loading-indicator`).addClass('visible').find(`.loading-text h4`).text('Retrieving your session');                        
+                    } else {
+                        $('.step-content-1').addClass('active').find('.loading-indicator').addClass('visible').find('.loading-text h4').text('Retrieving your session');
+                    }
                     
                     // Load all versions up to current version
                     const versions = await this.loadAllVersions(currentVersionNumber);
                     console.log('Loaded versions:', versions);
-                    
+
                     if (versions) {
-                        // Update UI for each version
-                        await this.updateUIForVersions(versions, currentVersionNumber);
+                        if (response.data.paymentVerified) {
+                            this.updateUIForVersions(versions, currentVersionNumber);
+                        } else {
+                            UIManager.updateContentStep(1, versions[0].preview);
+                        }
                     } else {
                         throw new Error('Failed to load content versions');
                     }
+                    
                 }
                 
             } catch (error) {
@@ -152,9 +155,10 @@ class SessionManager {
 
         $.post('/api/clear-session.php')
             .done(() => {
-                $('.step').removeClass('active');
-                $('.step-introduction').addClass('active');
-                $('#session-restore-overlay').fadeOut();
+                // $('.step').removeClass('active');
+                // $('.step-final-question').addClass('active');
+                // $('#session-restore-overlay').fadeOut();
+                location.reload();
             });
     }
             

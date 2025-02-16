@@ -9,3 +9,23 @@ Ever Remember is a tool to help users generate personalized memorial content.
 - Generate memorial content with privacy and care.
 - Modular structure for scalability.
 - Secure practices for data handling.
+
+## Installation
+- Install redis-server on the server. Redis server is required for Rate limiting.
+
+```
+# For Ubuntu/Debian
+# Install redis-server
+sudo apt-get update
+sudo apt-get install redis-server
+
+# Install php redis extension
+sudo apt-get install php-redis
+
+# Enable extension in php.ini
+extension=redis.so
+
+# Restart redis server
+sudo systemctl start redis
+sudo systemctl enable redis-server
+```

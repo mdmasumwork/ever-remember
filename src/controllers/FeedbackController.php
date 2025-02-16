@@ -1,16 +1,31 @@
 <?php
 require_once __DIR__ . '/../services/FeedbackService.php';
+require_once __DIR__ . '/../services/ValidationService.php';
+require_once __DIR__ . '/../middleware/RateLimitMiddleware.php';
+require_once __DIR__ . '/../middleware/CSRFMiddleware.php';
+require_once __DIR__ . '/../services/SessionService.php';
 
 class FeedbackController {
     private $feedbackService;
+    private $validationService;
+    private $rateLimitMiddleware;
+    private $csrfMiddleware;
+    private $sessionService;
 
     public function __construct() {
         $this->feedbackService = new FeedbackService();
+        $this->validationService = new ValidationService();
+        $this->rateLimitMiddleware = new RateLimitMiddleware();
+        $this->csrfMiddleware = new CSRFMiddleware();
+        $this->sessionService = new SessionService();
     }
 
     public function storeFeedback() {
         try {
-            session_start();
+            $this->csrfMiddleware->handle();
+            // Apply rate limiting
+            $this->rateLimitMiddleware->handle('feedback');
+
             $paymentId = $_SESSION['payment_id'] ?? null;
             
             if (!$paymentId) {
@@ -18,7 +33,15 @@ class FeedbackController {
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            $feedback = $data['feedback'] ?? '';
+            
+            // Validate and sanitize the feedback data
+            // Specify validation type as feedback
+            $sanitizedData = $this->validationService->validateAndSanitize(
+                $data, 
+                $_SESSION, 
+                ValidationService::TYPE_FEEDBACK
+            );
+            $feedback = $sanitizedData['feedback'] ?? '';
 
             if (empty($feedback)) {
                 throw new Exception('Feedback cannot be empty');
@@ -28,6 +51,11 @@ class FeedbackController {
 
             return [
                 'success' => true
+            ];
+        } catch (RateLimitExceededException $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage()
             ];
         } catch (Exception $e) {
             return [

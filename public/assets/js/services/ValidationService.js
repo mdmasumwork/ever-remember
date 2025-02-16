@@ -1,4 +1,4 @@
-class FormValidator {
+class ValidationService {
     static validateStep($step) {
         // If step is not required, return true
         if (!$step.hasClass('required')) {

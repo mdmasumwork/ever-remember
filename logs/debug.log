@@ -1,0 +1,42 @@
+[2025-02-15 16:26:10] Session initiated. Session ID: jevt54ml4aa6d795fe4f52nfe6 
+[2025-02-15 16:26:10] Session data: Array
+(
+    [security] => Array
+        (
+            [created_at] => 1739636471
+            [last_activity] => 1739636471
+        )
+
+    [csrf_token] => 5c89537969ada90f376f5dde06d0a41a87ca17a5607fc8e305463ca859f43fb3
+)
+ 
+[2025-02-15 16:26:11] Seestion statue value - 1 
+[2025-02-15 16:26:11] Session is not active or security data is missing. 
+[2025-02-15 16:26:22] Seestion statue value - 1 
+[2025-02-15 16:26:22] Session is not active or security data is missing. 
+[2025-02-15 17:43:07] CSRF token from header: a064b3247dfcc1281f8ebc12797e9ef36c913f45985d42a70b1bbdb64bdc8e72 
+[2025-02-15 17:43:47] CSRF token from header: a064b3247dfcc1281f8ebc12797e9ef36c913f45985d42a70b1bbdb64bdc8e72 
+[2025-02-15 17:45:04] CSRF token from header: 7c7f51e59e2831abbc62e3f929b3febf1a08d06339eac7a51b62129530ce7ccb 
+[2025-02-15 17:50:38] CSRF token from header: 0baefb356c1ad96e4d88af5b99ab650cd3b4a83b94006d1ea4faa2a405e1c921 
+[2025-02-15 17:54:08] CSRF token from header: fdb2df3c46306dc7f0685911d5107083dd48ef13499c461eccff47394261b366 
+[2025-02-15 17:56:31] CSRF token from header: 63d5d0258a625e33c9c7cd21b890e5f1ca1b9248e98edd87860814e54d4ea7a8 
+[2025-02-15 17:58:22] CSRF token from header: 3f27d5fa20bb03ddcd808f13dcadaf35e95bdc350d6e4f3c7d2e01fee1a66955 
+[2025-02-15 17:58:52] CSRF token from header: 3f27d5fa20bb03ddcd808f13dcadaf35e95bdc350d6e4f3c7d2e01fee1a66955 
+[2025-02-15 17:59:32] CSRF token from header: 5c902d40a1c91885e6d70d241f4c30182c725f816c4a69920659d641ff0fc73e 
+[2025-02-15 18:00:08] CSRF token from header: 5c902d40a1c91885e6d70d241f4c30182c725f816c4a69920659d641ff0fc73e 
+[2025-02-15 18:01:09] CSRF token from header: 6f16de072e6c78f0e6909718ce7d4c88f4a7c2073924623af9186307a748d788 
+[2025-02-15 18:01:24] CSRF token from header: 3feaca648410eca100d980d8b5f5fe534b15445f0737a9f9f0975f6079b92a67 
+[2025-02-15 18:02:10] CSRF token from header: 67f03d415e395d31ff09c835ef480d4cfba2f04cffa7838929baa888b913a2a6 
+[2025-02-15 18:06:18] CSRF token from header: 17c9cce7c8f9d499cd2746b8cf410a5ae0009e03968449074deb6a9b7e69e16f 
+[2025-02-15 18:14:31] CSRF token from header: f81f641fd457af83a30d5f7de00c714cbcf58c0d3226cdc32160845003c64ff5 
+[2025-02-15 18:16:41] CSRF token from header: f81f641fd457af83a30d5f7de00c714cbcf58c0d3226cdc32160845003c64ff5 
+[2025-02-15 18:20:52] CSRF token from header: f3aa4c5cc0d1b591dd66321ab20a253c7633acc160543f140b487bbd7ff3e2bb 
+[2025-02-15 18:24:16] CSRF token from header: 14794fe319aafba40cfc562b96f8247f7616e08ae6c6b1d666e08dd51f5c1122 
+[2025-02-15 18:40:55] CSRF token from header: 3eddc11d822f0fb314d26d3b5c5f3e4552d5e5267cb9c8ca4205be40dfe94c98 
+[2025-02-15 20:44:00] CSRF token from header: 2d78442e6ef6c5b23e77f5282af2060dfbf9539c01f589b3dc4993ffb78d0a48 
+[2025-02-15 20:54:09] CSRF token from header: 2d78442e6ef6c5b23e77f5282af2060dfbf9539c01f589b3dc4993ffb78d0a48 
+[2025-02-15 23:46:49] CSRF token from header: 6df864ddc55138944e286c1993fc3d199c8536600e830fda64354a7da60bb28b 
+[2025-02-15 23:48:31] CSRF token from header: 6df864ddc55138944e286c1993fc3d199c8536600e830fda64354a7da60bb28b 
+[2025-02-15 23:49:52] CSRF token from header: a1fe3a2b934367937ac1287d21f41815e31dade39120125e8932afa36679e1d1 
+[2025-02-16 05:16:02] CSRF token from header: 476605ddf25def0c5fa7d1332602e573d2d4a55025c8d50905135d0041ea00cb 
+[2025-02-16 05:19:08] Session ID regenerated: 0uoa38vp69s7kpb7e2a22nppl6 
