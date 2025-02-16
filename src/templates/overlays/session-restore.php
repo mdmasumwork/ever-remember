@@ -2,7 +2,7 @@
     <div class="overlay-content">
         <div class="message-card">
             <div class="restore-message">
-                <h3>Welcome Back!</h3>
+                <h3>Hi there!</h3>
                 <p>We noticed you have a recent session with completed content. Would you like to continue where you left off?</p>
                 
                 <div class="action-buttons">

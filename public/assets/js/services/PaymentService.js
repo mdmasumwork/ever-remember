@@ -2,8 +2,7 @@ class PaymentService {
     static async init() {
         try {
             // Fetch Stripe public key from backend
-            const response = await fetch('/api/get-stripe-key.php');
-            const data = await response.json();
+            const data = await HttpService.get('/api/get-stripe-key.php');
 
             console.log('Stripe key:', data.publicKey);
             
@@ -60,14 +59,7 @@ class PaymentService {
             $button.addClass('processing');
             
             try {
-                const response = await fetch('/api/create-payment-intent.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
+                const data = await HttpService.post('/api/create-payment-intent.php', {});
 
                 if (data.success && data.clientSecret) {
                     const result = await this.stripe.confirmCardPayment(data.clientSecret, {
@@ -102,17 +94,13 @@ class PaymentService {
 
             console.log('Name:', userName);
 
-            const verifyResponse = await fetch('/api/verify-payment.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    paymentIntentId: paymentIntent.id,
-                    userName: userName,
-                    userEmail: userEmail
-                })
+            const verifyResponse = await HttpService.post('/api/verify-payment.php', {
+                paymentIntentId: paymentIntent.id,
+                userName: userName,
+                userEmail: userEmail
             });
 
-            if (!verifyResponse.ok) throw new Error('Payment verification failed');
+            if (!verifyResponse.success) throw new Error('Payment verification failed');
 
             // 2. Show success message
             UIManager.updatePaymentUI('payment-success');
@@ -138,8 +126,7 @@ class PaymentService {
     }
 
     static async loadFullContent() {
-        const response = await fetch('/api/get-full-content.php?version=1');
-        const content = await response.json();
+        const content = await HttpService.get('/api/get-full-content.php?version=1');
         
         if (!content.success) {
             throw new Error(content.error);

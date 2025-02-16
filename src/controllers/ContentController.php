@@ -5,34 +5,22 @@ require_once __DIR__ . '/../services/PromptService.php';
 require_once __DIR__ . '/../services/ValidationService.php';
 require_once __DIR__ . '/../services/SessionService.php';
 require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../middleware/RateLimitMiddleware.php';
-require_once __DIR__ . '/../middleware/CSRFMiddleware.php';
 
 class ContentController {
     private $openAIService;
     private $promptService;
     private $validationService;
-    private $rateLimitMiddleware;
-    private $csrfMiddleware;
     private $sessionService;
 
     public function __construct() {
         $this->openAIService = new OpenAIService();
         $this->promptService = new PromptService();
         $this->validationService = new ValidationService();
-        $this->rateLimitMiddleware = new RateLimitMiddleware();
-        $this->csrfMiddleware = new CSRFMiddleware();
         $this->sessionService = new SessionService();
     }
 
     public function handleRequest() {
         try {
-
-            // Add CSRF check before rate limiting
-            $this->csrfMiddleware->handle();
-            
-            // Apply rate limiting first
-            $this->rateLimitMiddleware->handle('content');
             
             // Validate JSON and content type
             if (!empty($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') === false) {

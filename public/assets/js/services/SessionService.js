@@ -4,16 +4,18 @@ class SessionService {
         this.bindGoodbyeActions();
     }
 
-    static checkExistingSession() {
-        $.get('/api/check-session.php')
-            .done(response => {
-                if (response.success && response.data.version) {
-                    this.showSessionRestoreOverlay();
-                } else {
-                    $('.step').removeClass('active');
-                    $('.step-final-question').addClass('active');
-                }
-            });
+    static async checkExistingSession() {
+        try {
+            const response = await HttpService.get('/api/check-session.php');
+            if (response.success && response.data.version) {
+                this.showSessionRestoreOverlay();
+            } else {
+                $('.step').removeClass('active');
+                $('.step-final-question').addClass('active');
+            }
+        } catch (error) {
+            console.error('Error checking existing session:', error);
+        }
     }
 
     static showSessionRestoreOverlay() {
@@ -33,13 +35,11 @@ class SessionService {
                 // Hide overlay immediately
                 $overlay.fadeOut();
                 
-                const response = await $.get('/api/check-session.php');
+                const response = await HttpService.get('/api/check-session.php');
                 
                 if (response.success && response.data.version) {
                     const currentVersionNumber = response.data.version;
 
-                    
-                    
                     // Show loading state for current version
                     if (response.data.paymentVerified) {
                         $('.step').removeClass('active');
@@ -69,7 +69,7 @@ class SessionService {
                 console.error('Session restore error:', error);
                 Toast.show('Error restoring session. Starting fresh...', 'error');
                 
-                await $.post('/api/clear-session.php');
+                await HttpService.post('/api/clear-session.php', {});
                 $('.step').removeClass('active');
                 $('.step-introduction').addClass('active');
             }
@@ -85,7 +85,7 @@ class SessionService {
             const promises = [];
             // Load all versions up to current version
             for (let i = 1; i <= currentVersion; i++) {
-                promises.push($.get(`/api/get-full-content.php?version=${i}`));
+                promises.push(HttpService.get(`/api/get-full-content.php?version=${i}`));
             }
             
             const results = await Promise.all(promises);
@@ -104,7 +104,7 @@ class SessionService {
 
     static async getSessionVersion() {
         try {
-            const response = await $.get('/api/check-session.php');
+            const response = await HttpService.get('/api/check-session.php');
             if (response.success && response.data.version) {
                 return response.data.version;
             }
@@ -116,16 +116,13 @@ class SessionService {
     }
 
     static bindGoodbyeActions() {
-        $('.step-goodbye .restart-session').on('click', async () => {
-            $.post('/api/clear-session.php')
-            .done(() => {
-                location.reload();
-            });
+        $('.step-goodbye .restart-session').on('click', () => {
+            this.startNewSession();
         });
 
         $('.step-goodbye .view-content').on('click', async () => {
             try {
-                const response = await $.get('/api/check-session.php');
+                const response = await HttpService.get('/api/check-session.php');
                 
                 if (response.success && response.data.version) {
                     const currentVersionNumber = response.data.version;
@@ -142,25 +139,23 @@ class SessionService {
             } catch (error) {
                 console.error('Error getting version:', error);
                 Toast.show('Error loading content. Please try again.', 'error');
-                await this.handleSessionClear();
+                await HttpService.post('/api/clear-session.php', {});
             }
         });
     }
 
     static startNewSession() {
         // Trigger event 'stepForwarded' with step number 11, this event will be listened by progress bar
-        const detail = { currentStep: 1 };
-        const event = new CustomEvent('stepForwarded', { detail });
-        document.dispatchEvent(event);
+        // const detail = { currentStep: 1 };
+        // const event = new CustomEvent('stepForwarded', { detail });
+        // document.dispatchEvent(event);
 
-        $.post('/api/clear-session.php')
-            .done(() => {
-                // $('.step').removeClass('active');
-                // $('.step-final-question').addClass('active');
-                // $('#session-restore-overlay').fadeOut();
+        HttpService.post('/api/clear-session.php', {})
+            .then(() => {
                 location.reload();
+            })
+            .catch(error => {
+                console.error('Session clear error:', error);
             });
     }
-            
-
 }
