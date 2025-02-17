@@ -5,7 +5,7 @@ class DataManager {
     // TODO: Add secure transmission
     static formData = {
         firstPersonName: 'Md Masum',
-        email: 'md.masum@gmail.com',
+        email: 'md.masum.dev@gmail.com',
         deceasedPersonName: 'Nanet',
         messageType: 'eulogy',
         relationship: 'neighbor',

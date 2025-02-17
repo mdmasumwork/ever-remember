@@ -7,4 +7,5 @@ $(document).ready(function() {
     ProgressBar.init();
     PaymentService.init();
     SessionService.init();
+    EmailService.init();
 });

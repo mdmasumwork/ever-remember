@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     throw new Exception('Invalid request method');
 }
 
-sleep(5);
+sleep(1);
 
 $sessionService = new SessionService(); // Will initiate session in constructor
 

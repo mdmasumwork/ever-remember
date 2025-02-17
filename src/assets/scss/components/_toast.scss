@@ -1,11 +1,11 @@
 .toast {
     position: fixed;
-    bottom: $spacing-xl;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
+    background: $success;
     color: $text-white;
-    padding: $spacing-sm $spacing-lg;
+    padding: 16px;
     border-radius: $border-radius-sm;
     opacity: 0;
     transition: opacity $transition-speed ease;

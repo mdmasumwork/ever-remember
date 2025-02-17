@@ -14,7 +14,7 @@ class OpenAIService {
     }
     
     public function generateContent($prompt) {
-        sleep(5);
+        sleep(2);
         
         $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
         return [

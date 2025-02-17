@@ -78,6 +78,7 @@ $csrfToken = CSRFUtil::generateToken();
 <script src="assets/js/services/PaymentService.js"></script>
 <script src="assets/js/services/HttpService.js"></script>
 <script src="assets/js/services/ValidationService.js"></script>
+<script src="assets/js/services/EmailService.js"></script>
 
 <!-- Components -->
 <script src="assets/js/components/Accessibility.js"></script>

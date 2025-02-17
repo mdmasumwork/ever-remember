@@ -11,10 +11,16 @@ class Toast {
         this.toastElement = toast;
     }
 
-    static show() {
+    static show($text = 'Content copied!') {
+        this.toastElement.textContent = $text;
         this.toastElement.classList.add('show');
         setTimeout(() => {
             this.toastElement.classList.remove('show');
         }, 2000);
+    }
+
+    static changeText($text) {
+        console.log('Changing toast text to:', $text);
+        this.toastElement.textContent = $text;
     }
 }
