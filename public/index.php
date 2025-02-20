@@ -10,12 +10,27 @@ require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../src/utils/DebugUtil.php';
 require_once __DIR__ . '/../src/utils/sanitize.php';
 require_once __DIR__ . '/../src/utils/CSRFUtil.php';
+require_once __DIR__ . '/../src/utils/SecurityHeadersUtil.php';
+require_once __DIR__ . '/../src/middleware/CSRFMiddleware.php';
+require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
 
 // Load environment variables
 EnvUtil::loadEnvFile();
 
 // Start secure session
 SessionSecurityUtil::initiateSession();
+
+// Set security headers and handle preflight requests
+SecurityHeadersUtil::setIndexHeaders('GET');
+SecurityHeadersUtil::handlePreflight('GET');
+
+// Create and handle CSRF middleware
+$csrf = new CSRFMiddleware();
+$csrf->handle();
+
+// Create and handle rate limit middleware
+$rateLimitMiddleware = new RateLimitMiddleware();
+$rateLimitMiddleware->handle('index');
 
 // Generate CSRF token
 $csrfToken = CSRFUtil::generateToken();
@@ -27,7 +42,7 @@ $csrfToken = CSRFUtil::generateToken();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo $csrfToken; ?>">
-    <title>Memorial Content Generator</title>
+    <title>Ever Remember | AI powered content genrator</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -70,7 +85,11 @@ $csrfToken = CSRFUtil::generateToken();
 <?php include '../src/templates/footer.php'; ?>
 
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script 
+    src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+    crossorigin="anonymous">
+</script>
 
 
 <!-- Services -->

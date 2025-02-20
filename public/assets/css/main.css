@@ -410,8 +410,6 @@ ul, ol {
   left: 0;
   width: 100%;
   height: 40px;
-  background: url("/path/to/wave.svg") repeat-x;
-  animation: wave-animation 5s linear infinite;
 }
 .field-area input,
 .field-area textarea {
@@ -499,7 +497,7 @@ ul, ol {
   background: #55328F;
 }
 #main-content .vertical-progress__step.completed {
-  background: rgb(165.4692307692, 124.6153846154, 215.8846153846);
+  background: rgb(157.15, 112.5, 212.25);
 }
 @media (max-width: 768px) {
   #main-content .vertical-progress__step {

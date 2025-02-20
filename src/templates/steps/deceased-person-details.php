@@ -8,6 +8,7 @@
         <li>Hobbies and interests that brought them joy</li>
         <li>Where they grew up and lived</li>
         <li>Special memories you cherish</li>
+        <li>What legacy or values did they leave behind that you you'd like to highlight</li>
         <li>Anything else you'd like to include</li>
     </ul>
     <div class="field-area">

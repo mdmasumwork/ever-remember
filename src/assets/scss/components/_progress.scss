@@ -20,7 +20,7 @@
         }
 
         &.completed {
-            background: lighten($brand-primary, 5%);
+            background: scale-color($brand-primary, $lightness: 5%);
         }
 
         @include mobile {
