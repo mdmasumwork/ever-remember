@@ -16,6 +16,7 @@ class RateLimitMiddleware {
             'feedback' => ['attempts' => 5, 'window' => 60],    // 5 requests per minute
             'session' => ['attempts' => 30, 'window' => 60],    // 30 requests per minute
             'stripe' => ['attempts' => 30, 'window' => 60],     // 30 requests per minute
+            'index' => ['attempts' => 30, 'window' => 60],     // 30 requests per minute
             'email' => ['attempts' => 5, 'window' => 60]        // 5 requests per minute
         ];
         
@@ -24,11 +25,20 @@ class RateLimitMiddleware {
         }
         
         $identifier = $this->getIdentifier() . ':' . $route;
-        return $this->rateLimiter->checkLimit(
-            $identifier,
-            $limits[$route]['attempts'],
-            $limits[$route]['window']
-        );
+        try {
+            return $this->rateLimiter->checkLimit(
+                $identifier,
+                $limits[$route]['attempts'],
+                $limits[$route]['window']
+            );
+        } catch (RateLimitExceededException $e) {
+            http_response_code(429); // Too Many Requests
+            echo json_encode([
+                'error' => true,
+                'message' => 'Rate limit exceeded. Please try again later.'
+            ]);
+            exit();
+        }
     }
     
     private function getIdentifier() {

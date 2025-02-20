@@ -43,7 +43,7 @@ class SanitizerService {
     
     private function sanitizeBasicText($input) {
         $input = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $input);
-        $input = preg_replace('/on\w+="[^"]*"/i', '', $input); // Remove inline JS events
+        $input = preg_replace('/on\w+="[^"]*"/i', '', $input);
         $input = strip_tags($input);
         $input = trim($input);
         return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
@@ -74,4 +74,22 @@ class SanitizerService {
             in_array($file['type'], $allowedMimes) &&
             $file['size'] <= 5242880;
     }
+
+    public function sanitizeSystemCommand($input) {
+        if (is_array($input)) {
+            return array_map([$this, 'sanitizeSystemCommand'], $input);
+        }
+    
+        if (!is_string($input)) {
+            return $input;
+        }
+    
+        // Disallow potentially dangerous shell characters
+        if (preg_match('/[;&|`><$(){}[\]]/', $input)) {
+            throw new ValidationException('Invalid characters detected');
+        }
+    
+        return $input;
+    }
+    
 }

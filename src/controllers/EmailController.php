@@ -72,7 +72,7 @@ class EmailController {
             <div style="border: 1px solid #eee;">
                 <div class="header">
                     <h2>Your {$messageType} for {$deceasedPerson}</h2>
-                    <p>Version {$version} masum</p>
+                    <p>Version {$version}</p>
                 </div>
 
                 <div style="background-color: #fff; padding: 20px; font-size: 14px;">

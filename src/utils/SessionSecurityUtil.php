@@ -10,15 +10,22 @@ class SessionSecurityUtil {
     
     public static function initiateSession(): void {
         if (session_status() === PHP_SESSION_NONE) {
+            // Set session security settings
+            $isSecure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+            ini_set('session.cookie_secure', $isSecure ? 1 : 0);
+            ini_set('session.cookie_httponly', 1);
+            ini_set('session.use_only_cookies', 1);
+
             session_name(self::SESSION_NAME);
             session_set_cookie_params([
                 'lifetime' => self::SESSION_LIFETIME,
                 'path' => '/',
                 'domain' => $_SERVER['HTTP_HOST'],
-                'secure' => true,
+                'secure' => $isSecure,
                 'httponly' => true,
                 'samesite' => 'Lax'
             ]);
+            
             session_start();
             if (!isset($_SESSION['security'])) {
                 $_SESSION['security'] = [

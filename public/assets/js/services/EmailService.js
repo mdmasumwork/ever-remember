@@ -5,6 +5,8 @@ class EmailService {
             let version = 1;
             if (tabPane.hasClass('version-2')) {
                 version = 2;
+            } else if (tabPane.hasClass('version-3')) {
+                version = 3;
             }
             Toast.show('Sending email...');
             // Just send the version number

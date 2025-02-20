@@ -1,7 +1,7 @@
 <!-- Header Step -->
 <header id="header" class="sticky-header">
     <div class="logo">
-        <img src="assets/images/logo.png" alt="Logo" id="logo">
+        <img src="assets/image_source_files/logo_9.png" alt="Logo" id="logo">
     </div>
     <nav id="nav" class="main-nav">
         <ul>

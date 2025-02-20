@@ -125,7 +125,7 @@ ul, ol {
   z-index: 1000;
 }
 #header .logo {
-  width: 164px;
+  width: 180px;
 }
 #header .main-nav ul {
   list-style: none;
@@ -595,7 +595,7 @@ ul, ol {
   bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
-  background: #10B981;
+  background: #6BA754;
   color: #FFFFFF;
   padding: 16px;
   border-radius: 4px;

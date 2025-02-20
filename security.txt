@@ -1,0 +1,10 @@
+Security implemented
+=========================
+
+1. Form field validation and sanitization, both in frontend and backend
+2. CSRF protection
+3. XSS attach protection
+4. SQL injection projection - with prepared statment
+5. Rate limitng - for bot attack, Ddos attack etc
+6. Session security
+7. Header security
