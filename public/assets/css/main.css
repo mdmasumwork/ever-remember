@@ -73,10 +73,10 @@ h3 {
   margin-bottom: 16px;
 }
 
-h4 {
+h4, .style-h4 {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #55328F;
+  color: #6BA754;
   margin-bottom: 16px;
   font-weight: 700;
 }
@@ -360,7 +360,7 @@ ul, ol {
   color: #ff6600;
 }
 .er-button.secondary-button:hover {
-  background-color: #F9F4FF;
+  background-color: #fff4f4;
 }
 .er-button.tertiary-button {
   background-color: transparent;
@@ -862,6 +862,10 @@ ul, ol {
 }
 .loading-indicator .loading-dots span:nth-child(3) {
   animation-delay: 0.4s;
+}
+
+#session-restore-overlay .loading-indicator {
+  background-color: unset;
 }
 
 @keyframes loadingDots {

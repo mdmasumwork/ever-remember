@@ -11,7 +11,7 @@ class SessionService {
                 this.showSessionRestoreOverlay();
             } else {
                 $('.step').removeClass('active');
-                $('.step-final-question').addClass('active');
+                $('.step-introduction').addClass('active');
             }
         } catch (error) {
             console.error('Error checking existing session:', error);
@@ -145,10 +145,10 @@ class SessionService {
     }
 
     static startNewSession() {
-        // Trigger event 'stepForwarded' with step number 11, this event will be listened by progress bar
-        // const detail = { currentStep: 1 };
-        // const event = new CustomEvent('stepForwarded', { detail });
-        // document.dispatchEvent(event);
+        // Hide the register dash message
+        $('#session-restore-overlay .restore-message').hide();
+        // Show the loading indicator
+        $('#session-restore-overlay .restore-loading').show().find('.loading-indicator').addClass('visible');
 
         HttpService.post('/api/clear-session.php', {})
             .then(() => {

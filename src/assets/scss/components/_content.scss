@@ -194,6 +194,12 @@
     }
 }
 
+#session-restore-overlay {
+    .loading-indicator {
+        background-color: unset;
+    }
+}
+
 @keyframes loadingDots {
     0%, 100% { 
         transform: scale(1);

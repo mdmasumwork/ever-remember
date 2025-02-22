@@ -33,7 +33,7 @@
             
             <div class="content-actions">
                 <div class="payment-overlay">
-                    <h5>Unlock your complete personalized eulogy</h5>
+                    <h5>Unlock your complete personalized content</h5>
                     <p class="price">$9.99</p>
                     <button class="payment-button initial-button">Purchase to View Full Content</button>
 

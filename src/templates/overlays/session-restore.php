@@ -18,7 +18,7 @@
             <div class="restore-loading" style="display: none;">
                 <div class="loading-indicator">
                     <div class="loading-text">
-                        <h4>Retrieving your saved content...</h4>
+                        <h4>Clearing your current session...</h4>
                         <div class="loading-dots">
                             <span></span>
                             <span></span>
