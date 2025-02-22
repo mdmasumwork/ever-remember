@@ -42,6 +42,8 @@ class PaymentController {
         try {
             // 1. Verify with Service (stateless)
             $paymentResult = $this->paymentService->verifyPayment($paymentIntentId);
+            $userName = $_SESSION['form_data']['firstPersonName'] ?? '-';
+            $userEmail = $_SESSION['form_data']['email'] ?? '-';
             
             if ($paymentResult['success']) {
                 // 2. Log to database via Service

@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/DebugUtil.php';
-
 class SessionSecurityUtil {
     const SESSION_NAME = 'EVER_REMEMBER_SESSION';
     const SESSION_LIFETIME = 14400; // 4 hours
@@ -9,7 +7,7 @@ class SessionSecurityUtil {
     const REGENERATE_INTERVAL = 120; // 15 minutes - interval to regenerate session ID
     
     public static function initiateSession(): void {
-        if (session_status() === PHP_SESSION_NONE) {
+        if (session_status() === PHP_SESSION_NONE) {            
             // Set session security settings
             $isSecure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
             ini_set('session.cookie_secure', $isSecure ? 1 : 0);
@@ -37,6 +35,7 @@ class SessionSecurityUtil {
     }
 
     public static function clearSession(): void {
+        LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Clearing session...');
         // 1. Clear session data
         $_SESSION = array();
         
@@ -67,6 +66,8 @@ class SessionSecurityUtil {
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_write_close();
         }
+
+        LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Cleared');
     }
 
     public static function isSessionActive(): bool {
@@ -102,6 +103,7 @@ class SessionSecurityUtil {
     }
 
     private static function regenerateSession(): void {
+        $oldSessionId = session_id();
         // Store current session data
         $sessionData = $_SESSION;
         
@@ -113,7 +115,6 @@ class SessionSecurityUtil {
         
         // Update security timestamps
         $_SESSION['security']['last_activity'] = time();
-        
-        DebugUtil::log('Session ID regenerated: ' . session_id());
+        LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Regenerated session ID from ' . $oldSessionId . ' to ' . session_id());
     }
 }

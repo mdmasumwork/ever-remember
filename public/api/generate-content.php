@@ -1,7 +1,6 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
 
+require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/controllers/ContentController.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/middleware/CSRFMiddleware.php';
@@ -27,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller = new ContentController();
         $controller->handleRequest();
     } catch (Exception $e) {
+        LogUtil::log('error', 'generate-content.php: ' . $e->getMessage());
         http_response_code(500);
         echo json_encode([
             'error' => true,

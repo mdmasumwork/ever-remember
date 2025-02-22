@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/controllers/ContentController.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';

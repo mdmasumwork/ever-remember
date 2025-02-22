@@ -1,5 +1,6 @@
 <?php
-header('Content-Type: application/json');
+
+require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/controllers/FeedbackController.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/middleware/CSRFMiddleware.php';

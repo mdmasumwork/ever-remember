@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../src/utils/LogUtil.php';
+
 use Stripe\BillingPortal\Session;
 
 require_once __DIR__ . '/../../src/services/SessionService.php';
@@ -30,7 +32,6 @@ try {
     ]);
     
 } catch (Exception $e) {
-    error_log('Session clear error: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false,

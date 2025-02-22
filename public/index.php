@@ -1,10 +1,6 @@
 <?php
 
-//error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
+require_once __DIR__ . '/../src/utils/LogUtil.php';
 require_once __DIR__ . '/../src/utils/EnvUtil.php';
 require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../src/utils/DebugUtil.php';
@@ -14,25 +10,15 @@ require_once __DIR__ . '/../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../src/middleware/CSRFMiddleware.php';
 require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
 
-// Load environment variables
+// loading important settings and security protocols
 EnvUtil::loadEnvFile();
-
-// Start secure session
 SessionSecurityUtil::initiateSession();
-
-// Set security headers and handle preflight requests
 SecurityHeadersUtil::setIndexHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
-
-// Create and handle CSRF middleware
 $csrf = new CSRFMiddleware();
 $csrf->handle();
-
-// Create and handle rate limit middleware
 $rateLimitMiddleware = new RateLimitMiddleware();
 $rateLimitMiddleware->handle('index');
-
-// Generate CSRF token
 $csrfToken = CSRFUtil::generateToken();
 
 ?>

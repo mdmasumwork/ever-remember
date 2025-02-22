@@ -1,4 +1,6 @@
 <?php
+
+require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/config/stripe.php';
 require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';

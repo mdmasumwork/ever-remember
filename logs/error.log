@@ -1,0 +1,1 @@
+[Time: UTC 2025-02-22 06:49:21] Uncaught exception: Too few arguments to function SessionSecurityUtil::initiateSession(), 0 passed in /var/www/html/ever-remember/src/services/SessionService.php on line 10 and exactly 1 expected

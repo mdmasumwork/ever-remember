@@ -11,8 +11,6 @@ class CSRFMiddleware {
         }
 
         $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
-
-        DebugUtil::log('CSRF token from header: ' . $token);
         
         if (!CSRFUtil::verifyToken($token)) {
             header('HTTP/1.0 403 Forbidden');

@@ -1,4 +1,6 @@
 <?php
+
+require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 try {
     $sessionService = new SessionService();
     $status = $sessionService->getSessionStatus();
-    
+
     echo json_encode([
         'success' => true,
         'data' => $status

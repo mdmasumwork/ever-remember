@@ -34,6 +34,8 @@ class PaymentService {
 
     public function logPayment($paymentIntent, $userName, $userEmail) {
         try {
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Payment]: Successful | Payment Intent ID:' . $paymentIntent->id . ' | User: ' . $userName . ' | Email: ' . $userEmail . ' | Amount: ' . $paymentIntent->amount / 100);
+
             $stmt = $this->db->prepare("
                 INSERT INTO payments (
                     stripe_payment_id, 

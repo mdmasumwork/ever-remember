@@ -23,6 +23,8 @@ class EnvUtil {
                     putenv(trim($key) . '=' . trim($value));
                 }
             }
+        } else {
+            LogUtil::log('error', 'EnvUtil:loadEnvFile(): No .env file found.');
         }
     }
 }

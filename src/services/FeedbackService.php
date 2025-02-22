@@ -10,6 +10,9 @@ class FeedbackService {
     
     public function storeFeedback($paymentId, $feedback) {
         try {
+
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Feedback] Feedback given');
+
             $stmt = $this->db->prepare("
                 UPDATE payments
                 SET feedback = ?
@@ -24,7 +27,7 @@ class FeedbackService {
             
             return true;
         } catch (Exception $e) {
-            error_log("Feedback storage failed: " . $e->getMessage());
+            LogUtil::log('error', 'FeedbackService:storeFeedback(): ' . $e->getMessage());
             throw $e;
         }
     }

@@ -65,6 +65,8 @@ class ContentController {
 
             $_SESSION['contents'][$sanitizedData['version']] = $generatedContent['content'];
 
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Content]: Version ' . $sanitizedData['version'] . ' of the content has been generated');
+
             return sendResponse(true, [
                 'content' => $generatedContent['content'],
                 'prompt' => $prompt,
@@ -72,12 +74,11 @@ class ContentController {
                 'payment_verified' => $_SESSION['payment_verified'] ?? false
             ]);
 
-        } catch (RateLimitExceededException $e) {
-            return sendResponse(false, ['error' => $e->getMessage()]);
         } catch (ValidationException $e) {
+            LogUtil::log('error', '[Exception]: ContentContorller:handleRequest(): ' . $e->getMessage());
             return sendResponse(false, ['error' => $e->getMessage()]);
         } catch (Exception $e) {
-            error_log("Content generation error: " . $e->getMessage());
+            LogUtil::log('error', '[Exception]: ContentContorller:handleRequest(): ' . $e->getMessage());
             return sendResponse(false, ['error' => 'An unexpected error occurred']);
         }
     }
