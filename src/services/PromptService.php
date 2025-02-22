@@ -8,7 +8,8 @@ class PromptService {
         $details,
         $accomplishments,
         $messageTone,
-        $finalQuestion
+        $finalQuestion,
+        $firstPersonName
     ) {
         // define associative array to store the questions and answers
         $questionsAndAnswers = [
@@ -61,6 +62,10 @@ class PromptService {
             "finalQuestion" => [
             "question" => "Thank you! Before I begin drafting, is there anything else you’d like me to know about " . $deceasedPersonName . "?",
             "answer" => $finalQuestion
+            ],
+            "firstPersonName" => [
+                "question" => "What is your name?",
+                "answer" => $firstPersonName
             ]
         ];
 
@@ -75,7 +80,8 @@ class PromptService {
             $data['details'],
             $data['accomplishments'],
             $data['messageTone'],
-            $data['finalQuestion']
+            $data['finalQuestion'],
+            $data['firstPersonName']
         );
 
         $structuredPrompt = '';

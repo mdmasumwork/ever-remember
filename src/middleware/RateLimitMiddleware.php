@@ -13,7 +13,7 @@ class RateLimitMiddleware {
         $limits = [
             'content' => ['attempts' => 20, 'window' => 60],    // 20 requests per minute
             'payment' => ['attempts' => 10, 'window' => 60],    // 10 requests per minute
-            'feedback' => ['attempts' => 5, 'window' => 60],    // 5 requests per minute
+            'feedback' => ['attempts' => 10, 'window' => 60],    // 5 requests per minute
             'session' => ['attempts' => 30, 'window' => 60],    // 30 requests per minute
             'stripe' => ['attempts' => 30, 'window' => 60],     // 30 requests per minute
             'index' => ['attempts' => 30, 'window' => 60],     // 30 requests per minute

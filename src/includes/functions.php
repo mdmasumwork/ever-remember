@@ -2,12 +2,17 @@
 
 function sendResponse($success, $data) {
     header('Content-Type: application/json');    
+
+    $content = $data['content'] ?? '';
+    $previewLength = strlen($content) > 0 ? ceil(strlen($content) * 0.40) : 0;
+    $preview = $previewLength > 0 ? substr($content, 0, $previewLength) . '...' : '';
+
     echo json_encode([
         'success' => $success,
-        'preview' => isset($data['content']) ? substr($data['content'], 0, 100) . '...' : '',
+        'preview' => $preview,
         'prompt' => $data['prompt'] ?? '',
         'version' => $data['version'] ?? 1,
-        'fullContent' => isset($data['payment_verified']) && $data['payment_verified'] ? ($data['content'] ?? '') : null,
+        'fullContent' => isset($data['payment_verified']) && $data['payment_verified'] ? ($content ?? '') : null,
         'error' => $data['error'] ?? ''
     ]);
     exit;

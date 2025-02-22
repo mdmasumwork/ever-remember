@@ -117,12 +117,16 @@ class DataManager {
 
             case stepId.includes('step-feedback-2'):
                 const feedback2 = $step.find('#feedback-field-2').val();
-                this.sendFeedback(feedback2);
+                if (feedback2.trim()) {
+                    this.sendFeedback(feedback2);
+                }
                 break;
 
             case stepId.includes('step-feedback'):
                 const feedback = $step.find('#feedback-field').val();
-                this.sendFeedback(feedback);
+                if (feedback.trim()) {
+                    this.sendFeedback(feedback);
+                }
                 break;
         }
 

@@ -34,6 +34,10 @@ class ContentController {
             
             $data = json_decode($jsonData, true);
 
+            if (!isset($data['additionalInstruction']) || empty(trim($data['additionalInstruction']))) {
+                $data['additionalInstruction'] = 'I have no additional information or instruction.';
+            }
+
             // Explicitly specify content type validation
             $sanitizedData = $this->validationService->validateAndSanitize(
                 $data, 

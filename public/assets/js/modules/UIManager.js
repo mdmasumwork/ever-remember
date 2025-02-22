@@ -17,22 +17,32 @@ class UIManager {
 
 
     static updateContentStep(version, content, isPaid = false) {
+        const $contentBox = $(`.tab-pane.version-${version} .content-box`);
+        const $contentActions = $(`.step-content-${version} .content-actions`);
+        const $loadingIndicator = $(`.tab-pane.version-${version} .loading-indicator`);
+        const $contentCopyActions = $(`.tab-pane.version-${version} .content-copy-actions`);
+        const $paymentOverlay = $(`.step-content-${version} .payment-overlay`);
+        const $contentAction = $(`.step-content-${version} .content-action`);
 
-        $(`.tab-pane.version-${version} .loading-indicator`).removeClass('visible');
-        $(`.tab-pane.version-${version} .content-box`).addClass('visible').find('.generated-content').html(content);
-        $(`.step-content-${version} .content-actions`).addClass('visible');
+        $loadingIndicator.removeClass('visible');
+        $contentBox.addClass('visible').find('.generated-content').html(content);
+        $contentActions.addClass('visible');
 
         if (isPaid) {
-            $(`.tab-pane.version-${version} .content-box`).removeClass('masked').addClass('visible');
-            $(`.tab-pane.version-${version} .content-copy-actions`).addClass('visible');
-            $(`.step-content-${version} .content-action`).addClass('visible');
-            $(`.step-content-${version} .payment-overlay`).removeClass('visible');
+            $contentBox.removeClass('masked').addClass('visible');
+            $contentCopyActions.addClass('visible');
+            $contentAction.addClass('visible');
+            $paymentOverlay.removeClass('visible');
         } else {
-            $(`.tab-pane.version-${version} .content-box`).removeClass('visible').addClass('masked');
-            $(`.step-content-${version} .content-action`).removeClass('visible');
-            $(`.step-content-${version} .payment-overlay`).addClass('visible');
+            $contentBox.removeClass('visible').addClass('masked');
+            $contentAction.removeClass('visible');
+            $paymentOverlay.addClass('visible');
+
+            // Calculate and set max height based on content length
+            // const previewLength = Math.ceil(content.length);
+            // const maxHeight = previewLength * 0.45; // Adjust the multiplier as needed for better UI
+            // $contentBox.css('max-height', `${maxHeight}px`);
         }
-        
     }
 
     static showNextStep(steps = 1) {
