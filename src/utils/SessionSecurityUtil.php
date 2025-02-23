@@ -2,9 +2,9 @@
 
 class SessionSecurityUtil {
     const SESSION_NAME = 'EVER_REMEMBER_SESSION';
-    const SESSION_LIFETIME = 14400; // 4 hours
-    const INACTIVITY_TIMEOUT = 1800; // 30 minutes
-    const REGENERATE_INTERVAL = 120; // 15 minutes - interval to regenerate session ID
+    const SESSION_LIFETIME = 120; // 4 hours
+    const INACTIVITY_TIMEOUT = 3600; // 30 minutes
+    const REGENERATE_INTERVAL = 3600; // 15 minutes - interval to regenerate session ID
     
     public static function initiateSession(): void {
         if (session_status() === PHP_SESSION_NONE) {            

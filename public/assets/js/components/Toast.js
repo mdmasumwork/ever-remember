@@ -20,7 +20,6 @@ class Toast {
     }
 
     static changeText($text) {
-        console.log('Changing toast text to:', $text);
         this.toastElement.textContent = $text;
     }
 }

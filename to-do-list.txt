@@ -1,5 +1,6 @@
 Problem
 ====================
 
-1. When the user clicks to generate the first version, and they are blocked by payment overlay, 
-2. After payment, in additional question fields if the user click skip button, it should ignore the field vlaues.
+1. Show proper error at each point in the frontend
+2. Give some instructions in prompt not to write anything else other than related content
+3. 

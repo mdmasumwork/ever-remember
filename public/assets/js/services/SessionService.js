@@ -51,7 +51,6 @@ class SessionService {
                     
                     // Load all versions up to current version
                     const versions = await this.loadAllVersions(currentVersionNumber);
-                    console.log('Loaded versions:', versions);
 
                     if (versions) {
                         if (response.data.paymentVerified) {

@@ -3,8 +3,6 @@ class PaymentService {
         try {
             // Fetch Stripe public key from backend
             const data = await HttpService.get('/api/get-stripe-key.php');
-
-            console.log('Stripe key:', data.publicKey);
             
             if (!data.publicKey) {
                 throw new Error('Stripe key not found');
@@ -91,8 +89,6 @@ class PaymentService {
             // 1. Verify payment
             const userName = $('#first-person-name-field').val() || '-';
             const userEmail = $('#email-field').val() || '-';
-
-            console.log('Name:', userName);
 
             const verifyResponse = await HttpService.post('/api/verify-payment.php', {
                 paymentIntentId: paymentIntent.id,

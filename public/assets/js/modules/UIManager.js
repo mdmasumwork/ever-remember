@@ -8,7 +8,6 @@ class UIManager {
             $('.payment-overlay').removeClass('visible');
             $('.payment-success-overlay').addClass('visible');
         } else if (event === 'continue-after-payment') {
-            console.log('continue-after-payment');
             $('.step-content-1 .content-actions').removeClass('visible').find('.payment-success-overlay').removeClass('visible');
             $('.step-content-1 .content-box').removeClass('masked').removeClass('visible');            ;
             $('.step-content-1 .loading-indicator').addClass('visible').find('.loading-text h4').text('Retrieving full content');            

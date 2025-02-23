@@ -3,34 +3,33 @@ class DataManager {
     // TODO: Add CSRF protection
     // TODO: Add data sanitization
     // TODO: Add secure transmission
-    static formData = {
-        firstPersonName: 'Md Masum',
-        email: 'md.masum.dev@gmail.com',
-        deceasedPersonName: 'Nanet',
-        messageType: 'eulogy',
-        relationship: 'neighbor',
-        details: 'nice person',
-        accomplishments: 'teacher',
-        messageTone: 'formal',
-        finalQuestion: '',
-        additionalInstructions: []
-    };
-
     // static formData = {
-    //     firstPersonName: '',
-    //     email: '',
-    //     deceasedPersonName: '',
-    //     messageType: '',
-    //     relationship: '',
-    //     details: '',
-    //     accomplishments: '',
-    //     messageTone: '',
+    //     firstPersonName: 'Md Masum',
+    //     email: 'md.masum.dev@gmail.com',
+    //     deceasedPersonName: 'Nanet',
+    //     messageType: 'eulogy',
+    //     relationship: 'neighbor',
+    //     details: 'nice person',
+    //     accomplishments: 'teacher',
+    //     messageTone: 'formal',
     //     finalQuestion: '',
     //     additionalInstructions: []
     // };
 
+    static formData = {
+        firstPersonName: '',
+        email: '',
+        deceasedPersonName: '',
+        messageType: '',
+        relationship: '',
+        details: '',
+        accomplishments: '',
+        messageTone: '',
+        finalQuestion: '',
+        additionalInstructions: []
+    };
+
     static collectData(step, toSkip = false) {
-        console.log('Collecting data from step:', step);
         const $step = $(step);
         const stepId = $step.attr('id') || $step.attr('class');
 
@@ -129,8 +128,6 @@ class DataManager {
                 }
                 break;
         }
-
-        console.log('Collected data:', this.formData);
     }
 
     static async sendToContentGeneration(hasAdditionalInstruction = false) {
@@ -140,7 +137,6 @@ class DataManager {
                 : this.formData;
             
             const data = await HttpService.post('/api/generate-content.php', payload);
-            console.log(data.prompt);
             
             if (!data.success) {
                 throw new Error(data.error);
