@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+// Load environment variables from .env file
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
+$isDevelopment = $_ENV['APP_ENV'] === 'development';
+?>
+
 <!-- Header Step -->
 <header id="header" class="sticky-header">
     <div class="logo">
@@ -5,9 +17,9 @@
     </div>
     <nav id="nav" class="main-nav">
         <ul>
-            <li><a href="/api/clear-session-with-get.php" target="_blank">Clear Session</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
+            <?php if ($isDevelopment): ?>
+                <li><a href="/api/clear-session-with-get.php" target="_blank">Clear Session</a></li>
+            <?php endif; ?>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>

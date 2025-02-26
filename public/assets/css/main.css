@@ -1161,10 +1161,19 @@ ul, ol {
 #footer {
   background-color: #55328F;
   text-align: center;
-  padding: 20px;
+  padding: 24px;
 }
 #footer p {
   color: #ffffff;
+  margin-bottom: 0;
+}
+@media (max-width: 768px) {
+  #footer {
+    padding: 4px;
+  }
+  #footer p {
+    font-size: 12px;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -37,7 +37,6 @@ class EmailController {
 
     private function createEmailTemplate($messageType, $version, $content, $deceasedPerson) {
         $domainName = $_ENV['DOMAIN_NAME'];
-        LogUtil::log('debug', 'Content: ' . $content);
         
         // Replace double new lines with two <br> tags and single new lines with <br> tags
         $content = str_replace("\n\n", "<br><br>", $content);

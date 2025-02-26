@@ -1,0 +1,100 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - dev
+      - staging
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Make sure your repository variables are passed in here
+    env:
+      DEV_PATH: ${{ vars.DEV_PATH }}
+      STAGING_PATH: ${{ vars.STAGING_PATH }}
+      PROD_PATH: ${{ vars.PROD_PATH }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies and Build
+        run: |
+          npm install
+          npm run build:prod
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install Composer Dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Determine Target Directory
+        id: set-target
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/production" ]]; then
+            echo "TARGET_PATH=${{ vars.PROD_PATH }}" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "TARGET_PATH=${{ vars.STAGING_PATH }}" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "TARGET_PATH=${{ vars.DEV_PATH }}" >> $GITHUB_ENV
+          fi
+
+      - name: Safety Check - Verify Target Path
+        run: |
+          echo "TARGET_PATH = '${{ env.TARGET_PATH }}'"
+          # Change this check to a simpler pattern match:
+          if [[ ! "${{ env.TARGET_PATH }}" == */public_html/* ]]; then
+            echo "ERROR: Target path must be within public_html! Aborting deployment."
+            exit 1
+          fi
+
+      - name: Deploy .htaccess based on environment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/production" ]]; then
+            cp .htaccess.production .htaccess
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            cp .htaccess.staging .htaccess
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            cp .htaccess.dev .htaccess
+          fi
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+        
+      - name: Debug Connection Info
+        run: echo "Deploying to ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }} using port ${{ secrets.SFTP_PORT }}"
+        
+      - name: Deploy to Hostinger via Rsync
+        env:
+          SSHPASS: ${{ secrets.SFTP_PASSWORD }}
+        run: |
+          sshpass -e rsync -e "ssh -p ${{ secrets.SFTP_PORT }} -o StrictHostKeyChecking=no" \
+          -avzr \
+          --exclude='.git' \
+          --exclude='.github' \
+          --exclude='.gitignore' \
+          --exclude='.env' \
+          --exclude='.htaccess.dev' \
+          --exclude='.htaccess.staging' \
+          --exclude='.htaccess.production' \
+          --exclude='phpunit.xml' \
+          --exclude='security.txt' \
+          --exclude='to-do-list.txt' \
+          --exclude='file-structure.txt' \
+          --exclude='README.md' \
+          --exclude='.idea' \
+          --exclude='database/migrations' \
+          --exclude='tests' \
+          ./ ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }}
+

@@ -1,8 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
+require_once __DIR__ . '/EnvUtil.php';
 
 class SecurityHeadersUtil {
     private static function getCSPDirectives() {
@@ -47,7 +45,7 @@ class SecurityHeadersUtil {
     }
 
     public static function setHeaders($allowedMethods, $contentType = 'application/json') {
-        $allowedOrigin = $_ENV['ALLOWED_ORIGIN'] ?: '*';
+        $allowedOrigin = EnvUtil::getEnv('ALLOWED_ORIGIN', '*');
         header("Content-Type: $contentType");
         header("Access-Control-Allow-Origin: $allowedOrigin");
         header("Access-Control-Allow-Methods: $allowedMethods");
@@ -70,11 +68,15 @@ class SecurityHeadersUtil {
         // Add Cross-Origin isolation headers
         header("Cross-Origin-Opener-Policy: same-origin");
         header("Cross-Origin-Embedder-Policy: require-corp");
+        header("Cross-Origin-Resource-Policy: same-origin");
+
+        // Add HSTS header
+        header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
     }
 
     public static function handlePreflight($allowedMethods) {
         if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            $allowedOrigin = $_ENV['ALLOWED_ORIGIN'] ?: '*';
+            $allowedOrigin = EnvUtil::getEnv('ALLOWED_ORIGIN', '*');
             header("Access-Control-Allow-Origin: $allowedOrigin");
             header("Access-Control-Allow-Methods: $allowedMethods");
             header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -85,7 +87,7 @@ class SecurityHeadersUtil {
 
     public static function setIndexHeaders($allowedMethods, $contentType = 'text/html') {
         header("Content-Type: $contentType");
-        $allowedOrigin = $_ENV['ALLOWED_ORIGIN'] ?: '*';
+        $allowedOrigin = EnvUtil::getEnv('ALLOWED_ORIGIN', '*');
         header("Access-Control-Allow-Origin: $allowedOrigin");
         header("Access-Control-Allow-Methods: $allowedMethods");
         header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -103,5 +105,9 @@ class SecurityHeadersUtil {
         // Remove Cross-Origin isolation headers
         header_remove("Cross-Origin-Opener-Policy");
         header_remove("Cross-Origin-Embedder-Policy");
+        header("Cross-Origin-Resource-Policy: same-origin");
+
+        // Add HSTS header
+        header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
     }
 }

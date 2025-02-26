@@ -1,7 +1,5 @@
 <?php
 
-use Stripe\BillingPortal\Session;
-
 require_once __DIR__ . '/../utils/SessionSecurityUtil.php';
 
 class SessionService {

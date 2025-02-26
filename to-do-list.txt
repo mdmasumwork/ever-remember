@@ -4,3 +4,11 @@ Problem
 1. Show proper error at each point in the frontend
 2. Give some instructions in prompt not to write anything else other than related content
 3. 
+
+
+
+
+Security issues
+======================
+1. getCSPDirectives has 'unsafe-inline', which is ricky. To avoid this, we have to remove it, but then external resources link jquery are not loading then.
+So we have to remove the inline css and js from the code. I think we may have very few. we have to check.
