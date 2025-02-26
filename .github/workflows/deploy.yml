@@ -41,11 +41,14 @@ jobs:
           elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
             echo "TARGET_PATH=${{ env.STAGING_PATH }}" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "DEV_PATH='${{ env.DEV_PATH }}'"
             echo "TARGET_PATH=${{ env.DEV_PATH }}" >> $GITHUB_ENV
           fi
 
       - name: Safety Check - Verify Target Path
         run: |
+          echo "TARGET_PATH = '${{ env.TARGET_PATH }}'"
+          # Change this check to a simpler pattern match:
           if [[ ! "${{ env.TARGET_PATH }}" == */public_html/* ]]; then
             echo "ERROR: Target path must be within public_html! Aborting deployment."
             exit 1
