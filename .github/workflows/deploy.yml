@@ -44,15 +44,13 @@ jobs:
             echo "TARGET_PATH=${{ secrets.DEV_PATH }}" >> $GITHUB_ENV
           fi
 
-      - name: Deploy to Hostinger via SFTP
-        uses: appleboy/scp-action@master
+      - name: Deploy to Hostinger via SFTP (Using Rsync)
+        uses: burnett01/rsync-deploy-action@v1
         with:
-          host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          port: ${{ secrets.SFTP_PORT }}
-          source: "."
-          target: "${{ env.TARGET_PATH }}"
-          strip_components: 1
-          rm: true
-          exclude: "node_modules,vendor,.env,security.txt,to-do-list.txt,file-structure.txt,.gitignore,README.md,deploy.yml,.git,.idea,database/migrations,tests"
+          switches: -avz --delete-excluded --exclude='.git' --exclude='.gitignore' --exclude='node_modules' --exclude='vendor' --exclude='.env' --exclude='security.txt' --exclude='to-do-list.txt' --exclude='file-structure.txt' --exclude='README.md' --exclude='deploy.yml' --exclude='.idea' --exclude='database/migrations' --exclude='tests' --exclude='dev' --exclude='staging'
+          path: ./
+          remote_path: ${{ env.TARGET_PATH }}
+          remote_host: ${{ secrets.SFTP_HOST }}
+          remote_user: ${{ secrets.SFTP_USERNAME }}
+          remote_password: ${{ secrets.SFTP_PASSWORD }}
+          remote_port: ${{ secrets.SFTP_PORT }}
