@@ -59,6 +59,16 @@ jobs:
             exit 1
           fi
 
+      - name: Deploy .htaccess based on environment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/production" ]]; then
+            cp .htaccess.production .htaccess
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            cp .htaccess.staging .htaccess
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            cp .htaccess.dev .htaccess
+          fi
+
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
         
