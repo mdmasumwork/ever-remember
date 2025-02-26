@@ -44,6 +44,13 @@ jobs:
             echo "TARGET_PATH=${{ secrets.DEV_PATH }}" >> $GITHUB_ENV
           fi
 
+      - name: Safety Check - Verify Target Path
+        run: |
+          if [[ ! "${{ env.TARGET_PATH }}" == */public_html/* ]]; then
+            echo "ERROR: Target path must be within public_html! Aborting deployment."
+            exit 1
+          fi
+
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
         
@@ -55,13 +62,14 @@ jobs:
           SSHPASS: ${{ secrets.SFTP_PASSWORD }}
         run: |
           sshpass -e rsync -e "ssh -p ${{ secrets.SFTP_PORT }} -o StrictHostKeyChecking=no" \
-          -avzr --delete-excluded \
+          -avzr \
           --exclude='.git' \
           --exclude='.github' \
           --exclude='.gitignore' \
           --exclude='node_modules' \
           --exclude='vendor' \
           --exclude='.env' \
+          --exclude='phpunit.xml' \
           --exclude='security.txt' \
           --exclude='to-do-list.txt' \
           --exclude='file-structure.txt' \
