@@ -10,7 +10,7 @@ class OpenAIService {
     public function __construct() {
         $this->apiKey = OpenAIConfig::get('api_key');
         $this->model = OpenAIConfig::get('model');
-        $this->temperature = OpenAIConfig::get('temperature');
+        $this->temperature = (float) OpenAIConfig::get('temperature');
     }
     
     // public function generateContent($prompt) {
@@ -49,7 +49,9 @@ class OpenAIService {
         curl_close($ch);
         
         if ($httpCode !== 200) {
-            throw new Exception('OpenAI API request failed with status ' . $httpCode);
+            // Log detailed error information
+            $errorMessage = 'OpenAI API request failed with status ' . $httpCode . ' Response: ' . $response;
+            throw new Exception($errorMessage);
         }
         
         $responseData = json_decode($response, true);

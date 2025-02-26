@@ -96,5 +96,6 @@ jobs:
           --exclude='.idea' \
           --exclude='database/migrations' \
           --exclude='tests' \
+          --exclude='logs' \
           ./ ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }}
 
