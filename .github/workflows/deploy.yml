@@ -44,13 +44,30 @@ jobs:
             echo "TARGET_PATH=${{ secrets.DEV_PATH }}" >> $GITHUB_ENV
           fi
 
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+        
+      - name: Debug Connection Info
+        run: echo "Deploying to ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }} using port ${{ secrets.SFTP_PORT }}"
+        
       - name: Deploy to Hostinger via Rsync
-        uses: up9cloud/action-rsync@v1
-        with:
-          args: |
-            -e "ssh -p ${{ secrets.SFTP_PORT }} -o StrictHostKeyChecking=no" \
-            -avz --delete-excluded \
-            --exclude='.git' --exclude='.gitignore' --exclude='node_modules' --exclude='vendor' \
-            --exclude='.env' --exclude='security.txt' --exclude='to-do-list.txt' --exclude='file-structure.txt' \
-            --exclude='README.md' --exclude='deploy.yml' --exclude='.idea' --exclude='database/migrations' --exclude='tests' \
-            ./ u102329302@147.93.42.133:${{ env.TARGET_PATH }}
+        env:
+          SSHPASS: ${{ secrets.SFTP_PASSWORD }}
+        run: |
+          sshpass -e rsync -e "ssh -p ${{ secrets.SFTP_PORT }} -o StrictHostKeyChecking=no" \
+          -avzr --delete-excluded \
+          --exclude='.git' \
+          --exclude='.github' \
+          --exclude='.gitignore' \
+          --exclude='node_modules' \
+          --exclude='vendor' \
+          --exclude='.env' \
+          --exclude='security.txt' \
+          --exclude='to-do-list.txt' \
+          --exclude='file-structure.txt' \
+          --exclude='README.md' \
+          --exclude='.idea' \
+          --exclude='database/migrations' \
+          --exclude='tests' \
+          ./ ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }}
+
