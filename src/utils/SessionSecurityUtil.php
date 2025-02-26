@@ -1,11 +1,20 @@
 <?php
 
+require_once __DIR__ . '/EnvUtil.php';
+
 class SessionSecurityUtil {
-    const SESSION_NAME = 'EVER_REMEMBER_SESSION';
-    const SESSION_LIFETIME = 120; // 4 hours
-    const INACTIVITY_TIMEOUT = 3600; // 30 minutes
-    const REGENERATE_INTERVAL = 3600; // 15 minutes - interval to regenerate session ID
-    
+    private static $sessionName;
+    private static $sessionLifetime;
+    private static $inactivityTimeout;
+    private static $regenerateInterval;
+
+    public static function initialize() {
+        self::$sessionName = EnvUtil::getEnv('SESSION_NAME', 'EVER_REMEMBER_SESSION');
+        self::$sessionLifetime = EnvUtil::getEnv('SESSION_LIFETIME', 14400); // 4 hours
+        self::$inactivityTimeout = EnvUtil::getEnv('INACTIVITY_TIMEOUT', 1800); // 30 minutes
+        self::$regenerateInterval = EnvUtil::getEnv('REGENERATE_INTERVAL', 900); // 15 minutes
+    }
+
     public static function initiateSession(): void {
         if (session_status() === PHP_SESSION_NONE) {            
             // Set session security settings
@@ -14,9 +23,9 @@ class SessionSecurityUtil {
             ini_set('session.cookie_httponly', 1);
             ini_set('session.use_only_cookies', 1);
 
-            session_name(self::SESSION_NAME);
+            session_name(self::$sessionName);
             session_set_cookie_params([
-                'lifetime' => self::SESSION_LIFETIME,
+                'lifetime' => self::$sessionLifetime,
                 'path' => '/',
                 'domain' => $_SERVER['HTTP_HOST'],
                 'secure' => $isSecure,
@@ -40,10 +49,10 @@ class SessionSecurityUtil {
         $_SESSION = array();
         
         // 2. Clear session cookie
-        if (isset($_COOKIE[self::SESSION_NAME])) {
+        if (isset($_COOKIE[self::$sessionName])) {
             $params = session_get_cookie_params();
             setcookie(
-                self::SESSION_NAME,
+                self::$sessionName,
                 '',
                 [
                     'expires' => 1,  // Past time to ensure deletion
@@ -54,7 +63,7 @@ class SessionSecurityUtil {
                     'samesite' => $params['samesite']
                 ]
             );
-            unset($_COOKIE[self::SESSION_NAME]);
+            unset($_COOKIE[self::$sessionName]);
         }
         
         // 3. Destroy session data on server
@@ -80,13 +89,13 @@ class SessionSecurityUtil {
         $securityData = $_SESSION['security'];
 
         // Check session lifetime
-        if (($currentTime - $securityData['created_at']) > self::SESSION_LIFETIME) {
+        if (($currentTime - $securityData['created_at']) > self::$sessionLifetime) {
             self::clearSession();
             return false;
         }
 
         // Check inactivity timeout
-        if (($currentTime - $securityData['last_activity']) > self::INACTIVITY_TIMEOUT) {
+        if (($currentTime - $securityData['last_activity']) > self::$inactivityTimeout) {
             self::clearSession();
             return false;
         }
@@ -95,7 +104,7 @@ class SessionSecurityUtil {
         $_SESSION['security']['last_activity'] = $currentTime;
         
         // Regenerate session ID periodically for security
-        if (($currentTime - $securityData['last_activity']) > self::REGENERATE_INTERVAL) {
+        if (($currentTime - $securityData['last_activity']) > self::$regenerateInterval) {
             self::regenerateSession();
         }
         
@@ -118,3 +127,6 @@ class SessionSecurityUtil {
         LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Regenerated session ID from ' . $oldSessionId . ' to ' . session_id());
     }
 }
+
+// Initialize session settings
+SessionSecurityUtil::initialize();

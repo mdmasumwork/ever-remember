@@ -1,8 +1,5 @@
 <?php
 
-// First, install HTML Purifier via Composer:
-// composer require ezyang/htmlpurifier
-
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 class SanitizerService {
