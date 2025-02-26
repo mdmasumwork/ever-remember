@@ -8,7 +8,7 @@ Options -Indexes
 
 # Allow access only from a specific IP (for staging)
 Require all denied
-Require ip 192.168.1.100  # Replace with your IP address
+Require ip 172.59.184.156  # Replace with your IP address
 
 # Prevent access to hidden files and folders (e.g., .git, .env)
 RewriteRule (^|/)\. - [F]
