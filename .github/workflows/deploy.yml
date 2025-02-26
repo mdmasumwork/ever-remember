@@ -46,7 +46,9 @@ jobs:
 
       - name: Safety Check - Verify Target Path
         run: |
-          if [[ ! "${{ env.TARGET_PATH }}" == */public_html/* ]]; then
+          echo "TARGET_PATH = '${{ env.TARGET_PATH }}'"
+          # Change this check to a simpler pattern match:
+          if [[ ! "${{ env.TARGET_PATH }}" =~ public_html ]]; then
             echo "ERROR: Target path must be within public_html! Aborting deployment."
             exit 1
           fi
