@@ -11,6 +11,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Make sure your repository variables are passed in here
+    env:
+      DEV_PATH: ${{ vars.DEV_PATH }}
+      STAGING_PATH: ${{ vars.STAGING_PATH }}
+      PROD_PATH: ${{ vars.PROD_PATH }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -37,12 +43,11 @@ jobs:
         id: set-target
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/production" ]]; then
-            echo "TARGET_PATH=$PROD_PATH" >> $GITHUB_ENV
+            echo "TARGET_PATH=${{ vars.PROD_PATH }}" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
-            echo "TARGET_PATH=$STAGING_PATH" >> $GITHUB_ENV
+            echo "TARGET_PATH=${{ vars.STAGING_PATH }}" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
-            echo "DEV_PATH=$DEV_PATH"
-            echo "TARGET_PATH=$DEV_PATH" >> $GITHUB_ENV
+            echo "TARGET_PATH=${{ vars.DEV_PATH }}" >> $GITHUB_ENV
           fi
 
       - name: Safety Check - Verify Target Path
