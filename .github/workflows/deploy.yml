@@ -84,9 +84,10 @@ jobs:
           --exclude='.git' \
           --exclude='.github' \
           --exclude='.gitignore' \
-          --exclude='node_modules' \
-          --exclude='vendor' \
           --exclude='.env' \
+          --exclude='.htaccess.dev' \
+          --exclude='.htaccess.staging' \
+          --exclude='.htaccess.production' \
           --exclude='phpunit.xml' \
           --exclude='security.txt' \
           --exclude='to-do-list.txt' \
