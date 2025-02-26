@@ -37,12 +37,12 @@ jobs:
         id: set-target
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/production" ]]; then
-            echo "TARGET_PATH=${{ env.PROD_PATH }}" >> $GITHUB_ENV
+            echo "TARGET_PATH=$PROD_PATH" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
-            echo "TARGET_PATH=${{ env.STAGING_PATH }}" >> $GITHUB_ENV
+            echo "TARGET_PATH=$env.STAGING_PATH" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
-            echo "DEV_PATH='${{ env.DEV_PATH }}'"
-            echo "TARGET_PATH=${{ env.DEV_PATH }}" >> $GITHUB_ENV
+            echo "DEV_PATH=$DEV_PATH"
+            echo "TARGET_PATH=$env.DEV_PATH" >> $GITHUB_ENV
           fi
 
       - name: Safety Check - Verify Target Path
