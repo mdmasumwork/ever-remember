@@ -53,4 +53,4 @@ jobs:
             --exclude='.git' --exclude='.gitignore' --exclude='node_modules' --exclude='vendor'
             --exclude='.env' --exclude='security.txt' --exclude='to-do-list.txt' --exclude='file-structure.txt'
             --exclude='README.md' --exclude='deploy.yml' --exclude='.idea' --exclude='database/migrations' --exclude='tests'
-            ./ ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }}
+            ./ u102329302@147.93.42.133:${{ env.TARGET_PATH }}
