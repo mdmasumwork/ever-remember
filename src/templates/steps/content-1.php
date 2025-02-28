@@ -1,3 +1,9 @@
+<?php
+
+require_once __DIR__ . '/../../utils/EnvUtil.php';
+$amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
+
+?>
 <section class="step step-content-1">
     <h4>Thanks for sharing those beautiful details. Here's what I've created...</h4>
     
@@ -34,7 +40,8 @@
             <div class="content-actions">
                 <div class="payment-overlay">
                     <h5>Unlock your complete personalized content</h5>
-                    <p class="price">$9.99</p>
+                    <p class="price">$<?= $amount ?></p>
+                    <p class="green-text">After payment, you will also have the opportunity to modify the content two more times.</p>
                     <button class="payment-button initial-button">Purchase to View Full Content</button>
 
                     <div class="payment-form" style="display: none;">
@@ -68,8 +75,8 @@
                             </svg>
                         </div>
                         <h3>Payment Successful!</h3>
-                        <p>Thank you for your payment. I have sent you invoice as well to your email.</p>
-                        <button class="er-button primary-button continue-button">Continue to View Content</button>
+                        <p>Thank you for your payment.</p>
+                        <button class="er-button tertiary-button continue-button">Continue to View Content</button>
                     </div>
                 </div>
 

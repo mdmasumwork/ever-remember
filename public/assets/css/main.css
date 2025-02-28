@@ -113,6 +113,11 @@ ul, ol {
   background-position: center;
 }
 
+.green-text {
+  color: #299300;
+  margin-bottom: 24px;
+}
+
 #header {
   display: flex;
   align-items: center;
@@ -365,7 +370,7 @@ ul, ol {
 .er-button.tertiary-button {
   background-color: transparent;
   border: none;
-  color: #6B7280;
+  color: #ff6600;
   padding: 8px;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -375,7 +380,7 @@ ul, ol {
   display: none;
 }
 .er-button.tertiary-button:hover {
-  color: #ff6600;
+  color: #55328F;
 }
 .er-button:disabled {
   opacity: 0.6;
@@ -598,7 +603,7 @@ ul, ol {
   bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
-  background: #6BA754;
+  background: #299300;
   color: #FFFFFF;
   padding: 16px;
   border-radius: 4px;
