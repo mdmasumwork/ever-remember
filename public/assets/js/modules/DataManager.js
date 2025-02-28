@@ -1,20 +1,4 @@
 class DataManager {
-    // TODO: Add input validation
-    // TODO: Add CSRF protection
-    // TODO: Add data sanitization
-    // TODO: Add secure transmission
-    // static formData = {
-    //     firstPersonName: 'Md Masum',
-    //     email: 'md.masum.dev@gmail.com',
-    //     deceasedPersonName: 'Nanet',
-    //     messageType: 'eulogy',
-    //     relationship: 'neighbor',
-    //     details: 'nice person',
-    //     accomplishments: 'teacher',
-    //     messageTone: 'formal',
-    //     finalQuestion: '',
-    //     additionalInstructions: []
-    // };
 
     static formData = {
         firstPersonName: '',

@@ -13,16 +13,15 @@ class OpenAIService {
         $this->temperature = (float) OpenAIConfig::get('temperature');
     }
     
-    // public function generateContent($prompt) {
-    //     sleep(2);
-        
-    //     $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
-    //     return [
-    //         'content' => 'version ' . $version . ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut metus felis. Nulla lobortis velit elit, et interdum nunc euismod vel. Fusce laoreet a est in posuere. Sed egestas ut nunc eu efficitur. Donec est ex, auctor non pharetra viverra, scelerisque nec mauris. Nam metus'
-    //     ];
-    // }
-    
     public function generateContent($prompt) {
+        
+        $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
+        return [
+            'content' => 'version ' . $version . ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut metus felis. Nulla lobortis velit elit, et interdum nunc euismod vel. Fusce laoreet a est in posuere. Sed egestas ut nunc eu efficitur. Donec est ex, auctor non pharetra viverra, scelerisque nec mauris. Nam metus'
+        ];
+    }
+    
+    public function generateContent2($prompt) {
         $url = 'https://api.openai.com/v1/chat/completions';
         
         $headers = [

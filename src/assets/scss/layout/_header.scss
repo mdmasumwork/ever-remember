@@ -9,6 +9,11 @@
 
     .logo {
         width: 180px;
+        display: flex;
+
+        @include mobile {
+            width: 160px;
+        }
     }
 
     .main-nav {
@@ -43,6 +48,8 @@
 
 @include mobile {
     #header {
+        padding: 12px 32px;
+
         .main-nav {
             display: none;
         }

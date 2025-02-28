@@ -1,17 +1,13 @@
-.toast {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
+.toast-message {
     background: $success;
     color: $text-white;
-    padding: 16px;
-    border-radius: $border-radius-sm;
-    opacity: 0;
-    transition: opacity $transition-speed ease;
-    z-index: $z-tooltip;
-    
-    &.show {
-        opacity: 1;
+    margin: 1.5rem;
+    margin-top: 0;
+    border-radius: 8px;
+    display: none;
+
+    p {
+        color: $text-white;
+        margin-bottom: 0;
     }
 }

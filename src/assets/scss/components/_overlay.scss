@@ -14,7 +14,7 @@
         background: $surface-primary;
         border-radius: 12px;
         padding: $spacing-xl;
-        max-width: 500px;
+        max-width: 700px;
         width: 90%;
     }
 
@@ -33,11 +33,15 @@
 
         .action-buttons {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: $spacing-md;
 
             button {
                 width: 100%;
+            }
+
+            @include mobile {
+                flex-direction: column;
             }
         }
     }

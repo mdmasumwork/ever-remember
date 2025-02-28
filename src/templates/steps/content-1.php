@@ -36,7 +36,11 @@ $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
                     <img class="email-icon" src="assets/images/icons/email-orange.svg">
                 </div>
             </div>
-            
+
+            <div class="toast-message">
+                <p>Toast</p>
+            </div>
+
             <div class="content-actions">
                 <div class="payment-overlay">
                     <h5>Unlock your complete personalized content</h5>
@@ -76,7 +80,7 @@ $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
                         </div>
                         <h3>Payment Successful!</h3>
                         <p>Thank you for your payment.</p>
-                        <button class="er-button tertiary-button continue-button">Continue to View Content</button>
+                        <button class="er-button primary-button continue-button">Continue to View Content</button>
                     </div>
                 </div>
 
