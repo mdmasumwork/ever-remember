@@ -31,6 +31,7 @@ class LogUtil {
             'session' => "{$logDirectory}/session.log",
             'payment' => "{$logDirectory}/payment.log",
             'debug' => "{$logDirectory}/debug.log",
+            'info' => "{$logDirectory}/info.log"
         ];
 
         foreach (self::$logFiles as $file) {

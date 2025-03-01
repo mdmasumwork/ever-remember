@@ -22,12 +22,18 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.firstPersonName = $step.find('#first-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
                     $('.first-person-name-placeholder').text(this.formData.firstPersonName);
+                    
+                    // Store first person name in backend session
+                    this.storeFormData('first-person-name', this.formData.firstPersonName);
                 }
                 break;
 
             case stepId.includes('step-email'):
                 if (!toSkip) {
                     this.formData.email = $step.find('#email-field').val();
+                    
+                    // Store email in backend session
+                    this.storeFormData('email', this.formData.email);
                 }
                 break;
 
@@ -35,6 +41,9 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
                     $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonName);
+                    
+                    // Store deceased person name in backend session
+                    this.storeFormData('deceased-person-name', this.formData.deceasedPersonName);
                 }
                 break;
 
@@ -42,18 +51,30 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.messageType = $step.find('.card.selected').data('message-type');
                     $('.message-type-placeholder').text(this.formData.messageType);
+                    
+                    // Store message type in backend session
+                    this.storeFormData('message-type', this.formData.messageType);
+                    
+                    // Fetch questions for the deceased-person-details step based on the message type
+                    this.fetchQuestionsForMessageType(this.formData.messageType);
                 }
                 break;
 
             case stepId.includes('deceased-person-relation'):
                 if (!toSkip) {
                     this.formData.relationship = $step.find('#deceased-person-relation-field').val();
+                    
+                    // Store relationship in backend session
+                    this.storeFormData('relationship', this.formData.relationship);
                 }
                 break;
 
             case stepId.includes('deceased-person-details'):
                 if (!toSkip) {
                     this.formData.details = $step.find('#deceased-person-details-field').val();
+                    
+                    // Store details in backend session
+                    this.storeFormData('details', this.formData.details);
                 }
                 break;
 
@@ -63,11 +84,17 @@ class DataManager {
                 } else {
                     this.formData.accomplishments = 'I am not sure what to say.';
                 }
+                
+                // Store accomplishments in backend session
+                this.storeFormData('accomplishments', this.formData.accomplishments);
                 break;
 
             case stepId.includes('message-tone'):
                 if (!toSkip) {
                     this.formData.messageTone = $step.find('.card.selected').data('message-tone');
+                    
+                    // Store message tone in backend session
+                    this.storeFormData('message-tone', this.formData.messageTone);
                 }
                 break;
 
@@ -77,6 +104,10 @@ class DataManager {
                 } else {
                     this.formData.finalQuestion = 'No, I have noting more to add.';
                 }
+                
+                // Store final question in backend session
+                this.storeFormData('final-question', this.formData.finalQuestion);
+                
                 this.sendToContentGeneration();
                 break;
 
@@ -112,6 +143,56 @@ class DataManager {
                 }
                 break;
         }
+    }
+
+    // New method to store form data in the backend session
+    static async storeFormData(fieldName, value) {
+        try {
+            const data = await HttpService.post('/api/store-form-data.php', {
+                field_name: fieldName,
+                value: value
+            });
+            
+            if (!data.success) {
+                console.error('Failed to store form data:', data.error);
+            }
+        } catch (error) {
+            console.error('Error storing form data:', error);
+            // Silently fail, as this is a background operation
+        }
+    }
+
+    static async fetchQuestionsForMessageType(messageType) {
+        try {
+            const response = await HttpService.get('/api/get-questions.php?message_type=' + messageType);
+            
+            if (!response.success) {
+                throw new Error(response.error || 'Failed to fetch questions');
+            }
+            
+            this.updateDeceasedPersonDetailsStep(response.questions);
+        } catch (error) {
+            console.error('Failed to fetch questions:', error);
+            // Continue with default questions if there's an error
+        }
+    }
+    
+    static updateDeceasedPersonDetailsStep(questions) {
+        const $step = $('.step-deceased-person-details');
+        
+        // Update the title
+        $step.find('h4').text(questions.title);
+        
+        // Update the description
+        $step.find('p').first().html(questions.description);
+        
+        // Update the suggestions list
+        const $ul = $step.find('ul');
+        $ul.empty();
+        
+        questions.suggestions.forEach(suggestion => {
+            $ul.append(`<li>${suggestion}</li>`);
+        });
     }
 
     static async sendToContentGeneration(hasAdditionalInstruction = false) {

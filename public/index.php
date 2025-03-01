@@ -49,8 +49,8 @@ $csrfToken = CSRFUtil::generateToken();
     include '../src/templates/steps/message-type.php';
     include '../src/templates/steps/deceased-person-relation.php';
     include '../src/templates/steps/deceased-person-details.php';
-    include '../src/templates/steps/deceased-person-accomplishment.php';
     include '../src/templates/steps/message-tone.php';
+    include '../src/templates/steps/deceased-person-accomplishment.php';
     include '../src/templates/steps/final-question.php';
 
 

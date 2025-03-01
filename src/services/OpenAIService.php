@@ -13,7 +13,7 @@ class OpenAIService {
         $this->temperature = (float) OpenAIConfig::get('temperature');
     }
     
-    public function generateContent($prompt) {
+    public function generateContent1($prompt) {
         
         $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
         return [
@@ -21,7 +21,7 @@ class OpenAIService {
         ];
     }
     
-    public function generateContent2($prompt) {
+    public function generateContent($prompt) {
         $url = 'https://api.openai.com/v1/chat/completions';
         
         $headers = [

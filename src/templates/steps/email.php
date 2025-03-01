@@ -2,7 +2,7 @@
     <div class="step-content">
         <h2>Welcome, <span class="first-person-name-placeholder"></span>!</h2>
         <p>Everything we create together will be visible here but will not be stored, ensuring complete privacy.</p>
-        <p>To proceed, please provide your email. I can send the words we write directly to your inbox so you have a copy.</p>
+        <p>To proceed, please provide your email. You will be able to send the content to your email later after it has been created.</p>
         <h4>Enter your email to continue:</h4>
         <div class="field-area">
             <input type="text" id="email-field" placeholder="Enter your email">

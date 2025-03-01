@@ -226,4 +226,22 @@ class PromptService {
         );        
         return $beginningSystemPrompt . $structuredPrompt . $endingSystemPrompt;
     }
+
+    /**
+     * Generate a prompt for extracting name components from a string
+     * 
+     * @param string $nameString The string containing a person's name
+     * @return string The formatted prompt for name extraction
+     */
+    public function generateNameExtractionPrompt($nameString) {
+        $prompt = "You are a name parser. Extract the first name, middle name (if any), and last name (if any) from this input: \"{$nameString}\". " .
+                 "Important rules to follow: " .
+                 "1. Ignore phrases like 'my name is', 'I am', 'my neighbor', etc. " .
+                 "2. If the input has exactly two name parts (e.g., 'John Smith'), treat them as first_name and last_name (not middle_name). " .
+                 "3. Only use middle_name when there are 3 or more name components. " .
+                 "4. If uncertain, prefer setting last_name rather than middle_name when there are only two name components. " .
+                 "Respond with only a simple JSON object with these exact keys: first_name, middle_name, and last_name.";
+        
+        return $prompt;
+    }
 }
