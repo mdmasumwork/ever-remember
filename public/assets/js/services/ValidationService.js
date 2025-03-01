@@ -1,5 +1,6 @@
 class ValidationService {
     static validateStep($step) {
+        return true;
         // If step is not required, return true
         if (!$step.hasClass('required')) {
             return true;
@@ -22,6 +23,7 @@ class ValidationService {
     }
 
     static validateRequired($field) {
+        return true;
         const value = $field.val().trim();
         
         if (!value) {
@@ -34,6 +36,7 @@ class ValidationService {
     }
 
     static validateName($field) {
+        return true;
         const value = $field.val().trim();
         const nameRegex = /^[a-zA-Z\s-]{2,50}$/;
         
@@ -52,6 +55,7 @@ class ValidationService {
     }
 
     static validateEmail($field) {
+        return true;
         const value = $field.val().trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         

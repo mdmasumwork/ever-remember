@@ -7,7 +7,7 @@ class DataManager {
         messageType: '',
         relationship: '',
         details: '',
-        accomplishments: '',
+        additionalInfo: '',
         messageTone: '',
         finalQuestion: '',
         additionalInstructions: []
@@ -24,7 +24,7 @@ class DataManager {
                     $('.first-person-name-placeholder').text(this.formData.firstPersonName);
                     
                     // Store first person name in backend session
-                    this.storeFormData('first-person-name', this.formData.firstPersonName);
+                    this.storeFormData('firstPersonName', this.formData.firstPersonName);
                 }
                 break;
 
@@ -43,7 +43,7 @@ class DataManager {
                     $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonName);
                     
                     // Store deceased person name in backend session
-                    this.storeFormData('deceased-person-name', this.formData.deceasedPersonName);
+                    this.storeFormData('deceasedPersonName', this.formData.deceasedPersonName);
                 }
                 break;
 
@@ -53,7 +53,7 @@ class DataManager {
                     $('.message-type-placeholder').text(this.formData.messageType);
                     
                     // Store message type in backend session
-                    this.storeFormData('message-type', this.formData.messageType);
+                    this.storeFormData('messageType', this.formData.messageType);
                     
                     // Fetch questions for the deceased-person-details step based on the message type
                     this.fetchQuestionsForMessageType(this.formData.messageType);
@@ -66,6 +66,7 @@ class DataManager {
                     
                     // Store relationship in backend session
                     this.storeFormData('relationship', this.formData.relationship);
+                    console.log('relationship:', this.formData);
                 }
                 break;
 
@@ -78,24 +79,33 @@ class DataManager {
                 }
                 break;
 
-            case stepId.includes('deceased-person-accomplishment'):
-                if (!toSkip && $step.find('#deceased-person-accomplishment-field').val().length) {
-                    this.formData.accomplishments = $step.find('#deceased-person-accomplishment-field').val();
-                } else {
-                    this.formData.accomplishments = 'I am not sure what to say.';
-                }
-                
-                // Store accomplishments in backend session
-                this.storeFormData('accomplishments', this.formData.accomplishments);
-                break;
-
             case stepId.includes('message-tone'):
                 if (!toSkip) {
                     this.formData.messageTone = $step.find('.card.selected').data('message-tone');
                     
-                    // Store message tone in backend session
-                    this.storeFormData('message-tone', this.formData.messageTone);
+                    // Store message tone in backend session first
+                    this.storeFormData('messageTone', this.formData.messageTone)
+                        .then(() => {
+                            // Only fetch additional info question after message tone is stored
+                            this.fetchAdditionalInfoQuestion();
+                        })
+                        .catch(error => {
+                            console.error('Failed to store message tone:', error);
+                            // Still try to fetch additional info if storage fails
+                            this.fetchAdditionalInfoQuestion();
+                        });
                 }
+                break;
+
+            case stepId.includes('additional-info'):
+                if (!toSkip && $step.find('#additional-info-field').val().length) {
+                    this.formData.additionalInfo = $step.find('#additional-info-field').val();
+                } else {
+                    this.formData.additionalInfo = 'I am not sure what to say.';
+                }
+                
+                // Store additional info in backend session
+                this.storeFormData('additionalInfo', this.formData.additionalInfo);
                 break;
 
             case stepId.includes('final-question'):
@@ -106,9 +116,16 @@ class DataManager {
                 }
                 
                 // Store final question in backend session
-                this.storeFormData('final-question', this.formData.finalQuestion);
-                
-                this.sendToContentGeneration();
+                this.storeFormData('finalQuestionAnswer', this.formData.finalQuestion)
+                    .then(() => {
+                        // Send data to content generation after final question is stored
+                        this.sendToContentGeneration();
+                    })
+                    .catch(error => {
+                        console.error('Failed to store final question:', error);
+                        // Still try to send data to content generation if storage fails
+                        this.sendToContentGeneration();
+                    });
                 break;
 
             case stepId.includes('step-additional-question-1'):
@@ -116,8 +133,18 @@ class DataManager {
                 if (!toSkip) {
                     additionalInstruction_1 = $step.find('#additional-question-1-field').val();                    
                 }
+
                 this.formData.additionalInstructions.push(additionalInstruction_1);
-                this.sendToContentGeneration(true);
+                this.storeFormData('additionalInstruction', additionalInstruction_1).
+                    then(() => {
+                        this.sendToContentGeneration(true);
+                    })
+                    .catch(error => {
+                        console.error('Failed to store additional instruction:', error);
+                        // Still try to send data to content generation if storage fails
+                        this.sendToContentGeneration(true);
+                    });
+
                 break;
 
             case stepId.includes('step-additional-question-2'):
@@ -126,7 +153,15 @@ class DataManager {
                     additionalInstruction_2 = $step.find('#additional-question-2-field').val();                    
                 }
                 this.formData.additionalInstructions.push(additionalInstruction_2);
-                this.sendToContentGeneration(true);
+                this.storeFormData('additionalInstruction', additionalInstruction_2).
+                    then(() => {
+                        this.sendToContentGeneration(true);
+                    })
+                    .catch(error => {
+                        console.error('Failed to store additional instruction:', error);
+                        // Still try to send data to content generation if storage fails
+                        this.sendToContentGeneration(true);
+                    });
                 break;
 
             case stepId.includes('step-feedback-2'):
@@ -195,13 +230,53 @@ class DataManager {
         });
     }
 
+    static async fetchAdditionalInfoQuestion() {
+        try {
+            const $additionalInfoStep = $('.step-additional-info');
+            
+            // Show loading indicator
+            // $additionalInfoStep.find('.loading-indicator').addClass('visible');
+            // $additionalInfoStep.find('.step-content').removeClass('visible');
+            
+            // Request the additional info question from the backend
+            const response = await HttpService.get('/api/get-questions.php?step=additional-info');
+            
+            if (!response.success) {
+                throw new Error(response.error || 'Failed to fetch additional info question');
+            }
+            
+            // Process the response
+            if (response.additionalInfoRequired === false) {
+                // No additional info needed, skip this step
+                console.log('No additional info needed, skipping step');
+                $(document).trigger('stepForwardRequested', [1, true]);
+                return;
+            }
+            
+            // Update the step with the question
+            if (response.question) {
+                $additionalInfoStep.find('h4').html(response.question);                
+            }
+
+            $additionalInfoStep.find('.loading-indicator').hide();
+            $additionalInfoStep.find('.step-content').addClass('visible');
+            
+        } catch (error) {
+            console.error('Failed to fetch additional info question:', error);
+            // On error, show the step with default question
+            const $additionalInfoStep = $('.step-additional-info');
+            $additionalInfoStep.find('.loading-indicator').removeClass('visible');
+            $additionalInfoStep.find('.step-content').addClass('visible');
+        }
+    }
+
     static async sendToContentGeneration(hasAdditionalInstruction = false) {
         try {
-            const payload = hasAdditionalInstruction 
-                ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } 
-                : this.formData;
+            // const payload = hasAdditionalInstruction 
+            //     ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } 
+            //     : this.formData;
             
-            const data = await HttpService.post('/api/generate-content.php', payload);
+            const data = await HttpService.post('/api/generate-content.php');
             
             if (!data.success) {
                 throw new Error(data.error);

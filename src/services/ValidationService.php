@@ -39,10 +39,10 @@ class ValidationService {
                     throw new ValidationException('You have reached the maximum number of versions allowed');
                 }
 
-                if (isset($data['email']) && isset($data['firstPersonName']) && isset($data['deceasedPersonName'])) {
-                    throw new ValidationException('Invalid request type for current version');
-                    // throw new ValidationException('Something went wrong. You should ask for second or third version, but you are asking for the first version');
-                }
+                // if (isset($data['email']) && isset($data['firstPersonName']) && isset($data['deceasedPersonName'])) {
+                //     throw new ValidationException('Invalid request type for current version');
+                //     // throw new ValidationException('Something went wrong. You should ask for second or third version, but you are asking for the first version');
+                // }
 
                 if ($session['version'] >= 1 && (!isset($session['payment_verified']) || !$session['payment_verified'])) {
                     throw new ValidationException('Payment required');

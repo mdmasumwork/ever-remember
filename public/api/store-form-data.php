@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../src/middleware/CSRFMiddleware.php';
 require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../../src/services/PromptService.php';
 require_once __DIR__ . '/../../src/services/OpenAIService.php';
+require_once __DIR__ . '/../../src/services/SingleValidationService.php';
 
 SecurityHeadersUtil::setHeaders('POST');
 SecurityHeadersUtil::handlePreflight('POST');
@@ -20,6 +21,9 @@ $rateLimitMiddleware = new RateLimitMiddleware();
 $rateLimitMiddleware->handle('form_data');
 
 $promptService = new PromptService();
+$validator = new SingleValidationService();
+
+LogUtil::log('info', 'store-form-data.php: Script started');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -29,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 try {
     $postData = json_decode(file_get_contents('php://input'), true);
+    LogUtil::log('info', 'store-form-data.php: Received data: ' . json_encode($postData));
     
     if (!$postData || !isset($postData['field_name']) || !isset($postData['value'])) {
         throw new Exception('Missing required parameters');
@@ -39,43 +44,80 @@ try {
     
     // List of allowed field names to store in session
     $allowedFields = [
-        'first-person-name',
+        'firstPersonName',
         'email',
-        'deceased-person-name',
-        'message-type',
+        'deceasedPersonName',
+        'messageType',
         'relationship', 
         'details',
-        'accomplishments',
-        'message-tone',
-        'final-question'
+        'additionalInfo',
+        'messageTone',
+        'finalQuestionAnswer',
+        'additionalInstruction'
     ];
     
     if (!in_array($fieldName, $allowedFields)) {
         throw new Exception('Invalid field name');
     }
     
-    // Store the value in the session with a standardized key
-    $_SESSION['form_data'][$fieldName] = $value;
+    // Validate and sanitize the input value
+    try {
+        $sanitizedValue = $validator->validateAndSanitize($fieldName, $value);
+        LogUtil::log('info', "store-form-data.php: Validated field '$fieldName' successfully");
+    } catch (SingleValidationException $e) {
+        LogUtil::log('error', "store-form-data.php: Validation error for field '$fieldName': " . $e->getMessage());
+        http_response_code(400);
+        echo json_encode([
+            'success' => false, 
+            'error' => $e->getMessage()
+        ]);
+        exit;
+    }
+    
+    if ($fieldName === 'additionalInstruction') {
+        if (!isset($_SESSION['form_data']['additionalInstructions']) || !is_array($_SESSION['form_data']['additionalInstructions'])) {
+            $_SESSION['form_data']['additionalInstructions'] = [];
+        }
+        $_SESSION['form_data']['additionalInstructions'][] = $sanitizedValue;
+    } else {
+        $_SESSION['form_data'][$fieldName] = $sanitizedValue;
+    }
+    
+    LogUtil::log('info', "store-form-data.php: Stored '$fieldName' in session");
     
     // Special handling for the deceased person name
-    if ($fieldName === 'deceased-person-name') {
-        $prompt = $promptService->generateNameExtractionPrompt($value);
+    if ($fieldName === 'deceasedPersonName') {
+        $prompt = $promptService->generateNameExtractionPrompt($sanitizedValue);
         
         try {
             $openAIService = new OpenAIService();
-            $parsedName = json_decode($openAIService->generateContent($prompt)['content'], true);
+            $response = $openAIService->generateContent($prompt);
+            $parsedName = json_decode($response['content'], true);
             
-            $_SESSION['deceased_person_first_name'] = $parsedName['first_name'];
-            $_SESSION['deceased_person_middle_name'] = $parsedName['middle_name'];
-            $_SESSION['deceased_person_last_name'] = $parsedName['last_name'];
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('Failed to parse name from OpenAI response');
+            }
+            
+            $_SESSION['deceasedPersonFirstName'] = $parsedName['first_name'] ?? '';
+            $_SESSION['deceasedPersonMiddleName'] = $parsedName['middle_name'] ?? '';
+            $_SESSION['deceasedPersonLastName'] = $parsedName['last_name'] ?? '';
+            $_SESSION['deceasedPersonFullName'] = trim(
+                ($_SESSION['deceasedPersonFirstName'] ?? '') .
+                ($_SESSION['deceasedPersonMiddleName'] ? ' ' . $_SESSION['deceasedPersonMiddleName'] : '') .
+                ($_SESSION['deceasedPersonLastName'] ? ' ' . $_SESSION['deceasedPersonLastName'] : '')
+            );
+            
+            LogUtil::log('info', 'store-form-data.php: Successfully parsed name components: ' . 
+                        json_encode($parsedName));
         } catch (Exception $e) {
             LogUtil::log('error', 'Name parsing error: ' . $e->getMessage());
+            // Continue without parsed name if there's an error
         }
     }
     
     echo json_encode([
         'success' => true,
-        'message' => 'Data parsed successfully'
+        'message' => 'Data stored successfully'
     ]);
     
 } catch (Exception $e) {

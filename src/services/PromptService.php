@@ -1,29 +1,18 @@
 <?php
+require_once __DIR__ . '/SessionService.php';
+
 class PromptService {
 
-    private function getQuestionsAndAnswers(
-        $deceasedPersonName, 
-        $messageType,
-        $relationship,
-        $details,
-        $accomplishments,
-        $messageTone,
-        $finalQuestion,
-        $firstPersonName
-    ) {
+    private function getQuestionsAndAnswers() {
         // define associative array to store the questions and answers
         $questionsAndAnswers = [
             "deceasedPersonName" => [
             "question" => "Who is it you want to write a message about today?",
-            "answer" => $deceasedPersonName
+            "answer" => $_SESSION['form_data']['deceasedPersonName']
             ],
             "messageType" => [
-            "question" => "What kind of message would you like me to write?\n" . 
-                    "- A message for cards or flowers (condolence-message)\n" .
-                    "- A letter for sympathy (sympathy-letter)\n" .
-                    "- A eulogy (eulogy)\n" .
-                    "- An obituary or something else (obituary)",
-            "answer" => match ($messageType) {
+            "question" => "What kind of message would you like me to write?\n",
+            "answer" => match ($_SESSION['form_data']['messageType']) {
                 "condolence message" => "A message for cards or flowers",
                 "sympathy letter" => "A letter for sympathy",
                 "eulogy" => "A eulogy",
@@ -32,24 +21,13 @@ class PromptService {
             }
             ],
             "relationship" => [
-            "question" => "Please can you tell me a little more about " . $deceasedPersonName . "? Let's start with how you knew each other.",
-            "answer" => $relationship
+            "question" => "Could you tell me a little more about " . $_SESSION['deceasedPersonFullName'] . "? Let's start with how you knew each other.",
+            "answer" => $_SESSION['form_data']['relationship']
             ],
             "details" => [
-            "question" => "Thank you for sharing that, and I'm truly sorry for your loss. To help me write something that truly captures " . $deceasedPersonName . ", please could you tell me a bit more about them? You can start with simple details, like:\n" .
-                      "- When and where " . $deceasedPersonName . " was born\n" .
-                      "- Their profession or what they did for a living\n" .
-                      "- Hobbies and interests that brought them joy\n" .
-                      "- Where they grew up and lived\n" .
-                      "- Special memories you cherish\n" .
-                      "- Anything else you'd like to include\n\n" . 
+            "question" => "Thank you for sharing that, and I'm truly sorry for your loss. To help me write something that truly captures " . $_SESSION['deceasedPersonFirstName'] . ", please could you tell me a bit more about them? You can start with simple details, like:\n" .
                       "It’s completely okay if you’re unsure what to say. Feel free to use the white answer boxes to ask for ideas or guidance whenever you need.",
-            "answer" => $details
-            ],
-            "accomplishments" => [
-            "question" => "Would you like to share any of " . $deceasedPersonName . "’s accomplishments? Were there particular achievements at work or in something they were passionate about? What were they especially good at?\n\n" . 
-                      "Remember, you don’t need to stress about finding the perfect words—that’s my job. Just type whatever comes to mind, and I’ll take care of the rest.",
-            "answer" => $accomplishments
+            "answer" => $_SESSION['form_data']['details']
             ],
             "messageTone" => [
             "question" => "Thank you! To ensure the message truly honors them, could you let me know the tone that feels most appropriate? Here are some options to choose from:\n" .
@@ -57,32 +35,28 @@ class PromptService {
                       "- Formal – Professional and traditional, suitable for a more dignified tribute.\n" .
                       "- Poetic – Elegant and expressive, focusing on deep emotions for an artistic touch.\n" .
                       "- Uplifting – Positive and hopeful, celebrating the joy and achievements of a life well-lived.",
-            "answer" => $messageTone
+            "answer" => $_SESSION['form_data']['messageTone']
+            ],
+            "additionalInfo" => [
+            "question" => $_SESSION['additionalInfoQuestion'] . "\n\n" . 
+                      "Remember, you don’t need to stress about finding the perfect words—that’s my job. Just type whatever comes to mind, and I’ll take care of the rest.",
+            "answer" => $_SESSION['form_data']['additionalInfo']
             ],
             "finalQuestion" => [
-            "question" => "Thank you! Before I begin drafting, is there anything else you’d like me to know about " . $deceasedPersonName . "?",
-            "answer" => $finalQuestion
+            "question" => "Thank you! Before I begin drafting, is there anything else you’d like me to know about " . $_SESSION['deceasedPersonFirstName'] . "?",
+            "answer" => $_SESSION['form_data']['finalQuestionAnswer']
             ],
             "firstPersonName" => [
                 "question" => "What is your name?",
-                "answer" => $firstPersonName
+                "answer" => $_SESSION['form_data']['firstPersonName']
             ]
         ];
 
         return $questionsAndAnswers;
     }
 
-    private function getStructuredPrompt($data) {
-        $questionsAndAnswers = $this->getQuestionsAndAnswers(
-            $data['deceasedPersonName'],
-            $data['messageType'],
-            $data['relationship'],
-            $data['details'],
-            $data['accomplishments'],
-            $data['messageTone'],
-            $data['finalQuestion'],
-            $data['firstPersonName']
-        );
+    private function getStructuredPrompt() {
+        $questionsAndAnswers = $this->getQuestionsAndAnswers();
 
         $structuredPrompt = '';
         foreach ($questionsAndAnswers as $key => $value) {
@@ -91,38 +65,38 @@ class PromptService {
         }
         
         // Add the restored content from the session
-        if ((isset($data['contents'][1]) && $data['version'] === 2) || (isset($data['contents'][2]) && $data['version'] === 3)) {
-            $structuredPrompt .= "First version:\n" . $data['contents'][1] . "\n\n";
+        if ((isset($_SESSION['contents'][1]) && $_SESSION['version'] === 2) || (isset($_SESSION['contents'][2]) && $_SESSION['version'] === 3)) {
+            $structuredPrompt .= "First version:\n" . $_SESSION['contents'][1] . "\n\n";
 
             $structuredPrompt .= "Question: Did you like it?\n\n";
             $structuredPrompt .= "Answer: No, I want changes.\n\n";
 
-            $structuredPrompt .= "Question: Ok, no problem. Would you like to share anything more about {$data['deceasedPersonName']} or provide any specific instructions to help improve the content? But no worries! if you don't have additional details or instructions, I'll generate another version of the content.\n\n"; 
-            $structuredPrompt .= "Answer: " . $data['additionalInstructions'][0] . "\n\n";
+            $structuredPrompt .= "Question: Ok, no problem. Would you like to share anything more about {$_SESSION['deceasedPersonFullName']} or provide any specific instructions to help improve the content? But no worries! if you don't have additional details or instructions, I'll generate another version of the content.\n\n"; 
+            $structuredPrompt .= "Answer: " . $_SESSION['form_data']['additionalInstructions'][0] . "\n\n";
         }
 
 
-        if (isset($data['contents'][2]) && $data['version'] === 3) {
-            $structuredPrompt .= "Second version:\n" . $data['contents'][2] . "\n\n";
+        if (isset($_SESSION['contents'][2]) && $_SESSION['version'] === 3) {
+            $structuredPrompt .= "Second version:\n" . $_SESSION['contents'][2] . "\n\n";
 
             $structuredPrompt .= "Question: Does this revised content meet your expectations?\n\n";
             $structuredPrompt .= "Answer: No, I still need it to be improved.\n\n";
 
             $structuredPrompt .= "Question: OK, could you please provide any additional instructions or specific details to help us craft a version that truly meets your expectations. But it's totally fine if you don’t have additional details or instructions, I’ll still generate another version of the content.\n\n";
-            $structuredPrompt .= "Answer: " . $data['additionalInstructions'][1] . "\n\n";
+            $structuredPrompt .= "Answer: " . $_SESSION['form_data']['additionalInstructions'][1] . "\n\n";
         }
 
         return $structuredPrompt;
     }
 
-    private function getBeginningSystemPrompt($deceasedPerson, $messageType, $version = 1) {
+    private function getBeginningSystemPrompt() {
         $basePrompt = "You are a professional memorial content writer specializing in creating heartfelt and respectful messages. ";
         
-        if ($version > 1) {
-            return $basePrompt . "This is version {$version} of the content after the user requested changes. Review the previous version(s) and their feedback carefully to maintain continuity while implementing the requested improvements.\n\n";
+        if ($_SESSION['version'] > 1) {
+            return $basePrompt . "This is version {$_SESSION['version']} of the content after the user requested changes. Review the previous version(s) and their feedback carefully to maintain continuity while implementing the requested improvements.\n\n";
         }
         
-        return $basePrompt . "Create a " . $this->getContentTypeDescription($messageType) . " that honors {$deceasedPerson}.\n\n";
+        return $basePrompt . "Create a " . $this->getContentTypeDescription($_SESSION['form_data']['messageType']) . " that honors {$_SESSION['deceasedPersonFullName']}.\n\n";
     }
 
     private function getContentTypeDescription($messageType) {
@@ -135,18 +109,18 @@ class PromptService {
         };
     }
 
-    private function getEndingSystemPrompt($messageType, $tone, $version = 1) {
-        $formatGuidelines = $this->getFormatGuidelines($messageType);
-        $toneGuidelines = $this->getToneGuidelines($tone);
+    private function getEndingSystemPrompt() {
+        $formatGuidelines = $this->getFormatGuidelines($_SESSION['form_data']['messageType']);
+        $toneGuidelines = $this->getToneGuidelines($_SESSION['form_data']['messageTone']);
         
         $baseGuidelines = "
-- Never address the deceased person directly
-- Never address the user of the application
-- Focus on comforting those grieving
-- Use appropriate pronouns based on context
-- Maintain consistency with previous versions if applicable\n";
+        - Never address the deceased person directly
+        - Never address the user of the application
+        - Focus on comforting those grieving
+        - Use appropriate pronouns based on context
+        - Maintain consistency with previous versions if applicable\n";
 
-        if ($version > 1) {
+        if ($_SESSION['version'] > 1) {
             $baseGuidelines .= "- Preserve elements the user liked from previous versions\n";
             $baseGuidelines .= "- Focus on implementing the specific changes requested\n";
         }
@@ -212,18 +186,10 @@ class PromptService {
         };
     }
 
-    public function generatePrompt($data) {
-        $beginningSystemPrompt = $this->getBeginningSystemPrompt(
-            $data['deceasedPersonName'], 
-            $data['messageType'],
-            $data['version']
-        );
-        $structuredPrompt = $this->getStructuredPrompt($data);      
-        $endingSystemPrompt = $this->getEndingSystemPrompt(
-            $data['messageType'],
-            $data['messageTone'], 
-            $data['version']
-        );        
+    public function generatePrompt() {
+        $beginningSystemPrompt = $this->getBeginningSystemPrompt();
+        $structuredPrompt = $this->getStructuredPrompt();      
+        $endingSystemPrompt = $this->getEndingSystemPrompt();        
         return $beginningSystemPrompt . $structuredPrompt . $endingSystemPrompt;
     }
 
@@ -244,4 +210,56 @@ class PromptService {
         
         return $prompt;
     }
+
+    /**
+     * Generate a prompt for determining if additional information is needed
+     * and what question to ask based on session data
+     * 
+     * @return string The formatted prompt
+     */
+    public function generateAdditionalInfoQuestionPrompt() {
+        
+        // Extract relevant data from session
+        $firstName = $_SESSION['deceasedPersonFirstName'] ?? '';
+        $lastName = $_SESSION['deceasedPersonLastName'] ?? '';
+        $fullName = trim("$firstName $lastName");
+        $messageType = $_SESSION['form_data']['messageType'] ?? '';
+        $messageTone = $_SESSION['form_data']['messageTone'] ?? '';
+        $relationship = $_SESSION['form_data']['relationship'] ?? '';
+        $details = $_SESSION['form_data']['details'] ?? '';
+        
+        $prompt = "You are an empathetic memorial content assistant helping to gather information for creating personalized memorial content. ";
+        $prompt .= "Based on the information provided, you need to determine if additional information is needed before creating the final content. ";
+        $prompt .= "If you decide additional information is needed, formulate ONE clear, specific, and compassionate question.";
+        
+        $prompt .= "\n\n--- USER'S PREVIOUS INFORMATION ---\n";
+        $prompt .= "Name of deceased: $fullName\n";
+        $prompt .= "Content type: $messageType\n";
+        $prompt .= "Preferred tone: $messageTone\n";
+        $prompt .= "Relationship with deceased: $relationship\n";
+        $prompt .= "Details provided: $details\n";
+        
+        $prompt .= "\n--- INSTRUCTIONS ---\n";
+        $prompt .= "1. Analyze the information for completeness and relevance for the selected content type ($messageType).\n";
+        $prompt .= "2. Identify any missing critical information that would enhance the quality of the $messageType.\n";
+        $prompt .= "3. Consider the level of detail already provided. For shorter formats like condolence messages, less information may be sufficient.\n";
+        $prompt .= "4. If the information is already sufficient, respond with: {\"additionalInfoRequired\":false}\n";
+        $prompt .= "5. If additional information would be helpful, respond with: {\"additionalInfoRequired\":true, \"question\":\"Your compassionate question here\"}\n";
+        
+        $prompt .= "\n--- GUIDANCE FOR QUESTIONS ---\n";
+        $prompt .= "• For condolence messages: Focus on personal connection or specific comfort to offer.\n";
+        $prompt .= "• For sympathy letters: Consider asking about specific memories or words of comfort.\n";
+        $prompt .= "• For eulogies: Inquire about defining stories, relationships, or values.\n";
+        $prompt .= "• For obituaries: Ask about achievements, surviving family, or community impact if missing.\n";
+        $prompt .= "• Avoid repeating information already provided.\n";
+        $prompt .= "• Be sensitive and compassionate in your phrasing.\n";
+        $prompt .= "• Make your question specific rather than general.\n";
+        $prompt .= "• If you ask about accomplishments, consider phrasing it as: \"Would you like to share any of $firstName's accomplishments? Were there particular achievements at work or in something they were passionate about?\"\n";
+        
+        $prompt .= "\nRespond with valid JSON only.";
+        
+        return $prompt;
+    }
 }
+
+new SessionService();
