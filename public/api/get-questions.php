@@ -35,24 +35,18 @@ try {
         
         // Generate the prompt for additional info question
         $prompt = $promptService->generateAdditionalInfoQuestionPrompt();
-        LogUtil::log('info', 'Generated additional info prompt');
         
         // Send prompt to OpenAI
         try {
             $response = $openAIService->generateContent($prompt);
-            LogUtil::log('info', 'Received OpenAI response for additional info');
-            
-            // Parse the JSON response
             $jsonResponse = json_decode($response['content'], true);
             
             if (json_last_error() !== JSON_ERROR_NONE) {
-                LogUtil::log('error', 'Failed to parse JSON response: ' . json_last_error_msg());
                 throw new Exception('Failed to parse response from OpenAI');
             }
             
             $_SESSION['additionalInfoQuestion'] = $jsonResponse['question'] ?? null;
-
-            // Return the response with needed flag and question if applicable
+            
             echo json_encode([
                 'success' => true,
                 'additionalInfoRequired' => $jsonResponse['additionalInfoRequired'] ?? false,
@@ -61,8 +55,6 @@ try {
             exit;
             
         } catch (Exception $e) {
-            LogUtil::log('error', 'OpenAI error: ' . $e->getMessage());
-            // If we have an error, default to showing the additional info question
             echo json_encode([
                 'success' => true,
                 'additionalInfoRequired' => true,
@@ -88,7 +80,8 @@ try {
                 'If you would like to express support for the recipient.',
                 'If you would like to add a brief personal note, such as a memory or something meaningful about ' . $_SESSION["deceasedPersonFirstName"] . '.',
                 'Anything else you would like to include.'
-            ]
+            ],
+            'placeholder' => 'Enter any details you\'d like to include ...'
         ],
         'sympathy' => [
             'title' => 'I appreciate you sharing this with me, and I\'m so sorry for your loss.',
@@ -99,8 +92,8 @@ try {
                 'If you would like to include a comforting memory or kind words about ' . $_SESSION["deceasedPersonFirstName"] . '.',
                 $_SESSION["deceasedPersonFirstName"] . '\'s character or impact on others.',
                 'Anything specific you would like to mention about ' . $_SESSION["deceasedPersonFirstName"] . '\' legacy or what they meant to people.'
-
-            ]
+            ],
+            'placeholder' => 'Enter any details you\'d like to include ...'
         ],
         'eulogy' => [
             'title' => 'Thank you for entrusting me with this important tribute.',
@@ -112,7 +105,8 @@ try {
                 'How ' . $_SESSION["deceasedPersonFirstName"] . ' positively impacted the lives of their loved ones and community.',
                 'If you would like to include a favorite quote, poem, or reflection.',
                 'Anything else you\'d like to include.'
-            ]
+            ],
+            'placeholder' => 'Enter any details you\'d like to include ...'
         ],
         'obituary' => [
             'title' => 'I\'m sorry for your loss and appreciate your trust in this important task.',
@@ -126,7 +120,8 @@ try {
                 'If you would like to mention any surviving family members.',
                 'If you would like to include details about funeral/memorial services.',
                 'Anything else you\'d like to include.'
-            ]
+            ],
+            'placeholder' => 'Enter any details you\'d like to include ...'
         ]
     ];
     
@@ -146,7 +141,6 @@ try {
     ]);
     
 } catch (Exception $e) {
-    LogUtil::log('error', 'get-questions.php: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false, 

@@ -12,7 +12,7 @@
         <li>Anything else you'd like to include</li>
     </ul>
     <div class="field-area">
-    <textarea id="deceased-person-details-field" placeholder=""></textarea>
+    <textarea id="deceased-person-details-field"></textarea>
         <div class="field-button-area">
             <button class="er-button primary-button go-next-1">Send</button>
         </div>

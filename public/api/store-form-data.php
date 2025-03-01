@@ -23,7 +23,6 @@ $rateLimitMiddleware->handle('form_data');
 $promptService = new PromptService();
 $validator = new SingleValidationService();
 
-LogUtil::log('info', 'store-form-data.php: Script started');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -33,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 try {
     $postData = json_decode(file_get_contents('php://input'), true);
-    LogUtil::log('info', 'store-form-data.php: Received data: ' . json_encode($postData));
     
     if (!$postData || !isset($postData['field_name']) || !isset($postData['value'])) {
         throw new Exception('Missing required parameters');
@@ -63,9 +61,7 @@ try {
     // Validate and sanitize the input value
     try {
         $sanitizedValue = $validator->validateAndSanitize($fieldName, $value);
-        LogUtil::log('info', "store-form-data.php: Validated field '$fieldName' successfully");
     } catch (SingleValidationException $e) {
-        LogUtil::log('error', "store-form-data.php: Validation error for field '$fieldName': " . $e->getMessage());
         http_response_code(400);
         echo json_encode([
             'success' => false, 
@@ -82,8 +78,6 @@ try {
     } else {
         $_SESSION['form_data'][$fieldName] = $sanitizedValue;
     }
-    
-    LogUtil::log('info', "store-form-data.php: Stored '$fieldName' in session");
     
     // Special handling for the deceased person name
     if ($fieldName === 'deceasedPersonName') {
@@ -106,12 +100,8 @@ try {
                 ($_SESSION['deceasedPersonMiddleName'] ? ' ' . $_SESSION['deceasedPersonMiddleName'] : '') .
                 ($_SESSION['deceasedPersonLastName'] ? ' ' . $_SESSION['deceasedPersonLastName'] : '')
             );
-            
-            LogUtil::log('info', 'store-form-data.php: Successfully parsed name components: ' . 
-                        json_encode($parsedName));
         } catch (Exception $e) {
-            LogUtil::log('error', 'Name parsing error: ' . $e->getMessage());
-            // Continue without parsed name if there's an error
+            // LogUtil::log('error', 'Name parsing error: ' . $e->getMessage());
         }
     }
     
@@ -121,7 +111,6 @@ try {
     ]);
     
 } catch (Exception $e) {
-    LogUtil::log('error', 'store-form-data.php: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false, 

@@ -22,8 +22,6 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.firstPersonName = $step.find('#first-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
                     $('.first-person-name-placeholder').text(this.formData.firstPersonName);
-                    
-                    // Store first person name in backend session
                     this.storeFormData('firstPersonName', this.formData.firstPersonName);
                 }
                 break;
@@ -31,8 +29,6 @@ class DataManager {
             case stepId.includes('step-email'):
                 if (!toSkip) {
                     this.formData.email = $step.find('#email-field').val();
-                    
-                    // Store email in backend session
                     this.storeFormData('email', this.formData.email);
                 }
                 break;
@@ -41,8 +37,6 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
                     $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonName);
-                    
-                    // Store deceased person name in backend session
                     this.storeFormData('deceasedPersonName', this.formData.deceasedPersonName);
                 }
                 break;
@@ -51,11 +45,7 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.messageType = $step.find('.card.selected').data('message-type');
                     $('.message-type-placeholder').text(this.formData.messageType);
-                    
-                    // Store message type in backend session
                     this.storeFormData('messageType', this.formData.messageType);
-                    
-                    // Fetch questions for the deceased-person-details step based on the message type
                     this.fetchQuestionsForMessageType(this.formData.messageType);
                 }
                 break;
@@ -63,8 +53,6 @@ class DataManager {
             case stepId.includes('deceased-person-relation'):
                 if (!toSkip) {
                     this.formData.relationship = $step.find('#deceased-person-relation-field').val();
-                    
-                    // Store relationship in backend session
                     this.storeFormData('relationship', this.formData.relationship);
                     console.log('relationship:', this.formData);
                 }
@@ -73,8 +61,6 @@ class DataManager {
             case stepId.includes('deceased-person-details'):
                 if (!toSkip) {
                     this.formData.details = $step.find('#deceased-person-details-field').val();
-                    
-                    // Store details in backend session
                     this.storeFormData('details', this.formData.details);
                 }
                 break;
@@ -82,8 +68,6 @@ class DataManager {
             case stepId.includes('message-tone'):
                 if (!toSkip) {
                     this.formData.messageTone = $step.find('.card.selected').data('message-tone');
-                    
-                    // Store message tone in backend session first
                     this.storeFormData('messageTone', this.formData.messageTone)
                         .then(() => {
                             // Only fetch additional info question after message tone is stored
@@ -91,8 +75,6 @@ class DataManager {
                         })
                         .catch(error => {
                             console.error('Failed to store message tone:', error);
-                            // Still try to fetch additional info if storage fails
-                            this.fetchAdditionalInfoQuestion();
                         });
                 }
                 break;
@@ -104,7 +86,6 @@ class DataManager {
                     this.formData.additionalInfo = 'I am not sure what to say.';
                 }
                 
-                // Store additional info in backend session
                 this.storeFormData('additionalInfo', this.formData.additionalInfo);
                 break;
 
@@ -115,7 +96,6 @@ class DataManager {
                     this.formData.finalQuestion = 'No, I have noting more to add.';
                 }
                 
-                // Store final question in backend session
                 this.storeFormData('finalQuestionAnswer', this.formData.finalQuestion)
                     .then(() => {
                         // Send data to content generation after final question is stored
@@ -159,8 +139,6 @@ class DataManager {
                     })
                     .catch(error => {
                         console.error('Failed to store additional instruction:', error);
-                        // Still try to send data to content generation if storage fails
-                        this.sendToContentGeneration(true);
                     });
                 break;
 
@@ -228,6 +206,8 @@ class DataManager {
         questions.suggestions.forEach(suggestion => {
             $ul.append(`<li>${suggestion}</li>`);
         });
+
+        $('.deceased-person-details-field').attr('placeholder', questions.placeholder);
     }
 
     static async fetchAdditionalInfoQuestion() {
@@ -276,6 +256,7 @@ class DataManager {
             //     ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } 
             //     : this.formData;
             
+            // const data = await HttpService.post('/api/generate-content.php', payload);
             const data = await HttpService.post('/api/generate-content.php');
             
             if (!data.success) {
