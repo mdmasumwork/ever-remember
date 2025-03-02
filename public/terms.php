@@ -83,8 +83,9 @@ $pageTitle = "Terms and Conditions - EverRemember";
             
             <div class="terms-section">
                 <h4>7. Limitation of Liability</h4>
-                <p>Ever Remember is provided on an "as-is" basis. While we strive to generate meaningful messages, we do not guarantee that the content will meet all individual expectations.</p>
-                <p>We are not liable for any emotional distress, inaccuracies, or consequences arising from using our AI-generated content.</p>
+                <p>Ever Remember is provided on an "as-is" basis. While we strive to generate meaningful and high-quality messages, AI-generated content is inherently subjective, and we cannot guarantee that it will meet all individual preferences.</p>
+                <p>By using our service, you acknowledge that the generated content is based on the information provided and may not always reflect the exact sentiment or wording you desire. If you have concerns, please contact us, and we will do our best to assist you.</p>
+                <p>Ever Remember shall not be liable for any emotional distress, inaccuracies, or consequences resulting from the use of our AI-generated content.</p>
             </div>
             
             <div class="terms-section">

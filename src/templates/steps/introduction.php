@@ -1,5 +1,5 @@
 <section class="step step-introduction required required-name">
-    <h2>Hello, I'm Serenity.</h2>
+    <h1>Hello, I'm Serenity.</h1>
     <p>Welcome to <span class="style-h4">Ever Remember</span>, your condolence and sympathy content writing assistant.</p>
     <p>Expressing the right words during a time of loss can be difficult. Together, we’ll create a heartfelt and meaningful message to share your thoughts and emotions with care.</p>
     <p>I’ll ask you a few simple questions to guide us.</p>

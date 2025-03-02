@@ -1,0 +1,181 @@
+.pricing-page {
+    .pricing-content {
+        display: block;
+        opacity: 1;
+        padding: 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        color: $brand-accent;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .pricing-intro {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        color: $text-muted;
+        font-size: 1.2rem;
+    }
+
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .pricing-card {
+        background-color: $surface-primary;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        &.featured {
+            border: 2px solid $brand-secondary;
+            box-shadow: 0 6px 18px rgba($brand-secondary, 0.15);
+            
+            .pricing-card-badge {
+                background-color: $brand-secondary;
+                color: white;
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+                font-weight: bold;
+                border-bottom-left-radius: 8px;
+            }
+            
+            .pricing-card-header {
+                background: linear-gradient(45deg, $surface-secondary, $surface-tertiary);
+            }
+        }
+    }
+
+    .pricing-card-header {
+        background-color: $surface-secondary;
+        padding: 2rem;
+        text-align: center;
+        
+        h4 {
+            color: $brand-accent;
+            margin-bottom: 0.75rem;
+        }
+        
+        .pricing-amount {
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            
+            .currency {
+                vertical-align: top;
+                font-size: 1.5rem;
+                color: $text-body;
+            }
+            
+            .price {
+                font-size: 3rem;
+                color: $brand-accent;
+            }
+        }
+        
+        .pricing-description {
+            color: $text-muted;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+    }
+
+    .pricing-card-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+        
+        .pricing-features {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            
+            li {
+                padding: 0.5rem 0;
+                position: relative;
+                padding-left: 1.5rem;
+                
+                &:before {
+                    content: "✓";
+                    color: $success;
+                    position: absolute;
+                    left: 0;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .pricing-card-footer {
+        padding: 1.5rem;
+        text-align: center;
+        
+        .select-plan-btn {
+            width: 100%;
+            padding: 0.75rem;
+        }
+    }
+
+    .pricing-guarantee {
+        background-color: $surface-secondary;
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 3rem 0;
+        text-align: center;
+        
+        h3 {
+            color: $brand-accent;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .pricing-faq {
+        margin: 3rem 0;
+        
+        h3 {
+            color: $brand-accent;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            background-color: $surface-primary;
+            padding: 1.5rem;
+            border-radius: 8px;
+            
+            h4 {
+                color: $text-heading;
+                margin-bottom: 0.5rem;
+            }
+            
+            p {
+                color: $text-body;
+                margin: 0;
+            }
+        }
+    }
+}

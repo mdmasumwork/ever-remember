@@ -43,7 +43,7 @@ $pageTitle = "Contact Us";
     
     <main class="main-content" id="main-content">
         <section class="step step-contact-form">
-            <h2>Feel Free to Reach Out to Us</h2>
+            <h1>Feel Free to Reach Out to Us</h1>
             <p class="lead">Have a question, suggestion, or interested in working with us? We'd love to hear from you! Please fill out the form below, and we'll get back to you as soon as possible.</p>
             
             <div id="form-messages" class="alert" style="display: none;"></div>

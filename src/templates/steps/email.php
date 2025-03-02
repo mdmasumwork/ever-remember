@@ -1,6 +1,6 @@
 <section class="step step-email required required-email">
     <div class="step-content">
-        <h2>Welcome, <span class="first-person-name-placeholder"></span>!</h2>
+        <h1>Welcome, <span class="first-person-name-placeholder"></span>!</h1>
         <p>Everything we create together will be visible here but will not be stored, ensuring complete privacy.</p>
         <p>To proceed, please provide your email. You will be able to send the content to your email later after it has been created.</p>
         <h4>Enter your email to continue:</h4>
