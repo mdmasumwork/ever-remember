@@ -73,7 +73,7 @@ class ValidationService {
                 }
             } else {
                 // Subsequent request validations
-                if (!isset($data['additionalInstruction']) || empty(trim($data['additionalInstruction']))) {
+                if (!isset($data['additionalInstructions']) || count($data['additionalInstructions']) < 1) {
                     throw new ValidationException("Additional instruction is required");
                 }
             }

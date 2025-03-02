@@ -16,8 +16,6 @@ SecurityHeadersUtil::handlePreflight('GET');
 $rateLimitMiddleware = new RateLimitMiddleware();
 $rateLimitMiddleware->handle('questions');
 
-LogUtil::log('info', 'get-questions.php started');
-
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
     echo json_encode(['success' => false, 'error' => 'Invalid request method']);

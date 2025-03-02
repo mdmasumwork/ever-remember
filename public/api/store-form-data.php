@@ -105,10 +105,22 @@ try {
         }
     }
     
-    echo json_encode([
+    // Prepare response data
+    $responseData = [
         'success' => true,
         'message' => 'Data stored successfully'
-    ]);
+    ];
+    
+    // When storing firstPersonName, include name components in the response
+    if ($fieldName === 'deceasedPersonName') {
+        // Simply return the existing session data components if they exist
+        $responseData['deceasedPersonFirstName'] = $_SESSION['deceasedPersonFirstName'] ?? '';
+        $responseData['deceasedPersonMiddleName'] = $_SESSION['deceasedPersonMiddleName'] ?? '';
+        $responseData['deceasedPersonLastName'] = $_SESSION['deceasedPersonLastName'] ?? '';
+        $responseData['deceasedPersonFullName'] = $_SESSION['deceasedPersonFullName'] ?? '';
+    }
+    
+    echo json_encode($responseData);
     
 } catch (Exception $e) {
     http_response_code(500);

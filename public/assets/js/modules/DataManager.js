@@ -2,6 +2,10 @@ class DataManager {
 
     static formData = {
         firstPersonName: '',
+        deceasedPersonFirstName: '',
+        deceasedPersonMiddleName: '',
+        deceasedPersonLastName: '',
+        deceasedPersonFullName: '',
         email: '',
         deceasedPersonName: '',
         messageType: '',
@@ -35,9 +39,24 @@ class DataManager {
 
             case stepId.includes('deceased-person-name'):
                 if (!toSkip) {
-                    this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
-                    $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonName);
-                    this.storeFormData('deceasedPersonName', this.formData.deceasedPersonName);
+                    this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().trim();
+                    
+                    this.storeFormData('deceasedPersonName', this.formData.deceasedPersonName)
+                        .then(response => {
+                            if (response && response.success) {
+                                // Store the parsed name components
+                                this.formData.deceasedPersonFirstName = response.deceasedPersonFirstName || '';
+                                this.formData.deceasedPersonMiddleName = response.deceasedPersonMiddleName || '';
+                                this.formData.deceasedPersonLastName = response.deceasedPersonLastName || '';
+                                this.formData.deceasedPersonFullName = response.deceasedPersonFullName || this.formData.deceasedPersonFirstName;
+
+                                $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonFirstName);
+                                $('.step-deceased-person-relation .deceased-person-name-placeholder').text(this.formData.deceasedPersonFullName);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error processing first person name:', error);
+                        });
                 }
                 break;
 
@@ -169,9 +188,10 @@ class DataManager {
             if (!data.success) {
                 console.error('Failed to store form data:', data.error);
             }
+            return data; // Return the full response data
         } catch (error) {
             console.error('Error storing form data:', error);
-            // Silently fail, as this is a background operation
+            return { success: false, error: error.message };
         }
     }
 

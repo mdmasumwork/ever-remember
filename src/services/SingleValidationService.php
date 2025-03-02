@@ -81,7 +81,8 @@ class SingleValidationService {
         }
         
         // Check for special characters that shouldn't be in names
-        if (preg_match('/[<>(){}[\]\/\\\\&^%$#@!*=+`|~;:?]/', $name)) {
+        // Allow alphanumeric characters plus apostrophes, hyphens, periods and spaces
+        if (preg_match('/[^a-zA-Z0-9\'\-\. ]/', $name)) {
             throw new SingleValidationException('Name contains invalid characters');
         }
         
@@ -185,19 +186,19 @@ class SingleValidationService {
             $dangerousPatterns = [
                 '/<script/i',                          // Script tags
                 '/javascript:/i',                      // JavaScript protocol
-                '/data:/i',                            // Data URI scheme (can contain executable code)
+                '/data:\s*[^,]*base64/i',              // Data URI with base64 encoding (more specific)
                 '/vbscript:/i',                        // VBScript protocol
-                '/on\w+\s*=/i',                        // Event handlers (onclick, onload, etc.)
-                '/\beval\s*\(/i',                      // JavaScript eval function
-                '/document\.\w+/i',                    // DOM manipulation
-                '/(?:alert|confirm|prompt)\s*\(/i',    // JavaScript dialog functions
+                '/on\w+\s*=\s*["\'][^"\']*["\']?/i',  // Event handlers with more specific pattern
+                '/\beval\s*\(\s*[\'"][^\'"]*[\'"]\s*\)/i', // JavaScript eval function with string arg
+                '/document\.\w+\s*=/i',                // DOM manipulation assignments
+                '/(?:alert|confirm|prompt)\s*\([\'"][^\'"]*[\'"]\)/i', // JavaScript dialog functions
                 '/<\s*iframe/i',                       // iframes
                 '/<\s*object/i',                       // Object tags
                 '/<\s*embed/i',                        // Embed tags
-                '/\bURL\s*\(/i',                       // CSS URL function
+                '/\bURL\s*\(\s*[\'"][^\'"]*[\'"]\s*\)/i', // CSS URL function with string arg
                 '/expression\s*\(/i',                  // CSS expressions
-                '/<?[?%]/i',                           // PHP/ASP tags
-                '/\\\\x[0-9a-f]{2}/i'                  // Hex encoded characters
+                '/<?php|<\?=/i',                       // PHP tags specifically, not question marks
+                '/\bexec\s*\(/i'                       // exec function calls
             ];
             
             foreach ($dangerousPatterns as $pattern) {
