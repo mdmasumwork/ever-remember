@@ -1,14 +1,10 @@
 <?php
 
+require_once __DIR__ . '/../utils/EnvUtil.php';
 require_once __DIR__ . '/../services/EmailService.php';
-require_once __DIR__ . '/../../vendor/autoload.php';
-
-use Dotenv\Dotenv;
 
 class EmailController {
     public function __construct() {
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-        $dotenv->load();
     }
 
     public function handleRequest() {
@@ -35,8 +31,62 @@ class EmailController {
         echo json_encode(['success' => true]);
     }
 
+    public function sendContactFormEmail($name, $email, $company, $phone, $message) {
+        $emailService = new EmailService();
+        
+        // Create a simple HTML email for contact form
+        $htmlContent = $this->createSimpleContactEmail($name, $email, $company, $phone, $message);
+        
+        // Create plain text version
+        $plainContent = "New contact form submission from: $name\n\n"
+                      . "Email: $email\n"
+                      . "Company: $company\n"
+                      . "Phone: $phone\n\n"
+                      . "Message:\n$message\n\n"
+                      . "---\n"
+                      . "Sent from EverRemember contact form";
+        
+        // Send to admin
+        $adminEmail = EnvUtil::getEnv('GMAIL_SMTP_USER', 'md.masum.work@gmail.com');
+        
+        // Pass sender's email as replyTo parameter
+        $emailService->sendEmail(
+            $adminEmail, 
+            "EverRemember Contact: $name", 
+            $htmlContent,
+            $plainContent,
+            $email // Set reply-to as the sender's email
+        );
+        
+        return true;
+    }
+
+    private function createSimpleContactEmail($name, $email, $company, $phone, $message) {
+        // Format message with proper line breaks but keep it simple
+        $message = nl2br(htmlspecialchars($message));
+        
+        return <<<HTML
+        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <p>
+                {$message}
+            </p>
+            <p><strong>Sender Details:</strong></p>
+            <p>
+                {$name} <br />
+                {$email} <br />
+                {$phone} <br />
+                {$company}                
+            </p>
+            <p style="color: #777; font-size: 12px; margin-top: 30px;">
+                --- <br>
+                Sent from EverRemember contact form
+            </p>
+        </div>
+        HTML;
+    }
+
     private function createEmailTemplate($messageType, $version, $content, $deceasedPerson) {
-        $domainName = $_ENV['DOMAIN_NAME'];
+        $baseUrl = EnvUtil::getEnv('BASE_URL');
         
         // Replace double new lines with two <br> tags and single new lines with <br> tags
         $content = str_replace("\n\n", "<br><br>", $content);
@@ -85,7 +135,7 @@ class EmailController {
                 </div>
             </div>
             <div class="footer">
-                <p>Generated with care by <a href="{$domainName}">EverRemember</a></p>
+                <p>Generated with care by <a href="{$baseUrl}">EverRemember</a></p>
             </div>
         </body>
         </html>

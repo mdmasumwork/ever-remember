@@ -1,4 +1,7 @@
 .content-tabs {
+    position: relative;
+    overflow: hidden;
+    
     .tab-navigation {
         display: flex;
         gap: 1rem;
@@ -111,10 +114,7 @@
         &.visible {
             display: block;
         }
-    }
-
-    position: relative;
-    overflow: hidden;
+    }    
 }
 
 .step-content-1 {
