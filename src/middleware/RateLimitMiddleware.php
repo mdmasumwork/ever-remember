@@ -17,7 +17,8 @@ class RateLimitMiddleware {
             'session' => ['attempts' => 30, 'window' => 60],    // 30 requests per minute
             'stripe' => ['attempts' => 30, 'window' => 60],     // 30 requests per minute
             'index' => ['attempts' => 30, 'window' => 60],     // 30 requests per minute
-            'email' => ['attempts' => 5, 'window' => 60]        // 5 requests per minute
+            'email' => ['attempts' => 5, 'window' => 60],        // 5 requests per minute
+            'form_data' => ['attempts' => 15, 'window' => 60]   // 10 requests per minute
         ];
         
         if (!isset($limits[$route])) {

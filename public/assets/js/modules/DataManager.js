@@ -64,8 +64,20 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.messageType = $step.find('.card.selected').data('message-type');
                     $('.message-type-placeholder').text(this.formData.messageType);
-                    this.storeFormData('messageType', this.formData.messageType);
-                    this.fetchQuestionsForMessageType(this.formData.messageType);
+                    
+                    // Store the message type and update the price display when response is received
+                    this.storeFormData('messageType', this.formData.messageType)
+                        .then(response => {
+                            if (response && response.success && response.price) {
+                                $('.payment-overlay .price').text('$' + response.price);
+                                this.formData.contentPrice = response.price;
+                            }
+                            
+                            this.fetchQuestionsForMessageType(this.formData.messageType);
+                        })
+                        .catch(error => {
+                            console.error('Error updating price:', error);
+                        });
                 }
                 break;
 

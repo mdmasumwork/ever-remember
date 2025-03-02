@@ -79,6 +79,7 @@ try {
         $_SESSION['form_data'][$fieldName] = $sanitizedValue;
     }
     
+    
     // Special handling for the deceased person name
     if ($fieldName === 'deceasedPersonName') {
         $prompt = $promptService->generateNameExtractionPrompt($sanitizedValue);
@@ -93,7 +94,7 @@ try {
             }
             
             $_SESSION['deceasedPersonFirstName'] = $parsedName['first_name'] ?? '';
-            $_SESSION['deceasedPersonMiddleName'] = $parsedName['middle_name'] ?? '';
+            $_SESSION['deceasedPersonMiddleName'] = $parsedName['middle_name'] ?? '';    
             $_SESSION['deceasedPersonLastName'] = $parsedName['last_name'] ?? '';
             $_SESSION['deceasedPersonFullName'] = trim(
                 ($_SESSION['deceasedPersonFirstName'] ?? '') .
@@ -110,6 +111,13 @@ try {
         'success' => true,
         'message' => 'Data stored successfully'
     ];
+    
+    // Special handling for message type - include price information
+    if ($fieldName === 'messageType') {
+        // Use the shared function to get the price
+        $price = getPriceByMessageType($sanitizedValue);
+        $responseData['price'] = $price;
+    }
     
     // When storing firstPersonName, include name components in the response
     if ($fieldName === 'deceasedPersonName') {
