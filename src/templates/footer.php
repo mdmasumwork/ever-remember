@@ -13,5 +13,5 @@ $currentYear = date('Y');
 
 <!-- Footer Step -->
 <footer id="footer">
-    <p>&copy; <?php echo $currentYear; ?> <?php echo htmlspecialchars($companyName); ?>. All rights reserved.</p>
+    <p>&copy; <?php echo $currentYear; ?> <?php echo htmlspecialchars($companyName); ?>. All rights reserved | <a href="/terms">Terms</a> | <a href="/privacy">Privacy</a></p>
 </footer>

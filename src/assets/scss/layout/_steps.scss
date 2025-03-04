@@ -133,6 +133,16 @@
     }
 }
 
+.step-additional-info {
+    .step-content {
+        display: none;
+
+        &.visible {
+            display: block;
+        }
+    }
+}
+
 @include mobile {
     .step {
         padding: $spacing-lg;
@@ -156,3 +166,4 @@
         }
     }
 }
+

@@ -52,11 +52,3 @@
 //     padding: $spacing-lg;
 //     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 // }
-
-@mixin button-base {
-    padding: $spacing-md $spacing-xl;
-    border-radius: $border-radius-md;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all $transition-speed $transition-function;
-}

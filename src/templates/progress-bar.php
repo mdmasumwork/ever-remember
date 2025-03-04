@@ -2,7 +2,7 @@
     <?php
     $steps = [
         'Introduction', 'Email', 'Disclaimer', 'Name', 'Type', 
-        'Relation', 'Details', 'Accomplishments', 'Tone', 
+        'Relation', 'Details', 'Additional info', 'Tone', 
         'Final Question', 'Content'
     ];
     foreach ($steps as $index => $step) {

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/EnvUtil.php';
+require_once __DIR__ . '/LogUtil.php';
 
 class SessionSecurityUtil {
     private static $sessionName;

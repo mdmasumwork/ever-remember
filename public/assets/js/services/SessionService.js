@@ -66,7 +66,6 @@ class SessionService {
                 
             } catch (error) {
                 console.error('Session restore error:', error);
-                Toast.show('Error restoring session. Starting fresh...', 'error');
                 
                 await HttpService.post('/api/clear-session.php', {});
                 $('.step').removeClass('active');
@@ -137,7 +136,6 @@ class SessionService {
                 }
             } catch (error) {
                 console.error('Error getting version:', error);
-                Toast.show('Error loading content. Please try again.', 'error');
                 await HttpService.post('/api/clear-session.php', {});
             }
         });

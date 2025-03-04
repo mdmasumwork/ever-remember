@@ -97,5 +97,6 @@ jobs:
           --exclude='database/migrations' \
           --exclude='tests' \
           --exclude='logs' \
+          --exclude='src/assets/scss' \
           ./ ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }}
 

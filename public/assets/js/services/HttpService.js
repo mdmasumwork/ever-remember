@@ -26,7 +26,7 @@ class HttpService {
         return this.request(url, { method: 'GET' });
     }
 
-    static async post(url, data) {
+    static async post(url, data = {}) {
         return this.request(url, {
             method: 'POST',
             body: JSON.stringify(data)

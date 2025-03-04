@@ -1,21 +1,24 @@
 @use "sass:color";
 
 .er-button {
-    @include button-base;
     display: inline-flex;
     align-items: center;
-    font-size: $font-size-base;
+    font-size: 16px;
     gap: $spacing-sm;
     justify-content: center;
     border: 2px solid $action-primary;
+    padding: 12px 32px;
+    border-radius: 4px;
+    font-family: $font-family-body;
+    font-weight: 500;
 
     &.primary-button {
         background-color: $action-primary;
         color: $text-white;
 
         &:hover {
-            background-color: color.adjust($action-primary, $lightness: -10%);
-            border-color: color.adjust($action-primary, $lightness: -10%);
+            background-color: color.adjust($action-primary, $lightness: -5%);
+            border-color: color.adjust($action-primary, $lightness: -5%);
         }
     }
 
@@ -31,7 +34,7 @@
     &.tertiary-button {
         background-color: transparent;
         border: none;
-        color: $text-muted;
+        color: $brand-secondary;
         padding: $spacing-sm;
         text-decoration: underline;
         text-underline-offset: 4px;
@@ -42,7 +45,7 @@
         }
 
         &:hover {
-            color: $action-primary;
+            color: $brand-accent;
         }
     }
 
@@ -52,7 +55,7 @@
     }
 
     @include mobile {
-        padding: 12px 24px;
-        font-size: 16px;
+        padding: 10px 30px;
+        font-size: 14px;
     }
 }

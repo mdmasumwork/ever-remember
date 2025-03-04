@@ -24,10 +24,16 @@ class EmailService {
         $this->mail->Port = $_ENV['GMAIL_SMTP_PORT'];
     }
 
-    public function sendEmail($to, $subject, $htmlBody, $plainBody) {
+    public function sendEmail($to, $subject, $htmlBody, $plainBody, $replyTo = null) {
         try {
             $this->mail->setFrom($_ENV['GMAIL_SMTP_USER'], 'EverRemember');
             $this->mail->addAddress($to);
+            
+            // Add reply-to address if provided
+            if ($replyTo) {
+                $this->mail->addReplyTo($replyTo);
+            }
+            
             $this->mail->isHTML(true);
             $this->mail->Subject = $subject;
             $this->mail->Body = $htmlBody;

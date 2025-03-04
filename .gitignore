@@ -11,3 +11,5 @@ vendor
 .env.test.local
 .env.production.local
 logs
+.htaccess
+public/assets/css/

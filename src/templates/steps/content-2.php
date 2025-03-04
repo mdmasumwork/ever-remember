@@ -58,7 +58,11 @@
                     <span class="dot active" data-tab="version-2"></span>
                 </div>
             </div>
-            
+
+            <div class="toast-message">
+                <p>Toast</p>
+            </div>
+
             <div class="content-actions">
                 <div class="content-action">
                     <p class="action-question">Does this revised content meet your expectations?</p>

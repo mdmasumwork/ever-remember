@@ -1,29 +1,17 @@
 class DataManager {
-    // TODO: Add input validation
-    // TODO: Add CSRF protection
-    // TODO: Add data sanitization
-    // TODO: Add secure transmission
-    // static formData = {
-    //     firstPersonName: 'Md Masum',
-    //     email: 'md.masum.dev@gmail.com',
-    //     deceasedPersonName: 'Nanet',
-    //     messageType: 'eulogy',
-    //     relationship: 'neighbor',
-    //     details: 'nice person',
-    //     accomplishments: 'teacher',
-    //     messageTone: 'formal',
-    //     finalQuestion: '',
-    //     additionalInstructions: []
-    // };
 
     static formData = {
         firstPersonName: '',
+        deceasedPersonFirstName: '',
+        deceasedPersonMiddleName: '',
+        deceasedPersonLastName: '',
+        deceasedPersonFullName: '',
         email: '',
         deceasedPersonName: '',
         messageType: '',
         relationship: '',
         details: '',
-        accomplishments: '',
+        additionalInfo: '',
         messageTone: '',
         finalQuestion: '',
         additionalInstructions: []
@@ -38,19 +26,37 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.firstPersonName = $step.find('#first-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
                     $('.first-person-name-placeholder').text(this.formData.firstPersonName);
+                    this.storeFormData('firstPersonName', this.formData.firstPersonName);
                 }
                 break;
 
             case stepId.includes('step-email'):
                 if (!toSkip) {
                     this.formData.email = $step.find('#email-field').val();
+                    this.storeFormData('email', this.formData.email);
                 }
                 break;
 
             case stepId.includes('deceased-person-name'):
                 if (!toSkip) {
-                    this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().split(' ').map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1)).join(' ');
-                    $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonName);
+                    this.formData.deceasedPersonName = $step.find('#deceased-person-name-field').val().trim();
+                    
+                    this.storeFormData('deceasedPersonName', this.formData.deceasedPersonName)
+                        .then(response => {
+                            if (response && response.success) {
+                                // Store the parsed name components
+                                this.formData.deceasedPersonFirstName = response.deceasedPersonFirstName || '';
+                                this.formData.deceasedPersonMiddleName = response.deceasedPersonMiddleName || '';
+                                this.formData.deceasedPersonLastName = response.deceasedPersonLastName || '';
+                                this.formData.deceasedPersonFullName = response.deceasedPersonFullName || this.formData.deceasedPersonFirstName;
+
+                                $('.deceased-person-name-placeholder').text(this.formData.deceasedPersonFirstName);
+                                $('.step-deceased-person-relation .deceased-person-name-placeholder').text(this.formData.deceasedPersonFullName);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error processing first person name:', error);
+                        });
                 }
                 break;
 
@@ -58,33 +64,60 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.messageType = $step.find('.card.selected').data('message-type');
                     $('.message-type-placeholder').text(this.formData.messageType);
+                    
+                    // Store the message type and update the price display when response is received
+                    this.storeFormData('messageType', this.formData.messageType)
+                        .then(response => {
+                            if (response && response.success && response.price) {
+                                $('.payment-overlay .price').text('$' + response.price);
+                                this.formData.contentPrice = response.price;
+                            }
+                            
+                            this.fetchQuestionsForMessageType(this.formData.messageType);
+                        })
+                        .catch(error => {
+                            console.error('Error updating price:', error);
+                        });
                 }
                 break;
 
             case stepId.includes('deceased-person-relation'):
                 if (!toSkip) {
                     this.formData.relationship = $step.find('#deceased-person-relation-field').val();
+                    this.storeFormData('relationship', this.formData.relationship);
+                    console.log('relationship:', this.formData);
                 }
                 break;
 
             case stepId.includes('deceased-person-details'):
                 if (!toSkip) {
                     this.formData.details = $step.find('#deceased-person-details-field').val();
-                }
-                break;
-
-            case stepId.includes('deceased-person-accomplishment'):
-                if (!toSkip && $step.find('#deceased-person-accomplishment-field').val().length) {
-                    this.formData.accomplishments = $step.find('#deceased-person-accomplishment-field').val();
-                } else {
-                    this.formData.accomplishments = 'I am not sure what to say.';
+                    this.storeFormData('details', this.formData.details);
                 }
                 break;
 
             case stepId.includes('message-tone'):
                 if (!toSkip) {
                     this.formData.messageTone = $step.find('.card.selected').data('message-tone');
+                    this.storeFormData('messageTone', this.formData.messageTone)
+                        .then(() => {
+                            // Only fetch additional info question after message tone is stored
+                            this.fetchAdditionalInfoQuestion();
+                        })
+                        .catch(error => {
+                            console.error('Failed to store message tone:', error);
+                        });
                 }
+                break;
+
+            case stepId.includes('additional-info'):
+                if (!toSkip && $step.find('#additional-info-field').val().length) {
+                    this.formData.additionalInfo = $step.find('#additional-info-field').val();
+                } else {
+                    this.formData.additionalInfo = 'I am not sure what to say.';
+                }
+                
+                this.storeFormData('additionalInfo', this.formData.additionalInfo);
                 break;
 
             case stepId.includes('final-question'):
@@ -93,7 +126,17 @@ class DataManager {
                 } else {
                     this.formData.finalQuestion = 'No, I have noting more to add.';
                 }
-                this.sendToContentGeneration();
+                
+                this.storeFormData('finalQuestionAnswer', this.formData.finalQuestion)
+                    .then(() => {
+                        // Send data to content generation after final question is stored
+                        this.sendToContentGeneration();
+                    })
+                    .catch(error => {
+                        console.error('Failed to store final question:', error);
+                        // Still try to send data to content generation if storage fails
+                        this.sendToContentGeneration();
+                    });
                 break;
 
             case stepId.includes('step-additional-question-1'):
@@ -101,8 +144,18 @@ class DataManager {
                 if (!toSkip) {
                     additionalInstruction_1 = $step.find('#additional-question-1-field').val();                    
                 }
+
                 this.formData.additionalInstructions.push(additionalInstruction_1);
-                this.sendToContentGeneration(true);
+                this.storeFormData('additionalInstruction', additionalInstruction_1).
+                    then(() => {
+                        this.sendToContentGeneration(true);
+                    })
+                    .catch(error => {
+                        console.error('Failed to store additional instruction:', error);
+                        // Still try to send data to content generation if storage fails
+                        this.sendToContentGeneration(true);
+                    });
+
                 break;
 
             case stepId.includes('step-additional-question-2'):
@@ -111,7 +164,13 @@ class DataManager {
                     additionalInstruction_2 = $step.find('#additional-question-2-field').val();                    
                 }
                 this.formData.additionalInstructions.push(additionalInstruction_2);
-                this.sendToContentGeneration(true);
+                this.storeFormData('additionalInstruction', additionalInstruction_2).
+                    then(() => {
+                        this.sendToContentGeneration(true);
+                    })
+                    .catch(error => {
+                        console.error('Failed to store additional instruction:', error);
+                    });
                 break;
 
             case stepId.includes('step-feedback-2'):
@@ -130,13 +189,107 @@ class DataManager {
         }
     }
 
+    // New method to store form data in the backend session
+    static async storeFormData(fieldName, value) {
+        try {
+            const data = await HttpService.post('/api/store-form-data.php', {
+                field_name: fieldName,
+                value: value
+            });
+            
+            if (!data.success) {
+                console.error('Failed to store form data:', data.error);
+            }
+            return data; // Return the full response data
+        } catch (error) {
+            console.error('Error storing form data:', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    static async fetchQuestionsForMessageType(messageType) {
+        try {
+            const response = await HttpService.get('/api/get-questions.php?message_type=' + messageType);
+            
+            if (!response.success) {
+                throw new Error(response.error || 'Failed to fetch questions');
+            }
+            
+            this.updateDeceasedPersonDetailsStep(response.questions);
+        } catch (error) {
+            console.error('Failed to fetch questions:', error);
+            // Continue with default questions if there's an error
+        }
+    }
+    
+    static updateDeceasedPersonDetailsStep(questions) {
+        const $step = $('.step-deceased-person-details');
+        
+        // Update the title
+        $step.find('h4').text(questions.title);
+        
+        // Update the description
+        $step.find('p').first().html(questions.description);
+        
+        // Update the suggestions list
+        const $ul = $step.find('ul');
+        $ul.empty();
+        
+        questions.suggestions.forEach(suggestion => {
+            $ul.append(`<li>${suggestion}</li>`);
+        });
+
+        $('.deceased-person-details-field').attr('placeholder', questions.placeholder);
+    }
+
+    static async fetchAdditionalInfoQuestion() {
+        try {
+            const $additionalInfoStep = $('.step-additional-info');
+            
+            // Show loading indicator
+            // $additionalInfoStep.find('.loading-indicator').addClass('visible');
+            // $additionalInfoStep.find('.step-content').removeClass('visible');
+            
+            // Request the additional info question from the backend
+            const response = await HttpService.get('/api/get-questions.php?step=additional-info');
+            
+            if (!response.success) {
+                throw new Error(response.error || 'Failed to fetch additional info question');
+            }
+            
+            // Process the response
+            if (response.additionalInfoRequired === false) {
+                // No additional info needed, skip this step
+                console.log('No additional info needed, skipping step');
+                $(document).trigger('stepForwardRequested', [1, true]);
+                return;
+            }
+            
+            // Update the step with the question
+            if (response.question) {
+                $additionalInfoStep.find('h4').html(response.question);                
+            }
+
+            $additionalInfoStep.find('.loading-indicator').hide();
+            $additionalInfoStep.find('.step-content').addClass('visible');
+            
+        } catch (error) {
+            console.error('Failed to fetch additional info question:', error);
+            // On error, show the step with default question
+            const $additionalInfoStep = $('.step-additional-info');
+            $additionalInfoStep.find('.loading-indicator').removeClass('visible');
+            $additionalInfoStep.find('.step-content').addClass('visible');
+        }
+    }
+
     static async sendToContentGeneration(hasAdditionalInstruction = false) {
         try {
-            const payload = hasAdditionalInstruction 
-                ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } 
-                : this.formData;
+            // const payload = hasAdditionalInstruction 
+            //     ? { additionalInstruction: this.formData.additionalInstructions.slice(-1)[0] } 
+            //     : this.formData;
             
-            const data = await HttpService.post('/api/generate-content.php', payload);
+            // const data = await HttpService.post('/api/generate-content.php', payload);
+            const data = await HttpService.post('/api/generate-content.php');
             
             if (!data.success) {
                 throw new Error(data.error);

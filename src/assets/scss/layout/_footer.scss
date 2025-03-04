@@ -9,6 +9,11 @@
         margin-bottom: 0;
     }
 
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+    
     @include mobile {
         padding: 4px;
 

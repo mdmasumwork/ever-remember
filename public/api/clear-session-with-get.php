@@ -1,7 +1,5 @@
 <?php
 
-use Stripe\BillingPortal\Session;
-
 require_once __DIR__ . '/../../src/services/SessionService.php';
 
 header('Content-Type: application/json');

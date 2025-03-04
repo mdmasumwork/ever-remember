@@ -19,7 +19,9 @@ $isDevelopment = $_ENV['APP_ENV'] === 'development';
             <?php if ($isDevelopment): ?>
                 <li><a href="/api/clear-session-with-get.php" target="_blank">Clear Session</a></li>
             <?php endif; ?>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/">Serenity</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact</a></li>
         </ul>
     </nav>
 </div>

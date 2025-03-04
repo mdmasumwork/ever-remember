@@ -1,4 +1,7 @@
 .content-tabs {
+    position: relative;
+    overflow: hidden;
+    
     .tab-navigation {
         display: flex;
         gap: 1rem;
@@ -101,16 +104,17 @@
         .action-buttons {
             display: flex;
             gap: 1rem;
+
+            @include mobile {
+                flex-direction: column;
+            }
         }
 
 
         &.visible {
             display: block;
         }
-    }
-
-    position: relative;
-    overflow: hidden;
+    }    
 }
 
 .step-content-1 {

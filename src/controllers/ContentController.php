@@ -27,16 +27,7 @@ class ContentController {
                 return sendResponse(false, ['error' => 'Invalid content type']);
             }
 
-            $jsonData = file_get_contents('php://input');
-            if (!$this->isValidJson($jsonData)) {
-                return sendResponse(false, ['error' => 'Invalid JSON format']);
-            }
-            
-            $data = json_decode($jsonData, true);
-
-            if (!isset($data['additionalInstruction']) || empty(trim($data['additionalInstruction']))) {
-                $data['additionalInstruction'] = 'I have no additional information or instruction.';
-            }
+            $data = $_SESSION['form_data'];
 
             // Explicitly specify content type validation
             $sanitizedData = $this->validationService->validateAndSanitize(
@@ -53,7 +44,6 @@ class ContentController {
                 $_SESSION['contents'] = array();
             } else {
                 $_SESSION['version']++;
-                $_SESSION['form_data']['additionalInstructions'][] = $sanitizedData['additionalInstruction'] ?? '';
                 $sanitizedData = $_SESSION['form_data'];
                 
                 if (isset($_SESSION['contents'])) {
@@ -64,7 +54,7 @@ class ContentController {
             $sanitizedData['version'] = $_SESSION['version'] ?? 1;
 
             // Process and generate content
-            $prompt = $this->promptService->generatePrompt($sanitizedData);
+            $prompt = $this->promptService->generatePrompt();
             $generatedContent = $this->openAIService->generateContent($prompt);
 
             $_SESSION['contents'][$sanitizedData['version']] = $generatedContent['content'];

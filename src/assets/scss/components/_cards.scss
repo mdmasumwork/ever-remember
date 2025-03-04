@@ -91,6 +91,14 @@
         height: 30px; // Match width for perfect circle
     }
 
+    .card-footer {
+        display: none;
+        
+        .pricing-amount {
+            color: $brand-primary;
+        }
+    }
+
     @include mobile {
         grid-template-columns: 1fr;
         gap: $spacing-md;
