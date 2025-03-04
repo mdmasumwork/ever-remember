@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../src/utils/LogUtil.php';
+require_once __DIR__ . '/../src/utils/EnvUtil.php';
 require_once __DIR__ . '/../src/includes/functions.php';
 require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../src/utils/CSRFUtil.php';
@@ -46,6 +47,10 @@ $pageTitle = "Contact Us";
             <h1>Feel Free to Reach Out to Us</h1>
             <p class="lead">Have a question, suggestion, or interested in working with us? We'd love to hear from you! Please fill out the form below, and we'll get back to you as soon as possible.</p>
             
+            <div class="contact-info-area">
+                Or, directly reach out to us at <a href="mailto:<?= EnvUtil::getEnv('SUPPORT_EMAIL') ?>"><?= EnvUtil::getEnv('SUPPORT_EMAIL') ?> </a>
+            </div>
+
             <div id="form-messages" class="alert" style="display: none;"></div>
             
             <div id="contact-form-container">

@@ -3,8 +3,8 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../utils/DebugUtil.php';
+require_once __DIR__ . '/../utils/EnvUtil.php';
 
 class EmailService {
     private $mail;
@@ -16,17 +16,17 @@ class EmailService {
 
     private function setupSMTP() {
         $this->mail->isSMTP();
-        $this->mail->Host = $_ENV['GMAIL_SMTP_SERVER'];
+        $this->mail->Host = EnvUtil::getEnv('SMTP_SERVER');
         $this->mail->SMTPAuth = true;
-        $this->mail->Username = $_ENV['GMAIL_SMTP_USER'];
-        $this->mail->Password = $_ENV['GMAIL_SMTP_PASS'];
-        $this->mail->SMTPSecure = 'tls';
-        $this->mail->Port = $_ENV['GMAIL_SMTP_PORT'];
+        $this->mail->Username = EnvUtil::getEnv('SMTP_USER');
+        $this->mail->Password = EnvUtil::getEnv('SMTP_PASS');
+        $this->mail->SMTPSecure = EnvUtil::getEnv('SMTP_SECURE');
+        $this->mail->Port = EnvUtil::getEnv('SMTP_PORT');
     }
 
     public function sendEmail($to, $subject, $htmlBody, $plainBody, $replyTo = null) {
         try {
-            $this->mail->setFrom($_ENV['GMAIL_SMTP_USER'], 'EverRemember');
+            $this->mail->setFrom(EnvUtil::getEnv('SEND_FROM_EMAIL'), 'EverRemember');
             $this->mail->addAddress($to);
             
             // Add reply-to address if provided

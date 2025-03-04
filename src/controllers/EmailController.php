@@ -47,7 +47,7 @@ class EmailController {
                       . "Sent from EverRemember contact form";
         
         // Send to admin
-        $adminEmail = EnvUtil::getEnv('GMAIL_SMTP_USER', 'md.masum.work@gmail.com');
+        $adminEmail = EnvUtil::getEnv('SUPPORT_EMAIL', 'md.masum.work@gmail.com');
         
         // Pass sender's email as replyTo parameter
         $emailService->sendEmail(

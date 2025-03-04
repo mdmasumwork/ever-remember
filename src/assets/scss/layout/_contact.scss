@@ -4,6 +4,15 @@
         opacity: 1;
     }
 
+    .contact-info-area {
+        background-color: rgba($brand-primary, 0.1);
+        padding: 32px;
+        color: #000000;
+        border-radius: 5px;
+        border: 2px solid $brand-accent;
+        font-size: 16px;
+    }
+
     .field-area {
         margin: 32px 0;
 
