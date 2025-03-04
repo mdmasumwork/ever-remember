@@ -43,7 +43,7 @@ $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
 
             <div class="content-actions">
                 <div class="payment-overlay">
-                    <h5>Unlock your complete personalized content</h5>
+                    <h5>Unlock your <span class="message-type-placeholder">personalized content</span></h5>
                     <p class="price">$<?= $amount ?></p>
                     <p class="green-text">After payment, you will also have the opportunity to modify the content two more times.</p>
                     <button class="payment-button initial-button">Purchase to View Full Content</button>

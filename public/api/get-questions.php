@@ -55,7 +55,7 @@ try {
         } catch (Exception $e) {
             echo json_encode([
                 'success' => true,
-                'additionalInfoRequired' => true,
+                'additionalInfoRequired' => false,
                 'question' => null // Use default question in the template
             ]);
             exit;

@@ -1,0 +1,44 @@
+# Enable the rewrite engine
+RewriteEngine On
+
+# Base directory setting - adjust if necessary
+# RewriteBase /
+
+# Redirect contact.php to /contact (remove .php extension)
+RewriteCond %{THE_REQUEST} \s/+contact\.php[\s?] [NC]
+RewriteRule ^ /contact [R=301,L]
+
+# For requests to /contact, serve the contact.php file
+RewriteRule ^contact/?$ contact.php [L]
+
+# Redirect terms.php to /terms (remove .php extension)
+RewriteCond %{THE_REQUEST} \s/+terms\.php[\s?] [NC]
+RewriteRule ^ /terms [R=301,L]
+
+# For requests to /terms, serve the terms.php file
+RewriteRule ^terms/?$ terms.php [L]
+
+# Redirect privacy.php to /privacy (remove .php extension)
+RewriteCond %{THE_REQUEST} \s/+privacy\.php[\s?] [NC]
+RewriteRule ^ /privacy [R=301,L]
+
+# For requests to /privacy, serve the privacy.php file
+RewriteRule ^privacy/?$ privacy.php [L]
+
+# Redirect pricing.php to /pricing (remove .php extension)
+RewriteCond %{THE_REQUEST} \s/+pricing\.php[\s?] [NC]
+RewriteRule ^ /pricing [R=301,L]
+
+# For requests to /pricing, serve the pricing.php file
+RewriteRule ^pricing/?$ pricing.php [L]
+
+# Add similar rules for other pages you want to have clean URLs
+# RewriteRule ^page-name/?$ page-name.php [L]
+
+# If the file or directory doesn't exist, don't apply rewriting
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Optional: Handle all other PHP files with clean URLs
+# RewriteCond %{REQUEST_FILENAME}.php -f
+# RewriteRule ^(.+?)/?$ $1.php [L]

@@ -11,5 +11,8 @@ vendor
 .env.test.local
 .env.production.local
 logs
-.htaccess
+
+# Only ignore the root .htaccess file
+/.htaccess
+
 public/assets/css/
