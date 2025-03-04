@@ -26,6 +26,8 @@ $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
                     </div>
                 </div>
 
+                <div class="error-message"></div>
+
                 <!-- Content Box -->
                 <div class="content-box">
                     <div class="generated-content">

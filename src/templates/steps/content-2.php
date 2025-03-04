@@ -45,6 +45,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="error-message"></div>
                 <div class="content-box">
                     <div class="generated-content">                        
                     </div>

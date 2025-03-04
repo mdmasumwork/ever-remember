@@ -304,7 +304,7 @@ class DataManager {
         } catch (error) {
             console.error('Content generation failed:', error);
             $('.loading-indicator').removeClass('visible');
-            $('.error-message').text(error.message).show();
+            $('.error-message').text("Something went wrong! Please reload the page and try again, or contact our support.").show();
         }
     }
 

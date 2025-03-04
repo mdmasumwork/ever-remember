@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../utils/CSRFUtil.php';
-require_once __DIR__ . '/../utils/DebugUtil.php';
+require_once __DIR__ . '/../utils/LogUtil.php';
 
 class CSRFMiddleware {
     public function handle($page = '') {
@@ -15,6 +15,7 @@ class CSRFMiddleware {
         if (!CSRFUtil::verifyToken($token, $page)) {
             header('HTTP/1.0 403 Forbidden');
             echo json_encode(['error' => 'CSRF token validation failed']);
+            LogUtil::log('error', 'CSRF token validation failed');
             exit();
         }
         

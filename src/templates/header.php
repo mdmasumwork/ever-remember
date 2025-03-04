@@ -9,7 +9,7 @@ $baseUrl = EnvUtil::getEnv('BASE_URL');
 <!-- Header Step -->
 <header id="header" class="sticky-header">
     <div class="logo">
-        <a href="<?= $baseUrl ?>" ><img src="assets/image_source_files/logo_9.png" alt="Logo" id="logo"></a>
+        <a href="<?= $baseUrl ?>" ><img src="assets/images/logo.png" alt="Logo" id="logo"></a>
     </div>
     <nav id="nav" class="main-nav">
         <ul>

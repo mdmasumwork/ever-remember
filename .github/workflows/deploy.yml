@@ -98,5 +98,6 @@ jobs:
           --exclude='tests' \
           --exclude='logs' \
           --exclude='src/assets/scss' \
+          --exclude='public/assets/image_source_files' \
           ./ ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}:${{ env.TARGET_PATH }}
 

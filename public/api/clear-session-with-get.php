@@ -1,10 +1,15 @@
 <?php
 
+require_once __DIR__ . '/../../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 
 header('Content-Type: application/json');
 
 try {
+    // First make sure a session is started before trying to clear it
+    SessionSecurityUtil::initiateSession();
+    
+    // Now clear the session
     SessionService::clearSession();
     
     echo json_encode([
