@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../services/FeedbackService.php';
 require_once __DIR__ . '/../services/ValidationService.php';
-require_once __DIR__ . '/../middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../middleware/CSRFMiddleware.php';
 require_once __DIR__ . '/../services/SessionService.php';
 
@@ -15,7 +14,6 @@ class FeedbackController {
     public function __construct() {
         $this->feedbackService = new FeedbackService();
         $this->validationService = new ValidationService();
-        $this->rateLimitMiddleware = new RateLimitMiddleware();
         $this->csrfMiddleware = new CSRFMiddleware();
         $this->sessionService = new SessionService();
     }
@@ -23,8 +21,6 @@ class FeedbackController {
     public function storeFeedback() {
         try {
             $this->csrfMiddleware->handle();
-            // Apply rate limiting
-            $this->rateLimitMiddleware->handle('feedback');
 
             $paymentId = $_SESSION['payment_id'] ?? null;
             

@@ -43,7 +43,7 @@ class RateLimiterService {
             return true;
         }
         
-        if ($current >= $maxAttempts) {
+        if ($current > $maxAttempts) {
             throw new RateLimitExceededException(
                 "Rate limit exceeded. Try again in " . $this->redis->ttl($key) . " seconds."
             );

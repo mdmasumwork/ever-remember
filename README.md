@@ -4,7 +4,7 @@ Ever Remember is a tool to help users generate personalized memorial content.
 ## Setup
 - Clone the repository: `git clone https://github.com/your-repo/ever-remember.git`
 - Create database and create the table with the sql in `/database/migrations/create_payments_table.sql` file.
-- Configure `.env` in root directory.
+- Configure `.env` in root directory. follow the `.env.example` for reference.
 - Configure Apache's web root to point to the `/public` directory. If it is live server, then we have the right `.htaccess.production`, `.htaccess.dev` and `.htaccess.staging` inside root directory. We have to just put the the righ file in the root directory, naming it just `.htaccess`. When we do github actions auto deploy, it automatically copies the right file.
 - `dev` and `staging` environment shouldn't be public. Only dev team should able to acces it. For this, you have add the allowed IP address in .htaccess file. To get the public IP we can run `curl ifconfig.me` this command in terminal.
 - In `.env` file add add the righ environment, depending on the environment it may act differently.

@@ -2,25 +2,20 @@
 require_once __DIR__ . '/../services/PaymentService.php';
 require_once __DIR__ . '/../services/SessionService.php';
 require_once __DIR__ . '/../config/Database.php';
-require_once __DIR__ . '/../middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../utils/EnvUtil.php';
 require_once __DIR__ . '/../includes/functions.php';  // Added to use the shared function
 
 class PaymentController {
     private $paymentService;
-    private $rateLimitMiddleware;
     private $sessionService;
 
     public function __construct() {
         $this->paymentService = new PaymentService();
-        $this->rateLimitMiddleware = new RateLimitMiddleware();
         $this->sessionService = new SessionService();
     }
 
     public function createPaymentIntent() {
         try {
-            // Apply rate limiting
-            $this->rateLimitMiddleware->handle('payment');
             
             // Get message type from session
             $messageType = strtolower($_SESSION['form_data']['messageType'] ?? 'condolence message');
