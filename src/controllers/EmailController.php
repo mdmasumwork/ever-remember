@@ -11,7 +11,7 @@ class EmailController {
         $version = $_POST['version'] ?? 1;
         $emailService = new EmailService();
         $recipientEmail = $_SESSION['form_data']['email'];
-        $deceasedPerson = $_SESSION['form_data']['deceasedPersonName'] ?? 'your beloved one';
+        $deceasedPerson = $_SESSION['deceasedPersonFullName'] ?? 'your beloved one';
         $messageType = ucwords($_SESSION['form_data']['messageType'] ?? 'Content');
         $content = $_SESSION['contents'][$version] ?? 'No content found';
 

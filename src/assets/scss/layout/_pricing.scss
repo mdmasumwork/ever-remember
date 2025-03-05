@@ -73,7 +73,7 @@
 
     .pricing-card-header {
         background-color: $surface-secondary;
-        padding: 2rem;
+        padding: 1.5rem;
         text-align: center;
         
         h4 {
@@ -94,6 +94,10 @@
             .price {
                 font-size: 3rem;
                 color: $brand-accent;
+
+                @include mobile {
+                    font-size: 2rem;
+                }
             }
         }
         
