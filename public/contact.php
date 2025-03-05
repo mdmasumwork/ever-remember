@@ -6,7 +6,7 @@ require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../src/utils/CSRFUtil.php';
 require_once __DIR__ . '/../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../src/middleware/CSRFMiddleware.php';
-require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
+// require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
 
 // Initialize session and security - following index.php pattern
 SessionSecurityUtil::initiateSession();
@@ -14,8 +14,8 @@ SecurityHeadersUtil::setIndexHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
 $csrf = new CSRFMiddleware();
 $csrf->handle('contact');
-$rateLimitMiddleware = new RateLimitMiddleware();
-$rateLimitMiddleware->handle('contact');
+// $rateLimitMiddleware = new RateLimitMiddleware();
+// $rateLimitMiddleware->handle('contact');
 $csrfToken = CSRFUtil::generateToken('contact');
 
 // Reject non-GET requests at the page level

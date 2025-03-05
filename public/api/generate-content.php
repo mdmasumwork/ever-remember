@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/controllers/ContentController.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/middleware/CSRFMiddleware.php';
-require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
+// require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 
 SecurityHeadersUtil::setHeaders('POST');
@@ -14,8 +14,8 @@ $sessionService = new SessionService();
 $csrf = new CSRFMiddleware();
 $csrf->handle();
 
-$rateLimitMiddleware = new RateLimitMiddleware();
-$rateLimitMiddleware->handle('content');
+// $rateLimitMiddleware = new RateLimitMiddleware();
+// $rateLimitMiddleware->handle('content');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     throw new Exception('Invalid request method');

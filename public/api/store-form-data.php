@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../../src/middleware/CSRFMiddleware.php';
-require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
+// require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../../src/services/PromptService.php';
 require_once __DIR__ . '/../../src/services/OpenAIService.php';
 require_once __DIR__ . '/../../src/services/SingleValidationService.php';
@@ -17,8 +17,8 @@ $sessionService = new SessionService(); // Will initiate session in constructor
 $csrf = new CSRFMiddleware();
 $csrf->handle();
 
-$rateLimitMiddleware = new RateLimitMiddleware();
-$rateLimitMiddleware->handle('form_data');
+// $rateLimitMiddleware = new RateLimitMiddleware();
+// $rateLimitMiddleware->handle('form_data');
 
 $promptService = new PromptService();
 $validator = new SingleValidationService();

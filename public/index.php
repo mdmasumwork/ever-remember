@@ -9,7 +9,7 @@ require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../src/utils/CSRFUtil.php';
 require_once __DIR__ . '/../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../src/middleware/CSRFMiddleware.php';
-require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
+// require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
 
 // loading important settings and security protocols
 SessionSecurityUtil::initiateSession();
@@ -17,8 +17,8 @@ SecurityHeadersUtil::setIndexHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
 $csrf = new CSRFMiddleware();
 $csrf->handle();
-$rateLimitMiddleware = new RateLimitMiddleware();
-$rateLimitMiddleware->handle('index');
+// $rateLimitMiddleware = new RateLimitMiddleware();
+// $rateLimitMiddleware->handle('index');
 $csrfToken = CSRFUtil::generateToken();
 
 ?>

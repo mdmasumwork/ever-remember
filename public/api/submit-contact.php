@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../../src/middleware/CSRFMiddleware.php';
-require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
+// require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../../src/services/SingleValidationService.php';
 require_once __DIR__ . '/../../src/controllers/EmailController.php';
 
@@ -16,8 +16,8 @@ $sessionService = new SessionService();
 $csrf = new CSRFMiddleware();
 $csrf->handle('contact');
 
-$rateLimitMiddleware = new RateLimitMiddleware();
-$rateLimitMiddleware->handle('contact_form');
+// $rateLimitMiddleware = new RateLimitMiddleware();
+// $rateLimitMiddleware->handle('contact_form');
 
 $validator = new SingleValidationService();
 

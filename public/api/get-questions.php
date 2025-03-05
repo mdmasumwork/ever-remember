@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../src/utils/LogUtil.php';
 require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
 require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
-require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
+// require_once __DIR__ . '/../../src/middleware/RateLimitMiddleware.php';
 require_once __DIR__ . '/../../src/services/PromptService.php';
 require_once __DIR__ . '/../../src/services/OpenAIService.php';
 
@@ -13,8 +13,8 @@ SessionService::createSession();
 SecurityHeadersUtil::setHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
 
-$rateLimitMiddleware = new RateLimitMiddleware();
-$rateLimitMiddleware->handle('questions');
+// $rateLimitMiddleware = new RateLimitMiddleware();
+// $rateLimitMiddleware->handle('questions');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
