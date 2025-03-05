@@ -85,7 +85,6 @@ class DataManager {
                 if (!toSkip) {
                     this.formData.relationship = $step.find('#deceased-person-relation-field').val();
                     this.storeFormData('relationship', this.formData.relationship);
-                    console.log('relationship:', this.formData);
                 }
                 break;
 
@@ -260,7 +259,6 @@ class DataManager {
             // Process the response
             if (response.additionalInfoRequired === false) {
                 // No additional info needed, skip this step
-                console.log('No additional info needed, skipping step');
                 $(document).trigger('stepForwardRequested', [1, true]);
                 return;
             }
