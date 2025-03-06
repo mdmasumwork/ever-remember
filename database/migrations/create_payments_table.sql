@@ -8,6 +8,7 @@ CREATE TABLE payments (
     payment_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     content_id VARCHAR(255),
     content_type VARCHAR(50),
+    masses_type VARCHAR(100),
     feedback TEXT DEFAULT NULL,
     status VARCHAR(20) DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

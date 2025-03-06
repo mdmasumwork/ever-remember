@@ -49,10 +49,16 @@ class PaymentController {
             $paymentResult = $this->paymentService->verifyPayment($paymentIntentId);
             $userName = $_SESSION['form_data']['firstPersonName'] ?? '-';
             $userEmail = $_SESSION['form_data']['email'] ?? '-';
+            $messageType = $_SESSION['form_data']['messageType'] ?? 'condolence message';
             
             if ($paymentResult['success']) {
                 // 2. Log to database via Service
-                $paymentId = $this->paymentService->logPayment($paymentResult['payment'], $userName, $userEmail);
+                $paymentId = $this->paymentService->logPayment(
+                    $paymentResult['payment'], 
+                    $userName, 
+                    $userEmail,
+                    $messageType
+                );
                 
                 $_SESSION['payment_verified'] = true;
                 $_SESSION['payment_id'] = $paymentId; // Store payment ID in session

@@ -32,9 +32,9 @@ class PaymentService {
         ];
     }
 
-    public function logPayment($paymentIntent, $userName, $userEmail) {
+    public function logPayment($paymentIntent, $userName, $userEmail, $massesType = null) {
         try {
-            LogUtil::log('content', '[SessionID: ' . session_id() . '][Payment]: Successful | Payment Intent ID:' . $paymentIntent->id . ' | User: ' . $userName . ' | Email: ' . $userEmail . ' | Amount: ' . $paymentIntent->amount / 100);
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Payment]: Successful | Payment Intent ID:' . $paymentIntent->id . ' | User: ' . $userName . ' | Email: ' . $userEmail . ' | Amount: ' . $paymentIntent->amount / 100 . ' | Type: ' . $massesType);
 
             $stmt = $this->db->prepare("
                 INSERT INTO payments (
@@ -43,8 +43,9 @@ class PaymentService {
                     user_email, 
                     amount, 
                     payment_method, 
+                    masses_type,
                     status
-                ) VALUES (?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
             
             $stmt->execute([
@@ -53,6 +54,7 @@ class PaymentService {
                 $userEmail,
                 $paymentIntent->amount / 100,
                 $paymentIntent->payment_method_types[0],
+                $massesType,
                 'completed'
             ]);
 

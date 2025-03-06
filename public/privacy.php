@@ -46,9 +46,10 @@ $pageTitle = "Privacy Policy - EverRemember";
                 <h4>1. Information We Collect</h4>
                 <p>We collect only the necessary information required to provide our services:</p>
                 <ul>
-                    <li><strong>Personal Information:</strong> When you use our service, we may collect your name and email if you provide them for contact purposes.</li>
-                    <li><strong>Payment Information:</strong> Payments are securely processed through third-party providers (such as Stripe). We do not store or have access to your credit card details.</li>
-                    <li><strong>Session Data:</strong> We temporarily store information in your session (such as input details for generating condolence messages) to enhance user experience.</li>
+                    <li><strong>Personal Information:</strong> We collect and store user names and email addresses to maintain transaction records and provide customer support.</li>
+                    <li><strong>Payment Information:</strong> We store payment details such as transaction amount, Stripe Payment ID, and payment method. However, we do not store credit card or banking details.</li>
+                    <li><strong>Session Data:</strong> AI-generated content is temporarily stored for user access after payment but is not permanently saved.</li>
+                    <li><strong>Feedback Data:</strong> If users provide feedback voluntarily, we may store it for service improvements.</li>
                 </ul>
             </div>
             
@@ -66,9 +67,9 @@ $pageTitle = "Privacy Policy - EverRemember";
             <div class="terms-section">
                 <h4>3. Data Storage & Retention</h4>
                 <ul>
-                    <li>Generated content is not stored permanently. It is only available in your session until you leave or refresh the page.</li>
-                    <li>Payment records and basic user details (such as name and email) may be stored for transaction verification and customer support.</li>
-                    <li>We do not share, sell, or distribute your personal data to third parties.</li>
+                    <li>We retain personal information (name, email) and payment records for transaction verification, customer support, and compliance purposes.</li>
+                    <li>AI-generated content is not stored permanently and is only available during an active session.</li>
+                    <li>Users may request the deletion of their personal data (name, email) by contacting <a href="mailto:<?= EnvUtil::getEnv('SUPPORT_EMAIL', 'support@ever-remember.com') ?>"><?= EnvUtil::getEnv('SUPPORT_EMAIL', 'support@ever-remember.com') ?></a>. However, payment records cannot be deleted as they are retained for legal, financial, and regulatory compliance.</li>
                 </ul>
             </div>
             

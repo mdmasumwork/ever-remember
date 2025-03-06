@@ -70,9 +70,9 @@ $pageTitle = "Terms and Conditions - EverRemember";
             
             <div class="terms-section">
                 <h4>5. Content & Data Storage</h4>
-                <p>We do not store AI-generated content permanently. Your responses and generated messages are temporarily stored in your session for retrieval after payment.</p>
-                <p>We only store payment records and basic user information required for transactional purposes.</p>
-                <p>Feedback submitted voluntarily may be stored and used for improving our service.</p>
+                <p>We store user-provided details, including name, email, payment transaction details, and feedback, for record-keeping and customer support.</p>
+                <p>AI-generated content is not stored permanently and is only accessible during an active session.</p>
+                <p>We do not share or sell user data to third parties.</p>
             </div>
             
             <div class="terms-section">
