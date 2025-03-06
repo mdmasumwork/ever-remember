@@ -2,15 +2,15 @@
 
 require_once __DIR__ . '/../../utils/EnvUtil.php';
 
-$mssageType = $_SESSION['form_data']['messageType'] ?? 'default';
+$messageType = $_SESSION['form_data']['messageType'] ?? 'default';
 
-if ($mssageType === 'condolence message') {
+if ($messageType === 'condolence message') {
     $amount = EnvUtil::getEnv('CONDOLENCE_PRICE', '9.99');
-} else if ($mssageType === 'sympathy letter') {
+} else if ($messageType === 'sympathy letter') {
     $amount = EnvUtil::getEnv('SYMPATHY_LETTER_PRICE', '9.99');
-} else if ($mssageType === 'eulogy') {
+} else if ($messageType === 'eulogy') {
     $amount = EnvUtil::getEnv('EULOGY_PRICE', '9.99');
-} else if ($mssageType === 'obituary') {
+} else if ($messageType === 'obituary') {
     $amount = EnvUtil::getEnv('OBITUARY_PRICE', '9.99');
 } else {
     $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
