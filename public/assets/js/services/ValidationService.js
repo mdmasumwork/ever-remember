@@ -5,6 +5,11 @@ class ValidationService {
             return true;
         }
 
+        // Special case for terms agreement step
+        if ($step.hasClass('step-terms-agreement')) {
+            return this.validateTermsAgreement($step);
+        }
+
         const $input = $step.find('input, textarea').first();
         if (!$input.length) {
             return true;
@@ -66,6 +71,18 @@ class ValidationService {
         }
 
         UIManager.clearFieldError($field);
+        return true;
+    }
+    
+    static validateTermsAgreement($step) {
+        const $checkbox = $step.find('#terms-checkbox');
+        
+        if (!$checkbox.is(':checked')) {
+            UIManager.showFieldError($checkbox.parent(), 'You must agree to the Terms of Service and Privacy Policy');
+            return false;
+        }
+        
+        UIManager.clearFieldError($checkbox.parent());
         return true;
     }
 }

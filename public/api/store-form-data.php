@@ -52,7 +52,8 @@ try {
         'additionalInfo',
         'messageTone',
         'finalQuestionAnswer',
-        'additionalInstruction'
+        'additionalInstruction',
+        'termsAgreed'
     ];
     
     if (!in_array($fieldName, $allowedFields)) {
@@ -71,7 +72,10 @@ try {
         exit;
     }
     
-    if ($fieldName === 'additionalInstruction') {
+    if ($fieldName === 'termsAgreed') {
+        // Ensure it's stored as a boolean
+        $_SESSION['form_data']['termsAgreed'] = (bool)$sanitizedValue;
+    } else if ($fieldName === 'additionalInstruction') {
         if (!isset($_SESSION['form_data']['additionalInstructions']) || !is_array($_SESSION['form_data']['additionalInstructions'])) {
             $_SESSION['form_data']['additionalInstructions'] = [];
         }

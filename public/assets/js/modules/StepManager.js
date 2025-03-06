@@ -1,6 +1,7 @@
 class StepManager {
     static init() {
         this.bindStepForwardListener();
+        this.bindTermsCheckboxListener();
     }
 
     static bindStepForwardListener() {
@@ -15,7 +16,19 @@ class StepManager {
                 const detail = { currentStep: currentStepNumber };
                 const event = new CustomEvent('stepForwarded', { detail });
                 document.dispatchEvent(event);
-
+            }
+        });
+    }
+    
+    static bindTermsCheckboxListener() {
+        $(document).on('change', '#terms-checkbox', function() {
+            const $agreeButton = $('#terms-agree-button');
+            if (this.checked) {
+                $agreeButton.removeClass('disabled');
+                $agreeButton.prop('disabled', false);
+            } else {
+                $agreeButton.addClass('disabled');
+                $agreeButton.prop('disabled', true);
             }
         });
     }

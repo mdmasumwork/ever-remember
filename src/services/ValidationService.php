@@ -34,6 +34,7 @@ class ValidationService {
             // Content-specific business rules
             if (!isset($session['version'])) {
                 $this->validateRequiredFields($data);
+                $this->validateTermsAgreed($data);
             } else {
                 if ($session['version'] >= 3) {
                     throw new ValidationException('You have reached the maximum number of versions allowed');
@@ -92,6 +93,12 @@ class ValidationService {
             if (!isset($data[$field]) || empty(trim($data[$field]))) {
                 throw new ValidationException("The field '{$field}' is required");
             }
+        }
+    }
+
+    private function validateTermsAgreed($data) {
+        if (!isset($data['termsAgreed']) || $data['termsAgreed'] !== true) {
+            throw new ValidationException("You must agree to the Terms of Service and Privacy Policy to continue");
         }
     }
 

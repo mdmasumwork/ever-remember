@@ -56,6 +56,7 @@ $csrfToken = CSRFUtil::generateToken();
     include '../src/templates/steps/message-tone.php';
     include '../src/templates/steps/additional-info.php';
     include '../src/templates/steps/final-question.php';
+    include '../src/templates/steps/terms-agreement.php';
 
 
     include '../src/templates/steps/content-1.php';

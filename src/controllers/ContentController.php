@@ -29,6 +29,11 @@ class ContentController {
 
             $data = $_SESSION['form_data'];
 
+            // Check if user has agreed to terms (for first version)
+            if (!isset($_SESSION['version']) && (!isset($data['termsAgreed']) || $data['termsAgreed'] !== true)) {
+                return sendResponse(false, ['error' => 'You must agree to the Terms of Service and Privacy Policy']);
+            }
+
             // Explicitly specify content type validation
             $sanitizedData = $this->validationService->validateAndSanitize(
                 $data, 

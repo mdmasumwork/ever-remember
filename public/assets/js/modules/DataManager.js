@@ -14,7 +14,8 @@ class DataManager {
         additionalInfo: '',
         messageTone: '',
         finalQuestion: '',
-        additionalInstructions: []
+        additionalInstructions: [],
+        termsAgreed: false,
     };
 
     static collectData(step, toSkip = false) {
@@ -126,16 +127,23 @@ class DataManager {
                     this.formData.finalQuestion = 'No, I have noting more to add.';
                 }
                 
-                this.storeFormData('finalQuestionAnswer', this.formData.finalQuestion)
-                    .then(() => {
-                        // Send data to content generation after final question is stored
-                        this.sendToContentGeneration();
-                    })
-                    .catch(error => {
-                        console.error('Failed to store final question:', error);
-                        // Still try to send data to content generation if storage fails
-                        this.sendToContentGeneration();
-                    });
+                this.storeFormData('finalQuestionAnswer', this.formData.finalQuestion);
+                break;
+            
+            case stepId.includes('step-terms-agreement'):
+                if (!toSkip) {
+                    this.formData.termsAgreed = $step.find('#terms-checkbox').is(':checked');
+                    this.storeFormData('termsAgreed', this.formData.termsAgreed)
+                        .then(() => {
+                            // Send data to content generation after the user agreed to terms and privacy
+                            this.sendToContentGeneration();
+                        })
+                        .catch(error => {
+                            console.error('Failed to store final question:', error);
+                            // Still try to send data to content generation if storage fails
+                            this.sendToContentGeneration();
+                        });
+                }
                 break;
 
             case stepId.includes('step-additional-question-1'):
@@ -185,6 +193,7 @@ class DataManager {
                     this.sendFeedback(feedback);
                 }
                 break;
+            
         }
     }
 
