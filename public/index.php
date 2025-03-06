@@ -5,14 +5,18 @@
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 
-require_once __DIR__ . '/../src/utils/SessionSecurityUtil.php';
 require_once __DIR__ . '/../src/utils/CSRFUtil.php';
 require_once __DIR__ . '/../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../src/middleware/CSRFMiddleware.php';
+require_once __DIR__ . '/../src/services/SessionService.php';
 // require_once __DIR__ . '/../src/middleware/RateLimitMiddleware.php';
 
 // loading important settings and security protocols
-SessionSecurityUtil::initiateSession();
+$sessionService = new SessionService();
+if (! $sessionService->isSessionActive()) {
+    $sessionService->createSession();
+}
+
 SecurityHeadersUtil::setIndexHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
 $csrf = new CSRFMiddleware();

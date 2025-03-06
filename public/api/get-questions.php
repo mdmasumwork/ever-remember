@@ -8,7 +8,8 @@ require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 require_once __DIR__ . '/../../src/services/PromptService.php';
 require_once __DIR__ . '/../../src/services/OpenAIService.php';
 
-SessionService::createSession();
+$sessionService = new SessionService();
+$sessionService->isSessionActive();
 
 SecurityHeadersUtil::setHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');

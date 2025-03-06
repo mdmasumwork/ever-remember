@@ -10,6 +10,9 @@ require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 SecurityHeadersUtil::setHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
 
+$sessionService = new SessionService(); // Will initiate session in constructor
+$sessionService->isSessionActive();
+
 // $rateLimitMiddleware = new RateLimitMiddleware();
 // $rateLimitMiddleware->handle('content');
 

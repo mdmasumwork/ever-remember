@@ -36,11 +36,12 @@ class SessionSecurityUtil {
             
             session_start();
             if (!isset($_SESSION['security'])) {
+                LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Session created...');
                 $_SESSION['security'] = [
                     'created_at' => time(),
                     'last_activity' => time()
                 ];
-            }
+            }            
         }
     }
 
@@ -91,12 +92,14 @@ class SessionSecurityUtil {
 
         // Check session lifetime
         if (($currentTime - $securityData['created_at']) > self::$sessionLifetime) {
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Lifespan exceeded');
             self::clearSession();
             return false;
         }
 
         // Check inactivity timeout
         if (($currentTime - $securityData['last_activity']) > self::$inactivityTimeout) {
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Inactivity timeout exceeded');
             self::clearSession();
             return false;
         }
@@ -105,7 +108,8 @@ class SessionSecurityUtil {
         $_SESSION['security']['last_activity'] = $currentTime;
         
         // Regenerate session ID periodically for security
-        if (($currentTime - $securityData['last_activity']) > self::$regenerateInterval) {
+        if (($currentTime - $securityData['created_at']) > self::$regenerateInterval) {
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Regenarete time exceeded');
             self::regenerateSession();
         }
         
@@ -125,6 +129,7 @@ class SessionSecurityUtil {
         
         // Update security timestamps
         $_SESSION['security']['last_activity'] = time();
+        $_SESSION['security']['created_at'] = time();
         LogUtil::log('content', '[SessionID: ' . session_id() . '][Session]: Regenerated session ID from ' . $oldSessionId . ' to ' . session_id());
     }
 }

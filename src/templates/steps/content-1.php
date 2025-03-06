@@ -1,7 +1,21 @@
 <?php
 
 require_once __DIR__ . '/../../utils/EnvUtil.php';
-$amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
+
+$mssageType = $_SESSION['form_data']['messageType'] ?? 'default';
+
+if ($mssageType === 'condolence message') {
+    $amount = EnvUtil::getEnv('CONDOLENCE_PRICE', '9.99');
+} else if ($mssageType === 'sympathy letter') {
+    $amount = EnvUtil::getEnv('SYMPATHY_LETTER_PRICE', '9.99');
+} else if ($mssageType === 'eulogy') {
+    $amount = EnvUtil::getEnv('EULOGY_PRICE', '9.99');
+} else if ($mssageType === 'obituary') {
+    $amount = EnvUtil::getEnv('OBITUARY_PRICE', '9.99');
+} else {
+    $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
+    $messageType = 'personalized content';
+}
 
 ?>
 <section class="step step-content-1">
@@ -45,8 +59,9 @@ $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
 
             <div class="content-actions">
                 <div class="payment-overlay">
-                    <h5>Unlock your <span class="message-type-placeholder">personalized content</span></h5>
+                    <h5>Unlock your <span class="message-type-placeholder"><?= $messageType ?></span></h5>
                     <p class="price">$<?= $amount ?></p>
+                    <p>See our <a href="/pricing" target="_blank">pricing</a> for more details.</p>
                     <p class="green-text">After payment, you will also have the opportunity to modify the content two more times.</p>
                     <button class="payment-button initial-button">Purchase to View Full Content</button>
 

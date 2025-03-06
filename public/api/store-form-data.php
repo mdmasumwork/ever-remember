@@ -14,6 +14,8 @@ SecurityHeadersUtil::setHeaders('POST');
 SecurityHeadersUtil::handlePreflight('POST');
 
 $sessionService = new SessionService(); // Will initiate session in constructor
+$sessionService->isSessionActive();
+
 $csrf = new CSRFMiddleware();
 $csrf->handle();
 
@@ -22,7 +24,6 @@ $csrf->handle();
 
 $promptService = new PromptService();
 $validator = new SingleValidationService();
-
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

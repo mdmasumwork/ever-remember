@@ -10,7 +10,9 @@ require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 SecurityHeadersUtil::setHeaders('POST');
 SecurityHeadersUtil::handlePreflight('POST');
 
-$sessionService = new SessionService();
+$sessionService = new SessionService(); // Will initiate session in constructor
+$sessionService->isSessionActive();
+
 $csrf = new CSRFMiddleware();
 $csrf->handle();
 

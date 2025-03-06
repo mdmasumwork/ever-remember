@@ -42,4 +42,12 @@ class SessionService {
     public static function clearSession(): void {
         SessionSecurityUtil::clearSession();
     }
+
+    public static function isSessionActive(): bool {
+        return SessionSecurityUtil::isSessionActive();
+    }
+
+    public static function setLastActivity(): void {
+        $_SESSION['security']['last_activity'] = time();
+    }
 }

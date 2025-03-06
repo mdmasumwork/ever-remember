@@ -11,6 +11,8 @@ SecurityHeadersUtil::setHeaders('POST');
 SecurityHeadersUtil::handlePreflight('POST');
 
 $sessionService = new SessionService();
+$sessionService->isSessionActive();
+
 $csrf = new CSRFMiddleware();
 $csrf->handle();
 

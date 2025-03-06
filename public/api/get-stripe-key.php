@@ -8,6 +8,9 @@ require_once __DIR__ . '/../../src/utils/SecurityHeadersUtil.php';
 SecurityHeadersUtil::setHeaders('GET');
 SecurityHeadersUtil::handlePreflight('GET');
 
+// $sessionService = new SessionService();
+// $sessionService->isSessionActive();
+
 // $rateLimitMiddleware = new RateLimitMiddleware();
 // $rateLimitMiddleware->handle('stripe');
 
