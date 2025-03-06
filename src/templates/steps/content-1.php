@@ -3,27 +3,19 @@
 require_once __DIR__ . '/../../utils/EnvUtil.php';
 
 $messageType = trim($_SESSION['form_data']['messageType'] ?? 'default');
-echo "<h1>Message Type: $messageType</h1>";
 
 if ($messageType === 'condolence message') {
-    echo "<h1>Condolence Message</h1>";
-    $amount = EnvUtil::getEnv('CONDOLENCE_PRICE', '9.99');
+    $amount = EnvUtil::getEnv('CONDOLENCE_MESSAGE_PRICE', '9.99');
 } else if ($messageType === 'sympathy letter') {
-    echo "<h1>Sympathy Letter</h1>";
     $amount = EnvUtil::getEnv('SYMPATHY_LETTER_PRICE', '9.99');
 } else if ($messageType === 'eulogy') {
-    echo "<h1>Eulogy</h1>";
     $amount = EnvUtil::getEnv('EULOGY_PRICE', '9.99');
 } else if ($messageType === 'obituary') {
-    echo "<h1>Obituary</h1>";
     $amount = EnvUtil::getEnv('OBITUARY_PRICE', '9.99');
 } else {
-    echo "<h1>Personalized Content</h1>";
     $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
     $messageType = 'personalized content';
 }
-
-echo "<h1>Amount: $amount</h1>";
 
 ?>
 <section class="step step-content-1">
