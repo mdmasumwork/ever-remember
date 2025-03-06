@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../../utils/EnvUtil.php';
 
-$messageType = $_SESSION['form_data']['messageType'] ?? 'default';
+$messageType = trim($_SESSION['form_data']['messageType'] ?? 'default');
+echo "<h1>Message Type: $messageType</h1>";
 
 if ($messageType === 'condolence message') {
     $amount = EnvUtil::getEnv('CONDOLENCE_PRICE', '9.99');
