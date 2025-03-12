@@ -37,7 +37,7 @@ try {
         
         // Send prompt to OpenAI
         try {
-            $response = $openAIService->generateContent($prompt);
+            $response = $openAIService->generateRealContent($prompt);
             $jsonResponse = json_decode($response['content'], true);
             
             if (json_last_error() !== JSON_ERROR_NONE) {

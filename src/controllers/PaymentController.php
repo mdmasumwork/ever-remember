@@ -20,8 +20,13 @@ class PaymentController {
             // Get message type from session
             $messageType = strtolower($_SESSION['form_data']['messageType'] ?? 'condolence message');
             
-            // Use the shared function to determine price
-            $price = getPriceByMessageType($messageType);
+            // Check if there's a discounted price from a promo code in the session
+            if (isset($_SESSION['applied_promo']) && isset($_SESSION['applied_promo']['newPrice'])) {
+                $price = $_SESSION['applied_promo']['newPrice'];
+            } else {
+                // If no promo code discount, use the regular price
+                $price = getPriceByMessageType($messageType);
+            }
             
             // Create payment intent with the appropriate price
             $paymentIntent = $this->paymentService->createPaymentIntent($price);

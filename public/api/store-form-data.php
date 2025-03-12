@@ -91,7 +91,7 @@ try {
         
         try {
             $openAIService = new OpenAIService();
-            $response = $openAIService->generateContent($prompt);
+            $response = $openAIService->generateRealContent($prompt);
             $parsedName = json_decode($response['content'], true);
             
             if (json_last_error() !== JSON_ERROR_NONE) {

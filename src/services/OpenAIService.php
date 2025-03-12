@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../config/openai.php';
 require_once __DIR__ . '/../utils/LogUtil.php';
+require_once __DIR__ . '/../utils/EnvUtil.php';
 
 class OpenAIService {
     private $apiKey;
@@ -14,15 +15,24 @@ class OpenAIService {
         $this->temperature = (float) OpenAIConfig::get('temperature');
     }
     
-    // public function generateContent1($prompt) {
-        
-    //     $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
-    //     return [
-    //         'content' => 'version ' . $version . ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut metus felis. Nulla lobortis velit elit, et interdum nunc euismod vel. Fusce laoreet a est in posuere. Sed egestas ut nunc eu efficitur. Donec est ex, auctor non pharetra viverra, scelerisque nec mauris. Nam metus'
-    //     ];
-    // }
-    
     public function generateContent($prompt) {
+
+        if (EnvUtil::getEnv('DUMMY_CONTENT_MODE', 'development') === 'production') {
+            return $this->generateRealContent($prompt);
+        } else {
+            return $this->generateDummyContent();
+        }        
+        
+    }
+
+    public function generateDummyContent() {
+        $version = isset($_SESSION['version']) ? $_SESSION['version'] : 'unknown';
+        return [
+            'content' => 'version ' . $version . ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut metus felis. Nulla lobortis velit elit, et interdum nunc euismod vel. Fusce laoreet a est in posuere. Sed egestas ut nunc eu efficitur. Donec est ex, auctor non pharetra viverra, scelerisque nec mauris. Nam metus'
+        ];
+    }
+    
+    public function generateRealContent($prompt) {
         $url = 'https://api.openai.com/v1/chat/completions';
         
         // Log the request prompt (truncated for readability)

@@ -263,13 +263,140 @@
     }
 
     .price {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: bold;
         color: $brand-primary;
         margin-bottom: 1.5rem;
+        display: inline-block;
+        margin-right: 10px;
     }
 
-    .payment-button {
+    .promo-badge {
+        display: inline-block;
+        background: $brand-accent;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        position: relative;
+        top: -4px;
+    }
+
+    // Add promo code styles
+    .promo-code-section {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        
+        // Add styles for the applied promo chip
+        .applied-promo-chip {
+            display: inline-flex;
+            align-items: center;
+            background: $brand-accent;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            
+            .promo-code-text {
+                margin-right: 8px;
+                font-weight: 500;
+            }
+            
+            .promo-code-remove {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 18px;
+                height: 18px;
+                background: rgba(255,255,255,0.3);
+                border-radius: 50%;
+                font-size: 16px;
+                line-height: 1;
+                
+                &:hover {
+                    background: rgba(255,255,255,0.5);
+                }
+            }
+
+            &.removing {
+                opacity: 0.7;
+                pointer-events: none;
+                position: relative;
+                
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.1);
+                    border-radius: 20px;
+                    animation: pulse 1.5s infinite;
+                }
+                
+                .promo-code-text {
+                    white-space: nowrap;
+                }
+            }
+        }
+        
+        .promo-code-link {
+            color: $brand-accent;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            margin-bottom: 0.5rem;
+            
+            &:hover {
+                color: mix(#000, $brand-accent, 20%);
+            }
+        }
+        
+        .promo-code-form {
+            display: flex;
+            gap: 0.5rem;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+
+            @include mobile {
+                flex-direction: column;
+            }
+            
+            &.visible {
+                height: unset;
+                margin-top: 0.5rem;
+            }
+            
+            .promo-code-input {
+                flex-grow: 1;
+                padding: 8px 12px;
+                border: 1px solid $border-dark;
+                border-radius: 4px;
+                font-size: 0.9rem;
+            }
+            
+            .promo-code-apply {
+                background: $brand-accent;
+                color: white;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background 0.2s ease;
+                
+                &:hover {
+                    background: mix(#000, $brand-accent, 20%);
+                }
+            }
+        }
+    }
+
+    .payment-button, .payment-for-access-button {
         background: $brand-primary;
         color: white;
         padding: 0.8rem 2rem;
@@ -475,4 +602,29 @@
 .content-error *{
     color: #ff0000;
     font-weight: 500;
+}
+
+// Add promo message styles
+.promo-message {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    display: none;
+    
+    &.success {
+        color: $success;
+    }
+    
+    &.error {
+        color: $error;
+    }
+
+    &.visible {
+        display: block;
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.2; }
 }

@@ -4,18 +4,29 @@ require_once __DIR__ . '/../../utils/EnvUtil.php';
 
 $messageType = trim($_SESSION['form_data']['messageType'] ?? 'default');
 
-if ($messageType === 'condolence message') {
-    $amount = EnvUtil::getEnv('CONDOLENCE_MESSAGE_PRICE', '9.99');
-} else if ($messageType === 'sympathy letter') {
-    $amount = EnvUtil::getEnv('SYMPATHY_LETTER_PRICE', '9.99');
-} else if ($messageType === 'eulogy') {
-    $amount = EnvUtil::getEnv('EULOGY_PRICE', '9.99');
-} else if ($messageType === 'obituary') {
-    $amount = EnvUtil::getEnv('OBITUARY_PRICE', '9.99');
+// First check if there's a promo price in the session
+if (isset($_SESSION['applied_promo']) && isset($_SESSION['applied_promo']['newPrice'])) {
+    $amount = $_SESSION['applied_promo']['newPrice'];
+    $promoApplied = true;
 } else {
-    $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
-    $messageType = 'personalized content';
+    // If no promo price, get from environment as before
+    $promoApplied = false;
+    if ($messageType === 'condolence message') {
+        $amount = EnvUtil::getEnv('CONDOLENCE_MESSAGE_PRICE', '9.99');
+    } else if ($messageType === 'sympathy letter') {
+        $amount = EnvUtil::getEnv('SYMPATHY_LETTER_PRICE', '9.99');
+    } else if ($messageType === 'eulogy') {
+        $amount = EnvUtil::getEnv('EULOGY_PRICE', '9.99');
+    } else if ($messageType === 'obituary') {
+        $amount = EnvUtil::getEnv('OBITUARY_PRICE', '9.99');
+    } else {
+        $amount = EnvUtil::getEnv('CONTENT_PRICE', '9.99');
+        $messageType = 'personalized content';
+    }
 }
+
+// Check if this is a 100% discount (free)
+$isFreeAccess = ($amount == 0);
 
 ?>
 <section class="step step-content-1">
@@ -60,11 +71,32 @@ if ($messageType === 'condolence message') {
             <div class="content-actions">
                 <div class="payment-overlay">
                     <h5>Unlock your <span class="message-type-placeholder"><?= $messageType ?></span></h5>
-                    <p class="price">$<?= $amount ?></p>
+                    <p class="price">$<?= number_format((float)$amount, 2) ?> <?php if ($promoApplied): ?> <span class="promo-badge">Promo applied</span> <?php endif; ?></p>                    
                     <p>See our <a href="/pricing" target="_blank">pricing</a> for more details.</p>
                     <p class="green-text">After payment, you will also have the opportunity to modify the content two more times.</p>
-                    <button class="payment-button initial-button">Purchase to View Full Content</button>
-
+                    
+                    <!-- Promo code section -->
+                    <div class="promo-code-section">
+                        <?php if ($promoApplied): ?>
+                        <div class="applied-promo-chip">
+                            <span class="promo-code-text">Promo: <?= $_SESSION['applied_promo']['code'] ?></span>
+                            <span class="promo-code-remove">&times;</span>
+                        </div>
+                        <?php endif; ?>
+                        <p class="promo-code-link">I have a promo code</p>
+                        <div class="promo-code-form">
+                            <input type="text" class="promo-code-input" placeholder="Enter promo code">
+                            <button class="promo-code-apply">Apply</button>
+                        </div>
+                        <p class="promo-message success"></p>
+                    </div>
+                    
+                    <?php if ($isFreeAccess): ?>
+                    <button class="payment-for-access-button free-access-button">Get Your Full Content</button>
+                    <?php else: ?>
+                    <button class="payment-for-access-button initial-button">Purchase to View Full Content</button>
+                    <?php endif; ?>
+                    
                     <div class="payment-form" style="display: none;">
                         
                         <div class="card-element-container">

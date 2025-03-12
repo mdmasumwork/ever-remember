@@ -5,7 +5,7 @@
     <p>I’ll ask you a few simple questions to guide us.</p>
     <h4>So, I’m Serenity – what’s your name?</h4>
     <div class="field-area">
-        <input type="text" id="first-person-name-field" placeholder="Enter your full name">
+        <input type="text" id="first-person-name-field" class="go-next" placeholder="Enter your full name">
         <div class="field-button-area">
             <button class="er-button primary-button go-next-1" type="submit">Send</button>
         </div>

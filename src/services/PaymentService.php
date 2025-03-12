@@ -13,8 +13,9 @@ class PaymentService {
     }
 
     public function createPaymentIntent($amount) {
+        $amount = round($amount * 100); // Convert to cents and round to the nearest integer, as Stripe expects the amount in cents
         return \Stripe\PaymentIntent::create([
-            'amount' => $amount * 100, // Convert to cents
+            'amount' => $amount,
             'currency' => 'usd'
         ]);
     }
@@ -32,9 +33,15 @@ class PaymentService {
         ];
     }
 
-    public function logPayment($paymentIntent, $userName, $userEmail, $massesType = null) {
+    public function logPayment($paymentIntent, $userName, $userEmail, $contentType = null) {
         try {
-            LogUtil::log('content', '[SessionID: ' . session_id() . '][Payment]: Successful | Payment Intent ID:' . $paymentIntent->id . ' | User: ' . $userName . ' | Email: ' . $userEmail . ' | Amount: ' . $paymentIntent->amount / 100 . ' | Type: ' . $massesType);
+            LogUtil::log('content', '[SessionID: ' . session_id() . '][Payment]: Successful | Payment Intent ID:' . $paymentIntent->id . ' | User: ' . $userName . ' | Email: ' . $userEmail . ' | Amount: ' . $paymentIntent->amount / 100 . ' | Type: ' . $contentType);
+
+            // Get promo code from session if available
+            $promoCode = null;
+            if (isset($_SESSION['applied_promo']) && isset($_SESSION['applied_promo']['code'])) {
+                $promoCode = $_SESSION['applied_promo']['code'];
+            }
 
             $stmt = $this->db->prepare("
                 INSERT INTO payments (
@@ -42,10 +49,11 @@ class PaymentService {
                     user_name, 
                     user_email, 
                     amount, 
-                    payment_method, 
-                    masses_type,
+                    payment_method,
+                    promo_code,
+                    content_type,
                     status
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ");
             
             $stmt->execute([
@@ -54,11 +62,34 @@ class PaymentService {
                 $userEmail,
                 $paymentIntent->amount / 100,
                 $paymentIntent->payment_method_types[0],
-                $massesType,
+                $promoCode,
+                $contentType,
                 'completed'
             ]);
 
-            return $this->db->lastInsertId(); // Return the payment ID
+            $paymentId = $this->db->lastInsertId();
+
+            // Check if user has a 100% discount from promo code
+            if (
+                isset($_SESSION['applied_promo']) && 
+                isset($_SESSION['applied_promo']['promo_id'])
+            ) {
+                // Get promo ID from session
+                $promoId = $_SESSION['applied_promo']['promo_id'] ?? null;
+                
+                if ($promoId) {
+                    // Update the usage counter in the database
+                    $db = Database::getInstance();
+                    $updateStmt = $this->db->prepare("
+                        UPDATE promo_codes 
+                        SET current_uses = current_uses + 1 
+                        WHERE id = ?
+                    ");
+                    $updateStmt->execute([$promoId]);
+                }
+            }
+
+            return $paymentId; // Return the payment ID
         } catch (Exception $e) {
             error_log("Payment logging failed: " . $e->getMessage());
             throw $e;

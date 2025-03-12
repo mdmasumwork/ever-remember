@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/SanitizerService.php';
+require_once __DIR__ . '/../utils/AuthUtil.php';
 
 class ValidationException extends Exception {}
 
@@ -45,7 +46,7 @@ class ValidationService {
                 //     // throw new ValidationException('Something went wrong. You should ask for second or third version, but you are asking for the first version');
                 // }
 
-                if ($session['version'] >= 1 && (!isset($session['payment_verified']) || !$session['payment_verified'])) {
+                if ($session['version'] >= 1 && !AuthUtil::hasAccessToTheContent()) {
                     throw new ValidationException('Payment required');
                 }
             }

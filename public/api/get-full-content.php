@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../src/utils/LogUtil.php';
+require_once __DIR__ . '/../../src/utils/AuthUtil.php';
 require_once __DIR__ . '/../../src/includes/functions.php';
 require_once __DIR__ . '/../../src/controllers/ContentController.php';
 require_once __DIR__ . '/../../src/services/SessionService.php';
@@ -16,11 +17,10 @@ $sessionService->isSessionActive();
 // $rateLimitMiddleware = new RateLimitMiddleware();
 // $rateLimitMiddleware->handle('content');
 
+
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     throw new Exception('Invalid request method');
 }
-
-sleep(1);
 
 $sessionService = new SessionService(); // Will initiate session in constructor
 
@@ -39,9 +39,10 @@ try {
     sendResponse(true, [
         'content' => $_SESSION['contents'][$version] ?? '',
         'version' => $version,
-        'payment_verified' => $_SESSION['payment_verified'] ?? false
+        'payment_verified' => AuthUtil::hasAccessToTheContent()
     ]);
     
 } catch (Exception $e) {
     sendResponse(false, ['error' => $e->getMessage()]);
 }
+

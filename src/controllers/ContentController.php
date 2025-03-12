@@ -5,6 +5,7 @@ require_once __DIR__ . '/../services/PromptService.php';
 require_once __DIR__ . '/../services/ValidationService.php';
 require_once __DIR__ . '/../services/SessionService.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../utils/AuthUtil.php';
 
 class ContentController {
     private $openAIService;
@@ -70,7 +71,7 @@ class ContentController {
                 'content' => $generatedContent['content'],
                 'prompt' => $prompt,
                 'version' => $sanitizedData['version'],
-                'payment_verified' => $_SESSION['payment_verified'] ?? false
+                'payment_verified' => AuthUtil::hasAccessToTheContent()
             ]);
 
         } catch (ValidationException $e) {

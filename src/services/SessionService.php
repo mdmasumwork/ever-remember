@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../utils/SessionSecurityUtil.php';
+require_once __DIR__ . '/../utils/AuthUtil.php';
 
 class SessionService {
 
@@ -16,7 +17,7 @@ class SessionService {
             return [
                 'hasExistingSession' => isset($_SESSION['security']),
                 'version' => $_SESSION['version'] ?? null,
-                'paymentVerified' => $_SESSION['payment_verified'] ?? false,
+                'paymentVerified' => AuthUtil::hasAccessToTheContent(),
                 'isExpired' => false
             ];
         } else {

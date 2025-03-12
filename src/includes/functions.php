@@ -10,7 +10,6 @@ function sendResponse($success, $data) {
     echo json_encode([
         'success' => $success,
         'preview' => $preview,
-        'prompt' => $data['prompt'] ?? '',
         'version' => $data['version'] ?? 1,
         'fullContent' => isset($data['payment_verified']) && $data['payment_verified'] ? ($content ?? '') : null,
         'error' => $data['error'] ?? ''

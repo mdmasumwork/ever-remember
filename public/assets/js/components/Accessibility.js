@@ -19,14 +19,14 @@ class Accessibility {
         });
 
         // Handle Enter key on input fields (excluding textarea)
-        $(document).on('keypress', 'input', function(e) {
+        $(document).on('keypress', 'input.go-next', function(e) {
             if (e.which === 13) { // Enter key
-            const $submitButton = $(this).closest('.step').find('button[type="submit"]');
-            if ($submitButton.length) {
-                Accessibility.triggerStepForwardEvent($submitButton.get(0));
-            } else {
-                $(document).trigger('stepForwardRequested', [1]);
-            }
+                const $submitButton = $(this).closest('.step').find('button[type="submit"]');
+                if ($submitButton.length) {
+                    Accessibility.triggerStepForwardEvent($submitButton.get(0));
+                } else {
+                    $(document).trigger('stepForwardRequested', [1]);
+                }
             }
         });
     }

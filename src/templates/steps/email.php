@@ -5,7 +5,7 @@
         <p>To proceed, please provide your email. You will be able to send the content to your email later after it has been created.</p>
         <h4>Enter your email to continue:</h4>
         <div class="field-area">
-            <input type="text" id="email-field" placeholder="Enter your email">
+            <input type="text" id="email-field" class="go-next" placeholder="Enter your email">
             <div class="field-button-area">
                 <button class="er-button primary-button go-next-1">Send</button>
             </div>
